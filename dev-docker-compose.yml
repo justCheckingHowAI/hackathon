@@ -2,8 +2,12 @@ services:
   app:
     build:
       context: ./app
+    ports:
+      - "8000:80"
     restart: unless-stopped
   api:
     build:
       context: ./api
+    ports:
+      - "8001:80"
     restart: unless-stopped
