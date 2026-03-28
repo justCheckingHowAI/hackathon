@@ -66,7 +66,6 @@ interface GithubRepo {
 }
 
 const API_URL = import.meta.env.VITE_API_URL;
-const PERSON_ID = "mike";
 
 function formatFileSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
