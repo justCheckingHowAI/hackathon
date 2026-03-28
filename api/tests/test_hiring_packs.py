@@ -1,8 +1,13 @@
 import json
+from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from hiring_packs_store import HiringPacksStore
+from hiring_packs_store import (
+    DEMO_HIRING_PACK_FILENAME,
+    DEMO_HIRING_PACK_TARGET_PERSON_ID,
+    HiringPacksStore,
+)
 from main import app
 from routes_hiring_packs import get_hiring_packs_store
 from schemas_hiring_packs import HiringPack
@@ -56,17 +61,28 @@ def setup_function() -> None:
     app.dependency_overrides = {}
 
 
+def write_demo_hiring_pack(base_dir: Path, payload: dict) -> None:
+    (base_dir / DEMO_HIRING_PACK_FILENAME).write_text(
+        json.dumps(payload),
+        encoding='utf-8',
+    )
+
+
 def test_put_hiring_pack_persists_file(tmp_path) -> None:
     store = HiringPacksStore(base_dir=tmp_path)
     app.dependency_overrides = {get_hiring_packs_store: lambda: store}
     client = TestClient(app)
-    payload = build_hiring_pack_payload()
+    demo_payload = build_hiring_pack_payload()
+    write_demo_hiring_pack(tmp_path, demo_payload)
 
-    response = client.put('/hiring-packs/mike', json=payload)
+    response = client.put(
+        '/hiring-packs/any-person',
+        json={'ignored': True, 'person': {'id': 'someone-else'}},
+    )
 
     assert response.status_code == 200
-    assert response.json() == payload
-    assert json.loads((tmp_path / 'mike.json').read_text()) == payload
+    assert response.json() == demo_payload
+    assert json.loads((tmp_path / f'{DEMO_HIRING_PACK_TARGET_PERSON_ID}.json').read_text()) == demo_payload
 
 
 def test_get_hiring_pack_returns_saved_payload(tmp_path) -> None:
@@ -93,30 +109,29 @@ def test_get_hiring_pack_returns_404_when_missing(tmp_path) -> None:
     assert response.json() == {'detail': 'Hiring pack not found.'}
 
 
-def test_put_hiring_pack_rejects_invalid_payload(tmp_path) -> None:
+def test_put_hiring_pack_accepts_any_payload_and_ignores_it(tmp_path) -> None:
     store = HiringPacksStore(base_dir=tmp_path)
     app.dependency_overrides = {get_hiring_packs_store: lambda: store}
     client = TestClient(app)
-    payload = build_hiring_pack_payload()
-    del payload['recommendedRole']
+    demo_payload = build_hiring_pack_payload()
+    write_demo_hiring_pack(tmp_path, demo_payload)
 
-    response = client.put('/hiring-packs/mike', json=payload)
+    response = client.put('/hiring-packs/mike', json={'foo': 'bar'})
 
-    assert response.status_code == 422
+    assert response.status_code == 200
+    assert response.json() == demo_payload
 
 
-def test_put_hiring_pack_rejects_person_id_mismatch(tmp_path) -> None:
+def test_put_hiring_pack_returns_500_when_demo_file_is_missing(tmp_path) -> None:
     store = HiringPacksStore(base_dir=tmp_path)
     app.dependency_overrides = {get_hiring_packs_store: lambda: store}
     client = TestClient(app)
-    payload = build_hiring_pack_payload()
-    payload['person']['id'] = 'someone-else'
 
-    response = client.put('/hiring-packs/mike', json=payload)
+    response = client.put('/hiring-packs/mike', json={'anything': 'goes'})
 
-    assert response.status_code == 400
+    assert response.status_code == 500
     assert response.json() == {
-        'detail': 'person.id must match the person_id path parameter.'
+        'detail': f'Could not find demo hiring pack: {DEMO_HIRING_PACK_FILENAME}.'
     }
 
 
