@@ -33,6 +33,7 @@ import {
   Link,
   Trash2,
   FileUp,
+  AlertCircle,
   FileArchive,
   FileSpreadsheet,
   FileImage,
@@ -64,6 +65,9 @@ interface GithubRepo {
   name: string;
   status: "pending" | "scraping" | "done" | "error";
   progress: number;
+  jobId?: string;
+  errorMessage?: string;
+  message?: string;
 }
 
 function formatFileSize(bytes: number): string {
@@ -264,66 +268,181 @@ export function IntakePage({ onAnalysisComplete }: IntakePageProps) {
   };
 
   // --- GitHub repo handlers ---
-  const addGithubRepo = () => {
-    setRepoInputError("");
-    const parsed = parseGithubUrl(repoInput);
+  const addGithubRepo = async () => {
+    setRepoInputError('')
+    const parsed = parseGithubUrl(repoInput)
 
     if (!parsed) {
       setRepoInputError(
-        "Enter a valid GitHub URL or owner/repo format (e.g. facebook/react-native)"
-      );
-      return;
+        'Enter a valid GitHub URL or owner/repo format (e.g. facebook/react-native)'
+      )
+      return
     }
 
-    const fullName = `${parsed.owner}/${parsed.name}`;
+    const fullName = `${parsed.owner}/${parsed.name}`
     if (githubRepos.some((r) => `${r.owner}/${r.name}` === fullName)) {
-      setRepoInputError("This repository has already been added.");
-      return;
+      setRepoInputError('This repository has already been added.')
+      return
     }
 
-    const id = `repo-${Date.now()}`;
+    const id = `repo-${Date.now()}`
     const newRepo: GithubRepo = {
       id,
       url: `https://github.com/${parsed.owner}/${parsed.name}`,
       owner: parsed.owner,
       name: parsed.name,
-      status: "pending",
+      status: 'pending',
       progress: 0,
-    };
-    setGithubRepos((prev) => [...prev, newRepo]);
-    setRepoInput("");
+    }
+    setGithubRepos((prev) => [...prev, newRepo])
+    setRepoInput('')
 
-    // Simulate scraping
-    setTimeout(() => {
+    try {
+      const res = await fetch(`${API_URL}/scrapers/github/repo`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ repo: fullName }),
+      })
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ detail: 'Failed to queue scrape job' }))
+        setGithubRepos((prev) =>
+          prev.map((r) =>
+            r.id === id
+              ? { ...r, status: 'error', errorMessage: err.detail || 'Failed to queue scrape job' }
+              : r
+          )
+        )
+        return
+      }
+
+      const data = await res.json()
       setGithubRepos((prev) =>
-        prev.map((r) => (r.id === id ? { ...r, status: "scraping" } : r))
-      );
-
-      let prog = 0;
-      const interval = setInterval(() => {
-        prog += Math.random() * 15 + 5;
-        if (prog >= 100) {
-          prog = 100;
-          clearInterval(interval);
-          setGithubRepos((prev) =>
-            prev.map((r) =>
-              r.id === id ? { ...r, status: "done", progress: 100 } : r
-            )
-          );
-        } else {
-          setGithubRepos((prev) =>
-            prev.map((r) =>
-              r.id === id ? { ...r, progress: Math.min(prog, 99) } : r
-            )
-          );
-        }
-      }, 500);
-    }, 400);
+        prev.map((r) =>
+          r.id === id ? { ...r, jobId: data.job_id } : r
+        )
+      )
+    } catch {
+      setGithubRepos((prev) =>
+        prev.map((r) =>
+          r.id === id
+            ? { ...r, status: 'error', errorMessage: 'Network error — is the API running?' }
+            : r
+        )
+      )
+    }
   };
 
   const removeRepo = (id: string) => {
     setGithubRepos((prev) => prev.filter((r) => r.id !== id));
   };
+
+  // --- Poll scrape job statuses ---
+  useEffect(() => {
+    const activeRepos = githubRepos.filter(
+      (r) => r.jobId && r.status !== 'done' && r.status !== 'error'
+    )
+    if (activeRepos.length === 0) return
+
+    const pollInterval = setInterval(async () => {
+      for (const repo of activeRepos) {
+        if (!repo.jobId) continue
+        try {
+          const res = await fetch(`${API_URL}/scrapers/jobs/${repo.jobId}`)
+          if (!res.ok) continue
+          const job = await res.json()
+
+          const statusMap: Record<string, GithubRepo['status']> = {
+            queued: 'pending',
+            running: 'scraping',
+            completed: 'done',
+            failed: 'error',
+          }
+          const mappedStatus = statusMap[job.status] ?? 'scraping'
+          const pct =
+            job.progress_total && job.progress_total > 0
+              ? Math.round((job.progress_current / job.progress_total) * 100)
+              : 0
+
+          setGithubRepos((prev) =>
+            prev.map((r) =>
+              r.jobId === repo.jobId
+                ? {
+                    ...r,
+                    status: mappedStatus,
+                    progress: mappedStatus === 'done' ? 100 : pct,
+                    message: job.message ?? undefined,
+                    errorMessage: job.error ?? undefined,
+                  }
+                : r
+            )
+          )
+        } catch {
+          // ignore transient fetch errors
+        }
+      }
+    }, 3000)
+
+    return () => clearInterval(pollInterval)
+  }, [githubRepos])
+
+  // --- Fetch existing scrape jobs on mount ---
+  const fetchExistingJobs = useCallback(async () => {
+    try {
+      const res = await fetch(`${API_URL}/scrapers/jobs`)
+      if (!res.ok) return
+      const jobs: {
+        id: string
+        repo: string
+        status: string
+        progress_current: number | null
+        progress_total: number | null
+        message: string | null
+        error: string | null
+      }[] = await res.json()
+
+      const statusMap: Record<string, GithubRepo['status']> = {
+        queued: 'pending',
+        running: 'scraping',
+        completed: 'done',
+        failed: 'error',
+      }
+
+      const existing: GithubRepo[] = jobs.map((j) => {
+        const [owner = '', name = ''] = j.repo.split('/')
+        const mappedStatus = statusMap[j.status] ?? 'pending'
+        const pct =
+          j.progress_total && j.progress_total > 0
+            ? Math.round(((j.progress_current ?? 0) / j.progress_total) * 100)
+            : mappedStatus === 'done'
+              ? 100
+              : 0
+        return {
+          id: `job-${j.id}`,
+          url: `https://github.com/${j.repo}`,
+          owner,
+          name,
+          status: mappedStatus,
+          progress: pct,
+          jobId: j.id,
+          message: j.message ?? undefined,
+          errorMessage: j.error ?? undefined,
+        }
+      })
+
+      setGithubRepos((prev) => {
+        const existingJobIds = new Set(prev.map((r) => r.jobId).filter(Boolean))
+        const newJobs = existing.filter((e) => !existingJobIds.has(e.jobId))
+        return [...prev, ...newJobs]
+      })
+    } catch {
+      // Silently ignore — API may not be running
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchExistingJobs()
+  }, [fetchExistingJobs])
 
   const runAnalysis = () => {
     setIsAnalyzing(true);
@@ -693,6 +812,9 @@ export function IntakePage({ onAnalysisComplete }: IntakePageProps) {
                             {repo.status === "done" && (
                               <CheckCircle2 className="h-4 w-4 text-green-400" />
                             )}
+                            {repo.status === "error" && (
+                              <AlertCircle className="h-4 w-4 text-red-400" />
+                            )}
                             <button
                               onClick={() => removeRepo(repo.id)}
                               className="text-muted-foreground hover:text-foreground transition-colors"
@@ -716,7 +838,12 @@ export function IntakePage({ onAnalysisComplete }: IntakePageProps) {
                         )}
                         {repo.status === "done" && (
                           <span className="text-xs text-muted-foreground">
-                            PRs, commits, issues, and reviews scraped
+                            {repo.message || 'PRs, commits, issues, and reviews scraped'}
+                          </span>
+                        )}
+                        {repo.status === "error" && (
+                          <span className="text-xs text-red-400">
+                            {repo.errorMessage || 'Scraping failed'}
                           </span>
                         )}
                       </div>

@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routes_health import router as health_router
 from routes_hiring_packs import router as hiring_packs_router
 from routes_vapi import router as vapi_router
+from routes_scrapers import router as scrapers_router
 from routes_vectorize import router as vectorize_router
 from schemas_vapi import PhoneNumbersResponse, Settings
 from service_vapi import VapiClient, get_settings, get_vapi_client
@@ -40,4 +41,5 @@ app.add_middleware(
 app.include_router(health_router)
 app.include_router(hiring_packs_router)
 app.include_router(vapi_router)
+app.include_router(scrapers_router)
 app.include_router(vectorize_router)
