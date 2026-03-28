@@ -125,7 +125,7 @@ export function IntakePage({ onAnalysisComplete }: IntakePageProps) {
   // Fetch already-vectorized files on mount
   const fetchVectorizedFiles = useCallback(async () => {
     try {
-      const res = await fetch(`${API_URL}/vectorize/${PERSON_ID}/files`);
+      const res = await fetch(`${API_URL}/vectorize/files`);
       if (!res.ok) return;
       const files: { name: string | null; display_name: string | null; state: string | null; size_bytes: string | null }[] = await res.json();
       const existing: UploadedFile[] = files.map((f, i) => ({
