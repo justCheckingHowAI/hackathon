@@ -1,12 +1,15 @@
-from __future__ import annotations
-
+import os
+from functools import lru_cache
+from typing import Any
 from pathlib import Path
 from urllib.parse import urlencode
 
+import httpx
 import psycopg
-from fastapi import FastAPI, Form, HTTPException, Request, status
+from fastapi import Depends, FastAPI, Form, HTTPException, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel, ConfigDict
 
 from db import DatabaseConfigError, get_database
 
@@ -234,8 +237,6 @@ def ui_home(request: Request) -> HTMLResponse:
         "dashboard.html",
         {"counts": get_dashboard_counts()},
     )
-
-
 @app.get("/ui/people", response_class=HTMLResponse)
 def people_page(request: Request, edit_id: str | None = None) -> HTMLResponse:
     people = get_people_data()
@@ -673,3 +674,168 @@ def delete_relationship(relationship_id: str) -> RedirectResponse:
         return handle_db_error("/ui/relationships", "delete relationship", exc)
 
     return redirect_with_message("/ui/relationships", success="Relationship deleted.")
+
+
+class Settings(BaseModel):
+    private_key: str | None
+    default_phone_number: str | None
+    default_phone_number_id: str | None
+    base_url: str = "https://api.vapi.ai"
+
+
+def _to_camel(field_name: str) -> str:
+    parts = field_name.split("_")
+    return parts[0] + "".join(part.capitalize() for part in parts[1:])
+
+
+class OutboundCallRequest(BaseModel):
+    model_config = ConfigDict(populate_by_name=True, alias_generator=_to_camel)
+
+    assistant_id: str
+    customer_number: str
+    phone_number_id: str | None = None
+    customer_name: str | None = None
+
+
+class PhoneNumbersResponse(BaseModel):
+    items: list[dict[str, Any]]
+
+
+@lru_cache
+def get_settings() -> Settings:
+    return Settings(
+        private_key=os.getenv("VAPI_PRIVATE_KEY"),
+        default_phone_number=os.getenv("VAPI_DEFAULT_PHONE_NUMBER"),
+        default_phone_number_id=os.getenv("VAPI_DEFAULT_PHONE_NUMBER_ID"),
+        base_url=os.getenv("VAPI_BASE_URL", "https://api.vapi.ai"),
+    )
+
+
+class VapiClient:
+    def __init__(self, settings: Settings) -> None:
+        self.settings = settings
+
+    async def get_assistant(self, assistant_id: str) -> dict[str, Any]:
+        response = await self._request("GET", f"/assistant/{assistant_id}")
+        if not isinstance(response, dict):
+            raise HTTPException(status_code=502, detail="Unexpected assistant response from Vapi.")
+        return response
+
+    async def list_phone_numbers(self) -> list[dict[str, Any]]:
+        response = await self._request("GET", "/phone-number")
+        if isinstance(response, list):
+            return [item for item in response if isinstance(item, dict)]
+        if isinstance(response, dict):
+            for key in ("items", "results", "data"):
+                value = response.get(key)
+                if isinstance(value, list):
+                    return [item for item in value if isinstance(item, dict)]
+        raise HTTPException(status_code=502, detail="Unexpected phone-number response from Vapi.")
+
+    async def create_call(self, payload: dict[str, Any]) -> dict[str, Any]:
+        response = await self._request("POST", "/call", json=payload)
+        if not isinstance(response, dict):
+            raise HTTPException(status_code=502, detail="Unexpected call response from Vapi.")
+        return response
+
+    async def _request(
+        self,
+        method: str,
+        path: str,
+        json: dict[str, Any] | None = None,
+    ) -> dict[str, Any] | list[dict[str, Any]]:
+        try:
+            async with httpx.AsyncClient(
+                base_url=self.settings.base_url,
+                headers={"Authorization": f"Bearer {self.settings.private_key}"},
+                timeout=30.0,
+            ) as client:
+                response = await client.request(method, path, json=json)
+                response.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            detail = exc.response.text or exc.response.reason_phrase
+            raise HTTPException(
+                status_code=502,
+                detail=f"Vapi API error ({exc.response.status_code}): {detail}",
+            ) from exc
+        except httpx.HTTPError as exc:
+            raise HTTPException(status_code=502, detail=f"Vapi request failed: {exc}") from exc
+
+        return response.json()
+
+
+def get_vapi_client(settings: Settings = Depends(get_settings)) -> VapiClient:
+    if not settings.private_key:
+        raise HTTPException(status_code=500, detail="Missing VAPI_PRIVATE_KEY environment variable.")
+    return VapiClient(settings)
+
+
+def _normalize_phone_number(number: str | None) -> str | None:
+    if not number:
+        return None
+    return "".join(char for char in number if char.isdigit() or char == "+")
+
+
+async def _resolve_phone_number_id(
+    request: OutboundCallRequest,
+    settings: Settings,
+    vapi_client: VapiClient,
+) -> str:
+    if request.phone_number_id:
+        return request.phone_number_id
+    if settings.default_phone_number_id:
+        return settings.default_phone_number_id
+    if settings.default_phone_number:
+        normalized_target = _normalize_phone_number(settings.default_phone_number)
+        for phone_number in await vapi_client.list_phone_numbers():
+            if _normalize_phone_number(phone_number.get("number")) == normalized_target:
+                phone_number_id = phone_number.get("id")
+                if isinstance(phone_number_id, str) and phone_number_id:
+                    return phone_number_id
+        raise HTTPException(
+            status_code=400,
+            detail=f"Configured VAPI_DEFAULT_PHONE_NUMBER was not found in Vapi: {settings.default_phone_number}",
+        )
+
+    raise HTTPException(
+        status_code=400,
+        detail=(
+            "phoneNumberId is required or configure "
+            "VAPI_DEFAULT_PHONE_NUMBER_ID / VAPI_DEFAULT_PHONE_NUMBER."
+        ),
+    )
+
+
+@app.get("/vapi/assistant/{assistant_id}")
+async def get_vapi_assistant(
+    assistant_id: str,
+    vapi_client: VapiClient = Depends(get_vapi_client),
+) -> dict[str, Any]:
+    return await vapi_client.get_assistant(assistant_id)
+
+
+@app.get("/vapi/phone-numbers")
+async def get_vapi_phone_numbers(
+    vapi_client: VapiClient = Depends(get_vapi_client),
+) -> PhoneNumbersResponse:
+    return PhoneNumbersResponse(items=await vapi_client.list_phone_numbers())
+
+
+@app.post("/vapi/calls")
+async def create_vapi_call(
+    request: OutboundCallRequest,
+    settings: Settings = Depends(get_settings),
+    vapi_client: VapiClient = Depends(get_vapi_client),
+) -> dict[str, Any]:
+    phone_number_id = await _resolve_phone_number_id(request, settings, vapi_client)
+
+    customer: dict[str, Any] = {"number": request.customer_number}
+    if request.customer_name:
+        customer["name"] = request.customer_name
+
+    payload = {
+        "assistantId": request.assistant_id,
+        "phoneNumberId": phone_number_id,
+        "customer": customer,
+    }
+    return await vapi_client.create_call(payload)
