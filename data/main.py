@@ -259,7 +259,7 @@ def upload_with_retry(
         except RuntimeError as exc:
             last_exc = exc
             message = str(exc).lower()
-            if 'quota exceeded' not in message and '429' not in message:
+            if not any(k in message for k in ('quota', '429', '13', '8', 'internal', 'resource_exhausted')):
                 LOGGER.exception('Upload failed without retry display_name=%s', display_name)
                 raise
             if attempt == settings.retry_count:

@@ -194,7 +194,7 @@ export function IntakePage({ onAnalysisComplete }: IntakePageProps) {
       formData.append("file", file);
 
       const res = await fetch(
-        `${API_URL}/vectorize/${PERSON_ID}/upload`,
+        `${API_URL}/vectorize/upload`,
         { method: "POST", body: formData }
       );
 
