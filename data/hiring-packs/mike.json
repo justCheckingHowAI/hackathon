@@ -1,0 +1,161 @@
+{
+  "person": {
+    "id": "mike",
+    "name": "Mike Grabowski",
+    "role": "Senior React Native Engineer & OSS Lead",
+    "avatar": "MG",
+    "department": "Engineering",
+    "yearsAtCompany": 6,
+    "keyProjects": [
+      "React Native CLI",
+      "Re.Pack (Webpack for RN)",
+      "React Native Paper",
+      "Hermes Engine Integration"
+    ]
+  },
+  "skills": [
+    {
+      "name": "React Native Core",
+      "level": "expert",
+      "category": "Technical",
+      "evidence": [
+        "PR #2847: Refactored the native modules bridge to support async initialization.",
+        "React Native EU 2024 talk on migrating 200+ modules to the new architecture.",
+        "Maintained react-native-cli with 12k+ GitHub stars."
+      ]
+    },
+    {
+      "name": "Build Systems & Tooling",
+      "level": "expert",
+      "category": "Technical",
+      "evidence": [
+        "Created Re.Pack, enabling code splitting and module federation in React Native.",
+        "Implemented tree-shaking for native modules in Re.Pack v3.",
+        "Explained custom Metro transformer architecture on a podcast."
+      ]
+    },
+    {
+      "name": "JavaScript Engine Integration",
+      "level": "advanced",
+      "category": "Technical",
+      "evidence": [
+        "Wrote about integrating Hermes on iOS and profiling startup time.",
+        "Added Hermes bytecode precompilation to the CLI build step."
+      ]
+    },
+    {
+      "name": "Open Source Leadership",
+      "level": "expert",
+      "category": "Leadership",
+      "evidence": [
+        "Managed 50+ contributors across React Native CLI and Re.Pack.",
+        "Regularly helped community members debug native module issues.",
+        "Mentored three junior engineers on OSS contribution workflows."
+      ]
+    },
+    {
+      "name": "Architecture Design",
+      "level": "advanced",
+      "category": "Technical",
+      "evidence": [
+        "Talk on designing plugin architectures for React Native tooling.",
+        "Authored autolinking specification and configuration API docs.",
+        "Led modular architecture discussions for a monorepo migration."
+      ]
+    },
+    {
+      "name": "Native Modules (iOS/Android)",
+      "level": "advanced",
+      "category": "Technical",
+      "evidence": [
+        "Authored the Turbo Modules migration guide.",
+        "Bridged a native camera module with new architecture support."
+      ]
+    }
+  ],
+  "gapSummary": "Mike's departure creates critical gaps in React Native build tooling ownership, JavaScript engine integration expertise, and open-source community leadership. The team loses its primary architecture decision-maker for cross-platform tooling and the main bridge between the React Native core team and the broader OSS community.",
+  "recommendedRole": {
+    "title": "Staff React Native Platform Engineer",
+    "description": "Own React Native build infrastructure, native module architecture, and developer tooling. Lead OSS community engagement around internal frameworks and drive architectural decisions for cross-platform tooling.",
+    "seniority": "Staff / Principal"
+  },
+  "scorecard": [
+    {
+      "criterion": "React Native internals & new architecture",
+      "weight": 0.25,
+      "description": "Deep understanding of Fabric, TurboModules, and the JSI bridge. Can debug native crashes and performance issues at the engine level."
+    },
+    {
+      "criterion": "Build tooling & bundler expertise",
+      "weight": 0.2,
+      "description": "Experience with Metro, Webpack, or custom bundlers for mobile. Understands code splitting, tree-shaking, and bytecode compilation."
+    },
+    {
+      "criterion": "Open source leadership",
+      "weight": 0.2,
+      "description": "Track record maintaining popular OSS projects. Can manage community contributions, triage issues, and drive roadmap decisions publicly."
+    },
+    {
+      "criterion": "Native platform knowledge (iOS + Android)",
+      "weight": 0.15,
+      "description": "Comfortable writing and debugging native modules in Swift/ObjC and Kotlin/Java. Understands Gradle and CocoaPods."
+    },
+    {
+      "criterion": "Architecture & system design",
+      "weight": 0.1,
+      "description": "Can design plugin systems, define API contracts, and make trade-offs for long-lived developer tools."
+    },
+    {
+      "criterion": "Mentorship & technical communication",
+      "weight": 0.1,
+      "description": "Writes clear technical docs, gives talks, and mentors junior engineers effectively."
+    }
+  ],
+  "interviewQuestions": [
+    {
+      "question": "Walk us through how you'd debug a React Native app that crashes on startup only on Android 12+ devices after enabling the new architecture.",
+      "category": "React Native Internals"
+    },
+    {
+      "question": "You need to implement code splitting for a React Native app with 50+ feature modules. How would you approach it and what trade-offs would you evaluate?",
+      "category": "Build Tooling"
+    },
+    {
+      "question": "Describe a time you made a controversial technical decision in an open-source project. How did you communicate it and handle pushback?",
+      "category": "OSS Leadership"
+    },
+    {
+      "question": "Design a native module for biometric authentication across iOS and Android. How would you handle platform differences?",
+      "category": "Native Modules"
+    },
+    {
+      "question": "An OSS contributor submits a large PR that refactors your plugin system and changes the public API. How do you handle it?",
+      "category": "OSS Leadership"
+    },
+    {
+      "question": "You're tasked with reducing JS bundle startup time by 40%. Where do you start and what metrics do you track?",
+      "category": "Performance"
+    }
+  ],
+  "mustHave": [
+    "3+ years hands-on React Native experience beyond web React.",
+    "Experience with native module development on iOS or Android.",
+    "Track record in build tooling or developer experience work.",
+    "Published OSS work or significant contributions to major projects.",
+    "Strong written and verbal technical communication."
+  ],
+  "niceToHave": [
+    "Experience with Hermes or other JavaScript engines.",
+    "Knowledge of Module Federation or micro-frontend patterns.",
+    "Conference speaking experience.",
+    "Experience managing a team of 3+ engineers.",
+    "Rust or C++ for performance-critical native modules."
+  ],
+  "redFlags": [
+    "Only web React experience with no native mobile background.",
+    "No open-source contributions or community involvement.",
+    "Cannot explain the build pipeline beyond npm scripts.",
+    "Dismissive of backward compatibility and migration paths.",
+    "No experience working asynchronously with distributed teams."
+  ]
+}

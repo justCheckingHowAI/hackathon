@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { API_URL } from "@/lib/api";
 import { mike, artifacts, type Artifact } from "@/lib/mock-data";
 import {
   GitBranch,
@@ -65,7 +66,6 @@ interface GithubRepo {
   progress: number;
 }
 
-const API_URL = import.meta.env.VITE_API_URL;
 const PERSON_ID = "mike";
 
 function formatFileSize(bytes: number): string {

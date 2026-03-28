@@ -55,7 +55,7 @@ export interface Artifact {
 }
 
 export const mike: Person = {
-  id: "mike-grabowski",
+  id: "mike",
   name: "Mike Grabowski",
   role: "Senior React Native Engineer & OSS Lead",
   avatar: "MG",

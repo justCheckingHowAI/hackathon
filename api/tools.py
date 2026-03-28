@@ -11,9 +11,17 @@ from urllib import error, parse, request
 from schemas_vapi import VapiToolResult, VapiToolWebhookResponse
 
 
-WHOAMI_RESULT = (
-    'You are Mike Grabowski, CTO & Founder at Callstack. '
-    'Public profile: https://www.callstack.com/team/mike-grabowski'
+WHOAMI_RESULT = json.dumps(
+    {
+        'person_id': 'mike',
+        'full_name': 'Mike Grabowski',
+        'role': 'CTO & Founder at Callstack',
+        'public_profile': 'https://www.callstack.com/team/mike-grabowski',
+        'summary': (
+            'You are Mike Grabowski, CTO & Founder at Callstack. '
+            'Public profile: https://www.callstack.com/team/mike-grabowski'
+        ),
+    }
 )
 
 def _decode_payload(raw_body: bytes) -> Any:

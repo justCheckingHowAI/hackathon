@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -14,8 +15,13 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
+import {
+  fetchHiringPack,
+  HiringPackNotFoundError,
+  type HiringPack,
+  type HiringPackSkill,
+} from "@/lib/hiring-pack";
 import { cn } from "@/lib/utils";
-import { hiringPack } from "@/lib/mock-data";
 import {
   Brain,
   AlertTriangle,
@@ -29,20 +35,174 @@ import {
   Quote,
   Trophy,
   XCircle,
+  Loader2,
+  RefreshCw,
 } from "lucide-react";
 
 interface HiringPackPageProps {
   onNext: () => void;
 }
 
-const levelColors = {
+const PERSON_ID = "mike";
+
+const levelColors: Record<HiringPackSkill["level"], string> = {
   expert: "bg-primary/20 text-primary border-primary/30",
   advanced: "bg-blue-500/15 text-blue-400 border-blue-500/30",
   intermediate: "bg-muted text-muted-foreground border-border",
 };
 
 export function HiringPackPage({ onNext }: HiringPackPageProps) {
-  const { skills, gapSummary, recommendedRole, scorecard, interviewQuestions, mustHave, niceToHave, redFlags } = hiringPack;
+  const [hiringPack, setHiringPack] = useState<HiringPack | null>(null);
+  const [status, setStatus] = useState<"loading" | "ready" | "empty" | "error">(
+    "loading",
+  );
+  const [errorMessage, setErrorMessage] = useState("");
+  const [reloadKey, setReloadKey] = useState(0);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadHiringPack() {
+      setStatus("loading");
+      setErrorMessage("");
+
+      try {
+        const pack = await fetchHiringPack(PERSON_ID, controller.signal);
+        setHiringPack(pack);
+        setStatus("ready");
+      } catch (error) {
+        if (controller.signal.aborted) return;
+
+        if (error instanceof HiringPackNotFoundError) {
+          setHiringPack(null);
+          setStatus("empty");
+          return;
+        }
+
+        setHiringPack(null);
+        setStatus("error");
+        setErrorMessage(
+          error instanceof Error
+            ? error.message
+            : "Could not load the hiring pack.",
+        );
+      }
+    }
+
+    void loadHiringPack();
+    return () => controller.abort();
+  }, [reloadKey]);
+
+  if (status === "loading") {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-semibold text-foreground tracking-tight">
+            Backfill Hiring Pack
+          </h2>
+          <p className="text-muted-foreground mt-1">
+            Loading the saved hiring pack from the server.
+          </p>
+        </div>
+
+        <Card className="bg-card">
+          <CardContent className="py-12">
+            <div className="flex flex-col items-center justify-center gap-3 text-center">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <div>
+                <p className="text-sm font-medium text-foreground">
+                  Fetching hiring pack
+                </p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Pulling the latest saved data for this role.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (status === "empty") {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-semibold text-foreground tracking-tight">
+            Backfill Hiring Pack
+          </h2>
+          <p className="text-muted-foreground mt-1">
+            No saved hiring pack exists for this person yet.
+          </p>
+        </div>
+
+        <Card className="bg-card border-border">
+          <CardContent className="py-12">
+            <div className="mx-auto max-w-xl text-center">
+              <h3 className="text-base font-semibold text-foreground">
+                Hiring pack not found
+              </h3>
+              <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
+                Save a hiring pack through the backend API first. This screen
+                renders only data that has already been persisted on the server.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (status === "error") {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-semibold text-foreground tracking-tight">
+            Backfill Hiring Pack
+          </h2>
+          <p className="text-muted-foreground mt-1">
+            The screen could not load the saved hiring pack.
+          </p>
+        </div>
+
+        <Card className="bg-card border-accent/20">
+          <CardContent className="py-12">
+            <div className="mx-auto max-w-xl text-center">
+              <h3 className="text-base font-semibold text-foreground">
+                Loading failed
+              </h3>
+              <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
+                {errorMessage}
+              </p>
+              <Button
+                onClick={() => setReloadKey((value) => value + 1)}
+                variant="outline"
+                className="mt-4"
+              >
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Retry
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!hiringPack) {
+    return null;
+  }
+
+  const {
+    skills,
+    gapSummary,
+    recommendedRole,
+    scorecard,
+    interviewQuestions,
+    mustHave,
+    niceToHave,
+    redFlags,
+  } = hiringPack;
 
   return (
     <div className="space-y-6">
@@ -53,7 +213,8 @@ export function HiringPackPage({ onNext }: HiringPackPageProps) {
             Backfill Hiring Pack
           </h2>
           <p className="text-muted-foreground mt-1">
-            Evidence-backed analysis for replacing {hiringPack.person.name}'s role.
+            Evidence-backed analysis for replacing {hiringPack.person.name}'s
+            role.
           </p>
         </div>
         <Button
@@ -143,7 +304,10 @@ export function HiringPackPage({ onNext }: HiringPackPageProps) {
                       </h4>
                       <Badge
                         variant="outline"
-                        className={cn("text-[10px] uppercase tracking-wider", levelColors[skill.level])}
+                        className={cn(
+                          "text-[10px] uppercase tracking-wider",
+                          levelColors[skill.level],
+                        )}
                       >
                         {skill.level}
                       </Badge>
