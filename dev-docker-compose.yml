@@ -2,12 +2,16 @@ services:
   app:
     build:
       context: ./app
+    env_file:
+      - .env
     ports:
       - "8000:80"
     restart: unless-stopped
   api:
     build:
       context: ./api
+    env_file:
+      - .env
     ports:
       - "8001:80"
     restart: unless-stopped
