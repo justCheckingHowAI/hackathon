@@ -337,8 +337,8 @@ export function IntakePage({ onAnalysisComplete }: IntakePageProps) {
       { label: "Extracting competencies from GitHub data...", target: 45 },
       { label: "Analyzing conference talks & podcasts...", target: 60 },
       { label: "Mapping skill dependencies...", target: 80 },
-      { label: "Generating hiring pack...", target: 95 },
-      { label: "Complete!", target: 100 },
+      { label: "Preparing hiring workflow...", target: 95 },
+      { label: "Analysis complete!", target: 100 },
     ];
 
     let i = 0;

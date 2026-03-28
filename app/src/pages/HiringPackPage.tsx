@@ -21,6 +21,7 @@ import {
   type HiringPack,
   type HiringPackSkill,
 } from "@/lib/hiring-pack";
+import { createVapiCall } from "@/lib/vapi";
 import { cn } from "@/lib/utils";
 import {
   Brain,
@@ -37,6 +38,7 @@ import {
   XCircle,
   Loader2,
   RefreshCw,
+  Phone,
 } from "lucide-react";
 
 interface HiringPackPageProps {
@@ -58,6 +60,40 @@ export function HiringPackPage({ onNext }: HiringPackPageProps) {
   );
   const [errorMessage, setErrorMessage] = useState("");
   const [reloadKey, setReloadKey] = useState(0);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [isCalling, setIsCalling] = useState(false);
+  const [callMessage, setCallMessage] = useState("");
+  const [callError, setCallError] = useState("");
+
+  async function reloadHiringPack() {
+    setReloadKey((value) => value + 1);
+  }
+
+  async function handleCallMe() {
+    const normalizedPhoneNumber = phoneNumber.trim();
+    if (!normalizedPhoneNumber) {
+      setCallError("Enter a phone number to trigger the call.");
+      setCallMessage("");
+      return;
+    }
+
+    setIsCalling(true);
+    setCallError("");
+    setCallMessage("");
+
+    try {
+      await createVapiCall({ customerNumber: normalizedPhoneNumber });
+      setCallMessage(
+        "Call queued. Talk to the agent, then refresh this screen after the hiring pack is saved.",
+      );
+    } catch (error) {
+      setCallError(
+        error instanceof Error ? error.message : "Could not queue the call.",
+      );
+    } finally {
+      setIsCalling(false);
+    }
+  }
 
   useEffect(() => {
     const controller = new AbortController();
@@ -132,20 +168,90 @@ export function HiringPackPage({ onNext }: HiringPackPageProps) {
             Backfill Hiring Pack
           </h2>
           <p className="text-muted-foreground mt-1">
-            No saved hiring pack exists for this person yet.
+            Run the call flow first. The hiring pack will appear here after the
+            agent saves it on the backend.
           </p>
         </div>
 
         <Card className="bg-card border-border">
-          <CardContent className="py-12">
-            <div className="mx-auto max-w-xl text-center">
-              <h3 className="text-base font-semibold text-foreground">
-                Hiring pack not found
-              </h3>
-              <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-                Save a hiring pack through the backend API first. This screen
-                renders only data that has already been persisted on the server.
+          <CardHeader>
+            <CardTitle className="text-base">Generate Via Call</CardTitle>
+            <CardDescription>
+              Enter your phone number, let the agent prepare the hiring pack,
+              then refresh this screen.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <label
+                htmlFor="customer-number"
+                className="text-sm font-medium text-foreground"
+              >
+                Your phone number
+              </label>
+              <input
+                id="customer-number"
+                type="tel"
+                value={phoneNumber}
+                onChange={(event) => setPhoneNumber(event.target.value)}
+                placeholder="+48 123 456 789"
+                className="flex h-10 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+              />
+            </div>
+
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Button
+                onClick={handleCallMe}
+                disabled={isCalling}
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                {isCalling ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Phone className="mr-2 h-4 w-4" />
+                )}
+                Call Me
+              </Button>
+              <Button
+                onClick={reloadHiringPack}
+                variant="outline"
+                disabled={isCalling}
+              >
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Refresh
+              </Button>
+            </div>
+
+            {(callMessage || callError) && (
+              <div
+                className={cn(
+                  "rounded-lg border px-3 py-2 text-sm",
+                  callError
+                    ? "border-destructive/30 bg-destructive/10 text-destructive"
+                    : "border-primary/20 bg-primary/5 text-foreground",
+                )}
+              >
+                {callError || callMessage}
+              </div>
+            )}
+
+            <div className="rounded-lg border border-border bg-secondary/30 p-4">
+              <p className="text-sm font-medium text-foreground">
+                Expected flow
               </p>
+              <ol className="mt-2 space-y-1 text-sm leading-relaxed text-muted-foreground">
+                <li>
+                  1. Click{" "}
+                  <span className="font-medium text-foreground">Call Me</span>.
+                </li>
+                <li>2. Talk to the agent and ask for the hiring pack.</li>
+                <li>3. The agent saves it on the backend.</li>
+                <li>
+                  4. Click{" "}
+                  <span className="font-medium text-foreground">Refresh</span>{" "}
+                  here.
+                </li>
+              </ol>
             </div>
           </CardContent>
         </Card>
@@ -175,7 +281,7 @@ export function HiringPackPage({ onNext }: HiringPackPageProps) {
                 {errorMessage}
               </p>
               <Button
-                onClick={() => setReloadKey((value) => value + 1)}
+                onClick={reloadHiringPack}
                 variant="outline"
                 className="mt-4"
               >
@@ -217,13 +323,19 @@ export function HiringPackPage({ onNext }: HiringPackPageProps) {
             role.
           </p>
         </div>
-        <Button
-          onClick={onNext}
-          className="bg-primary text-primary-foreground hover:bg-primary/90 shrink-0"
-        >
-          Screen Candidate
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <Button onClick={reloadHiringPack} variant="outline">
+            <RefreshCw className="mr-2 h-4 w-4" />
+            Refresh
+          </Button>
+          <Button
+            onClick={onNext}
+            className="bg-primary text-primary-foreground hover:bg-primary/90 shrink-0"
+          >
+            Screen Candidate
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
       {/* Gap Summary */}
