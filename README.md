@@ -142,6 +142,37 @@ PYTHONPATH=api .venv/bin/python api/scripts/sync_vapi_assistant.py push
 
 Po pierwszym `pull` traktuj [config/vapi/assistant.json](/Users/maksymilian/.superset/worktrees/hackathon/feature/vapi/config/vapi/assistant.json) jako source of truth. Kolejne zmiany promptu, modelu i toolsów rób w repo i wypychaj przez `push`.
 
+## Vapi tool webhook testing
+
+Backend wystawia testowy custom tool webhook:
+- `POST /vapi/tools/whoami`
+
+Domyślnie `config/vapi/assistant.json` wskazuje produkcyjny URL:
+- `https://api.gemellus.app/vapi/tools/whoami`
+
+Lokalny flow z `localtunnel`:
+
+```bash
+# 1. Start API
+cd api
+../.venv/bin/uvicorn main:app --reload --host 0.0.0.0 --port 8001
+
+# 2. W drugim terminalu wystaw lokalny backend
+lt --port 8001
+
+# 3. Podmień model.tools[].server.url w config/vapi/assistant.json
+#    na URL z localtunnel, np. https://your-subdomain.loca.lt/vapi/tools/whoami
+
+# 4. Wypchnij config assistanta do Vapi
+PYTHONPATH=api .venv/bin/python api/scripts/sync_vapi_assistant.py push
+```
+
+Potem zadaj assistantowi pytanie typu:
+- "Who are you?"
+- "Whose clone are you?"
+
+Jeśli prompt i tool config są poprawne, Vapi wywoła `whoami` webhook i assistant odpowie jako Mike Grabowski.
+
 ## Testy
 
 ```bash

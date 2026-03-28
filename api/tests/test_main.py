@@ -190,3 +190,66 @@ def test_create_call_requires_phone_number_config() -> None:
             "VAPI_DEFAULT_PHONE_NUMBER_ID / VAPI_DEFAULT_PHONE_NUMBER."
         )
     }
+
+
+def test_whoami_tool_returns_result() -> None:
+    client = TestClient(app)
+
+    response = client.post(
+        "/vapi/tools/whoami",
+        json={
+            "message": {
+                "type": "tool-calls",
+                "toolCallList": [
+                    {
+                        "id": "tool-call-123",
+                        "name": "whoami",
+                        "arguments": {},
+                    }
+                ],
+            }
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "results": [
+            {
+                "toolCallId": "tool-call-123",
+                "result": (
+                    "You are Mike Grabowski, CTO & Founder at Callstack. "
+                    "Public profile: https://www.callstack.com/team/mike-grabowski"
+                ),
+            }
+        ]
+    }
+
+
+def test_whoami_tool_rejects_unsupported_tool_name() -> None:
+    client = TestClient(app)
+
+    response = client.post(
+        "/vapi/tools/whoami",
+        json={
+            "message": {
+                "type": "tool-calls",
+                "toolCallList": [
+                    {
+                        "id": "tool-call-999",
+                        "name": "not-whoami",
+                        "arguments": {},
+                    }
+                ],
+            }
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "results": [
+            {
+                "toolCallId": "tool-call-999",
+                "error": "Unsupported tool call for this endpoint: not-whoami",
+            }
+        ]
+    }

@@ -4,7 +4,14 @@ from typing import Any
 
 from fastapi import APIRouter, Depends
 
-from schemas_vapi import OutboundCallRequest, PhoneNumbersResponse, Settings
+from schemas_vapi import (
+    OutboundCallRequest,
+    PhoneNumbersResponse,
+    Settings,
+    VapiToolResult,
+    VapiToolWebhookRequest,
+    VapiToolWebhookResponse,
+)
 from service_vapi import (
     VapiClient,
     get_settings,
@@ -15,6 +22,11 @@ from service_vapi import (
 
 
 router = APIRouter(tags=['vapi'])
+
+WHOAMI_RESULT = (
+    'You are Mike Grabowski, CTO & Founder at Callstack. '
+    'Public profile: https://www.callstack.com/team/mike-grabowski'
+)
 
 
 @router.get('/vapi/assistant/{assistant_id}')
@@ -51,3 +63,29 @@ async def create_vapi_call(
         'customer': customer,
     }
     return await vapi_client.create_call(payload)
+
+
+@router.post('/vapi/tools/whoami', response_model_exclude_none=True)
+async def vapi_whoami_tool(
+    request: VapiToolWebhookRequest,
+) -> VapiToolWebhookResponse:
+    results: list[VapiToolResult] = []
+
+    for tool_call in request.message.tool_call_list:
+        if tool_call.name != 'whoami':
+            results.append(
+                VapiToolResult(
+                    toolCallId=tool_call.id,
+                    error=f'Unsupported tool call for this endpoint: {tool_call.name}',
+                )
+            )
+            continue
+
+        results.append(
+            VapiToolResult(
+                toolCallId=tool_call.id,
+                result=WHOAMI_RESULT,
+            )
+        )
+
+    return VapiToolWebhookResponse(results=results)
