@@ -65,7 +65,7 @@ interface GithubRepo {
   progress: number;
 }
 
-const API_URL = "http://localhost:8000";
+const API_URL = import.meta.env.VITE_API_URL;
 const PERSON_ID = "mike";
 
 function formatFileSize(bytes: number): string {
@@ -802,10 +802,10 @@ export function IntakePage({ onAnalysisComplete }: IntakePageProps) {
                       {totalSources} source{totalSources !== 1 ? "s" : ""}
                       {uploadedFiles.filter((f) => f.status === "uploading")
                         .length > 0 && (
-                        <span className="text-muted-foreground font-normal ml-1">
-                          ({uploadedFiles.filter((f) => f.status === "uploading").length} uploading...)
-                        </span>
-                      )}
+                          <span className="text-muted-foreground font-normal ml-1">
+                            ({uploadedFiles.filter((f) => f.status === "uploading").length} uploading...)
+                          </span>
+                        )}
                     </span>
                   </div>
                   <Separator />

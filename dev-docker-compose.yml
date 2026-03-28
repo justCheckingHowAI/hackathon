@@ -5,6 +5,8 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    environment:
+      VITE_API_URL: ${BACKEND_URL}
     ports:
       - "8000:80"
 

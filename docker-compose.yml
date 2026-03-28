@@ -2,7 +2,10 @@ services:
   app:
     build:
       context: ./app
+      args:
+        VITE_API_URL: ${BACKEND_URL}
     environment:
+      VITE_API_URL: ${BACKEND_URL}
       BACKEND_URL: ${BACKEND_URL}
     restart: unless-stopped
 
