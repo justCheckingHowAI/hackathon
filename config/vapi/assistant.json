@@ -17,15 +17,17 @@
     "tools": [
       {
         "type": "function",
-        "name": "whoami",
-        "description": "Returns the identity of the person this assistant is cloning. Use it when the caller asks who you are, whose clone you are, or who you represent.",
-        "parameters": {
-          "type": "object",
-          "properties": {},
-          "required": []
+        "function": {
+          "name": "whoami",
+          "description": "Returns the identity of the person this assistant is cloning. Use it when the caller asks who you are, whose clone you are, or who you represent.",
+          "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          }
         },
         "server": {
-          "url": "https://api.gemellus.app/vapi/tools/whoami"
+          "url": "https://fast-tables-pay.loca.lt/vapi/tools/whoami"
         }
       }
     ]
