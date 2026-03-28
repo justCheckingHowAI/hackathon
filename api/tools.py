@@ -8,6 +8,7 @@ from functools import lru_cache
 from typing import Any
 from urllib import error, parse, request
 
+from hiring_packs_store import HiringPackStorageError, get_hiring_packs_store
 from schemas_vapi import VapiToolResult, VapiToolWebhookResponse
 
 
@@ -23,6 +24,7 @@ WHOAMI_RESULT = json.dumps(
         ),
     }
 )
+GENERATE_HIRING_PACK_RESULT = 'Hiring pack saved for mike. Refresh the dashboard to view it.'
 
 def _decode_payload(raw_body: bytes) -> Any:
     try:
@@ -95,6 +97,23 @@ async def run_whoami_tool(raw_body: bytes) -> VapiToolWebhookResponse:
     return VapiToolWebhookResponse(
         results=[_success_result(tool_call['id'], WHOAMI_RESULT) for tool_call in tool_calls]
     )
+
+
+async def run_generate_hiring_pack_tool(raw_body: bytes) -> VapiToolWebhookResponse:
+    payload = _decode_payload(raw_body)
+    tool_calls = _extract_tool_calls(payload)
+    results: list[VapiToolResult] = []
+
+    for tool_call in tool_calls:
+        try:
+            get_hiring_packs_store().save_demo_to_default_person()
+        except HiringPackStorageError as exc:
+            results.append(_error_result(tool_call['id'], str(exc)))
+            continue
+
+        results.append(_success_result(tool_call['id'], GENERATE_HIRING_PACK_RESULT))
+
+    return VapiToolWebhookResponse(results=results)
 
 
 def _ensure_read_only_cypher(query: str) -> None:

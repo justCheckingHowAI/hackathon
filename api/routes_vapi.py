@@ -17,7 +17,12 @@ from service_vapi import (
     resolve_assistant_id,
     resolve_phone_number_id,
 )
-from tools import run_cypher_query_tool, run_retrieve_rag_contexts_tool, run_whoami_tool
+from tools import (
+    run_cypher_query_tool,
+    run_generate_hiring_pack_tool,
+    run_retrieve_rag_contexts_tool,
+    run_whoami_tool,
+)
 
 
 router = APIRouter(tags=['vapi'])
@@ -63,6 +68,13 @@ async def vapi_whoami_tool(
     request: Request,
 ) -> VapiToolWebhookResponse:
     return await run_whoami_tool(await request.body())
+
+
+@router.post('/vapi/tools/generate-hiring-pack', response_model_exclude_none=True)
+async def vapi_generate_hiring_pack_tool(
+    request: Request,
+) -> VapiToolWebhookResponse:
+    return await run_generate_hiring_pack_tool(await request.body())
 
 
 @router.post('/vapi/tools/run-cypher-query', response_model_exclude_none=True)

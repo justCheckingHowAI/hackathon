@@ -1,7 +1,10 @@
+import json
+
 from fastapi.testclient import TestClient
 
+from hiring_packs_store import HiringPacksStore
 from main import Settings, app, get_settings, get_vapi_client
-from tools import WHOAMI_RESULT
+from tools import GENERATE_HIRING_PACK_RESULT, WHOAMI_RESULT
 
 
 class StubVapiClient:
@@ -248,6 +251,98 @@ def test_whoami_tool_ignores_tool_name_on_dedicated_endpoint() -> None:
             {
                 "toolCallId": "tool-call-999",
                 "result": WHOAMI_RESULT,
+            }
+        ]
+    }
+
+
+def test_generate_hiring_pack_tool_saves_demo_pack(monkeypatch, tmp_path) -> None:
+    store = HiringPacksStore(base_dir=tmp_path)
+    demo_payload = {
+        "person": {
+            "id": "mike",
+            "name": "Mike Grabowski",
+            "role": "Senior React Native Engineer & OSS Lead",
+            "avatar": "MG",
+            "department": "Engineering",
+            "yearsAtCompany": 6,
+            "keyProjects": ["React Native CLI"],
+        },
+        "skills": [],
+        "gapSummary": "demo",
+        "recommendedRole": {
+            "title": "Staff React Native Platform Engineer",
+            "description": "demo",
+            "seniority": "Staff / Principal",
+        },
+        "scorecard": [],
+        "interviewQuestions": [],
+        "mustHave": [],
+        "niceToHave": [],
+        "redFlags": [],
+    }
+    (tmp_path / "demo-hiring-pack.json").write_text(
+        json.dumps(demo_payload),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr("tools.get_hiring_packs_store", lambda: store)
+    client = TestClient(app)
+
+    response = client.post(
+        "/vapi/tools/generate-hiring-pack",
+        json={
+            "message": {
+                "type": "tool-calls",
+                "toolCallList": [
+                    {
+                        "id": "tool-call-hiring-pack-1",
+                        "name": "generate_hiring_pack",
+                        "arguments": {"ignored": True},
+                    }
+                ],
+            }
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "results": [
+            {
+                "toolCallId": "tool-call-hiring-pack-1",
+                "result": GENERATE_HIRING_PACK_RESULT,
+            }
+        ]
+    }
+    assert (tmp_path / "mike.json").exists()
+
+
+def test_generate_hiring_pack_tool_returns_error_when_demo_missing(monkeypatch, tmp_path) -> None:
+    store = HiringPacksStore(base_dir=tmp_path)
+    monkeypatch.setattr("tools.get_hiring_packs_store", lambda: store)
+    client = TestClient(app)
+
+    response = client.post(
+        "/vapi/tools/generate-hiring-pack",
+        json={
+            "message": {
+                "type": "tool-calls",
+                "toolCallList": [
+                    {
+                        "id": "tool-call-hiring-pack-2",
+                        "name": "generate_hiring_pack",
+                        "arguments": {},
+                    }
+                ],
+            }
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "results": [
+            {
+                "toolCallId": "tool-call-hiring-pack-2",
+                "error": "Could not find demo hiring pack: demo-hiring-pack.json.",
             }
         ]
     }
