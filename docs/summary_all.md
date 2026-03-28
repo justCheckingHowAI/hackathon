@@ -4,6 +4,8 @@
 
 Ten dokument podsumowuje i porównuje pięć dokumentów planistycznych hackathonu oraz jedną transkrypcję spotkania zespołu. Wszystkie plany zbiegają się na jednym głównym pomyśle — **multimodalny agent głosowy, który zachowuje wiedzę odchodzących pracowników i przyspiesza rekrutację na ich miejsce** — ale różnią się zakresem, architekturą, strategią danych i podejściem do demo.
 
+**Wybrana nazwa produktu: [Gemellus](https://gemellus.app/)**
+
 **Po spotkaniu 1 (2026-03-28) większość otwartych decyzji została rozwiązana.** Zobacz sekcję „Decyzje ze spotkania 1" poniżej.
 
 ### Analizowane dokumenty
@@ -131,11 +133,15 @@ Adam i Przemek jawnie rekomendują: **nagraj zapasowe wideo demo** przed prezent
 
 ### 5. Nazwa produktu i pitch
 
-| Plan | Nazwa produktu | Styl pitcha |
-|------|---------------|-------------|
-| **Maks** | Brak proponowanej nazwy | Funkcjonalny: „Zamieniamy chaotyczną wiedzę firmową w akcję rekrutacyjną" |
-| **Adam** | **TeamTwin** | Emocjonalny: „A gdybyś mógł zadzwonić do kolegi, który odszedł?" |
-| **Przemek** | **OrgBrain** (alternatywy: KnowledgeGraph.ai, Hivemind) | Oparty na danych: „31,5 mld $ traconych rocznie na słabe dzielenie się wiedzą" |
+> **ROZWIĄZANE:** Zespół wybrał nazwę **[Gemellus](https://gemellus.app/)**. Wcześniejsze propozycje (TeamTwin, OrgBrain, KnowledgeGraph.ai, Hivemind) nie zostały przyjęte.
+
+Proponowane style pitcha z poszczególnych planów (do wykorzystania pod nową nazwą):
+
+| Plan | Styl pitcha |
+|------|-------------|
+| **Maks** | Funkcjonalny: „Zamieniamy chaotyczną wiedzę firmową w akcję rekrutacyjną" |
+| **Adam** | Emocjonalny: „A gdybyś mógł zadzwonić do kolegi, który odszedł?" |
+| **Przemek** | Oparty na danych: „31,5 mld $ traconych rocznie na słabe dzielenie się wiedzą" |
 
 ### 6. Głębokość badań rynkowych
 
@@ -251,8 +257,8 @@ Skupia się na tym, co wyciąć, nie na tym, kto co robi. Definiuje ograniczenia
 Najsilniejszy możliwy wpis hackathonowy łączyłby:
 
 1. **Od Maksa** — Dyscyplina zakresu, 3-minutowy timing demo, framework scoringowy, ramowanie produktowe („asystuje zespołom rekrutacyjnym")
-2. **Od Adama (TeamTwin)** — Koncept osobowości agenta, hak „zadzwoń do byłego kolegi", setup z dwoma telefonami na scenie, architektura 3 agentów
-3. **Od Przemka (OrgBrain)** — Liczby z badań rynkowych do pitcha (31,5 mld $, 87%, 42%), moment zsynchronizowanego głosu + dashboardu, pozycjonowanie konkurencyjne, wizja post-hackathonowa
+2. **Od Adama** — Koncept osobowości agenta, hak „zadzwoń do byłego kolegi", setup z dwoma telefonami na scenie, architektura 3 agentów
+3. **Od Przemka** — Liczby z badań rynkowych do pitcha (31,5 mld $, 87%, 42%), moment zsynchronizowanego głosu + dashboardu, pozycjonowanie konkurencyjne, wizja post-hackathonowa
 4. **Od planu Mike** — Strategia pozyskiwania danych prawdziwej osoby (adaptowalny do wybranej persony), 4-warstwowy model klonowania (wiedza, styl myślenia, styl komunikacji, kontekst organizacyjny)
 5. **Od planu K8s** — Struktura folderów, polecenia pipeline'u danych, gotowość oparta na checkliście, jasny podział zadań Dev/non-dev
 
@@ -278,7 +284,7 @@ Spotkanie zespołu rozwiązało większość wcześniej otwartych decyzji. Szcze
 
 | # | Pytanie | Status |
 |---|---------|--------|
-| 1 | **Nazwa produktu** | Nie zdecydowano — Przemek + Mieszko mają zaproponować |
+| 1 | **Nazwa produktu** | ~~Nie zdecydowano~~ → **Gemellus** (gemellus.app) — ROZWIĄZANE |
 | 2 | **Dokładny skrypt demo z timingiem** | Do iteracji po ~1 godzinie |
 | 3 | **Czas trwania demo** | Nie ustalono jawnie (plany wahają się od 3 do 5 min) |
 | 4 | **Szczegóły UI** | Zespół produktowy ma zdefiniować, potem devs pomagają implementować |
