@@ -1,311 +1,311 @@
-# Hackathon Plans - Summary & Comparison
+# Plany hackathonowe — podsumowanie i porównanie
 
-## Overview
+## Przegląd
 
-This document summarizes and compares five hackathon planning documents and one team meeting transcript. All plans converge on a single core idea — a **multimodal voice agent that preserves departing employee knowledge and accelerates backfill hiring** — but differ in scope, architecture, data strategy, and demo approach.
+Ten dokument podsumowuje i porównuje pięć dokumentów planistycznych hackathonu oraz jedną transkrypcję spotkania zespołu. Wszystkie plany zbiegają się na jednym głównym pomyśle — **multimodalny agent głosowy, który zachowuje wiedzę odchodzących pracowników i przyspiesza rekrutację na ich miejsce** — ale różnią się zakresem, architekturą, strategią danych i podejściem do demo.
 
-**After Meeting 1 (2026-03-28), several open decisions have been resolved.** See the "Decisions from Meeting 1" section below.
+**Po spotkaniu 1 (2026-03-28) większość otwartych decyzji została rozwiązana.** Zobacz sekcję „Decyzje ze spotkania 1" poniżej.
 
-### Documents Analyzed
+### Analizowane dokumenty
 
-| File | Author | Focus |
-|------|--------|-------|
-| `maks-demo-plan.md` | Maks | Product framing, scope control, demo structure |
-| `adam-hackathon-plan.md` | Adam | TeamTwin — 3 voice agents, technical architecture |
-| `przemek-hackathon-plan.md` | Przemek | OrgBrain — market research, competitive analysis, full-stack architecture |
-| `mike-grabowski-cloning-plan.md` | (data plan) | Real-person cloning strategy for Mike Grabowski (CTO Callstack) |
-| `kubernetes-data-sourcing-plan.md` | (data plan) | Data sourcing pipeline for Kubernetes SIG-Network contributor |
-| `narada1_transkrypcja.txt` | All | Team meeting transcript — key decisions and task division |
-| `summary_narada1.md` | (summary) | Detailed meeting summary with decisions, task split, and next steps |
+| Plik | Autor | Fokus |
+|------|-------|-------|
+| `maks-demo-plan.md` | Maks | Ramowanie produktowe, kontrola zakresu, struktura demo |
+| `adam-hackathon-plan.md` | Adam | TeamTwin — 3 agenty głosowe, architektura techniczna |
+| `przemek-hackathon-plan.md` | Przemek | OrgBrain — badanie rynku, analiza konkurencji, architektura full-stack |
+| `mike-grabowski-cloning-plan.md` | (plan danych) | Strategia klonowania prawdziwej osoby — Mike Grabowski (CTO Callstack) |
+| `kubernetes-data-sourcing-plan.md` | (plan danych) | Pipeline pozyskiwania danych dla kontrybutora Kubernetes SIG-Network |
+| `narada1_transkrypcja.txt` | Wszyscy | Transkrypcja spotkania zespołu — kluczowe decyzje i podział zadań |
+| `summary_narada1.md` | (podsumowanie) | Szczegółowe podsumowanie spotkania z decyzjami, podziałem zadań i następnymi krokami |
 
-### Team Composition
+### Skład zespołu
 
-| Person | Role | Hackathon Focus |
-|--------|------|----------------|
+| Osoba | Rola | Fokus na hackathonie |
+|-------|------|---------------------|
 | **Max** | Developer (core) | Google API, Vapi, Agent SDK, backend |
 | **Janusz** | Developer (core) | Google API, Vapi, Agent SDK, backend |
-| **Adam** | Product / VC / vibecoder | Data collection & organization |
-| **Przemek** | Product / VC / vibecoder | Demo story, presentation, UI, product name |
-| **Mieszko** | Creative / artistic | Demo narrative, UI design, presentation visuals |
+| **Adam** | Produkt / VC / vibecoder | Zbieranie i organizacja danych |
+| **Przemek** | Produkt / VC / vibecoder | Historia demo, prezentacja, UI, nazwa produktu |
+| **Mieszko** | Kreatywny / artystyczny | Narracja demo, projekt UI, wizualizacje prezentacji |
 
 ---
 
-## Common Ground (all or most plans agree)
+## Wspólny grunt (wszystkie lub większość planów się zgadza)
 
-### 1. Core Problem
+### 1. Główny problem
 
-All plans address the same business problem: **critical knowledge loss when key employees leave**. This is the universal trigger, the emotional hook, and the demo entry point.
+Wszystkie plany adresują ten sam problem biznesowy: **krytyczna utrata wiedzy, gdy kluczowi pracownicy odchodzą**. To uniwersalny wyzwalacz, emocjonalny hak i punkt wejścia do demo.
 
-Key framing across plans:
-- Maks: "When a key employee leaves, our multimodal agent turns messy organizational knowledge into a backfill hiring plan in minutes."
-- Adam: "What if you could call a colleague who left the company six months ago and ask them anything?"
-- Przemek: "Organizations lose over $30,000 per departing employee in knowledge transfer costs."
+Kluczowe ujęcia w poszczególnych planach:
+- Maks: „Gdy kluczowy pracownik odchodzi, nasz multimodalny agent zamienia chaotyczną wiedzę organizacyjną w plan rekrutacyjny w kilka minut."
+- Adam: „A gdybyś mógł zadzwonić do kolegi, który odszedł z firmy pół roku temu i zapytać go o cokolwiek?"
+- Przemek: „Organizacje tracą ponad 30 000$ na odchodzącym pracowniku w kosztach transferu wiedzy."
 
-### 2. Technology Stack
+### 2. Stack technologiczny
 
-Unanimous agreement on two core technologies:
+Jednomyślna zgoda na dwie kluczowe technologie:
 
-- **Google Gemini** — multimodal reasoning engine, document/text/code analysis, structured output generation
-- **Vapi** — voice agent orchestration platform, telephony, low-latency speech interaction
+- **Google Gemini** — multimodalny silnik wnioskowania, analiza dokumentów/tekstu/kodu, generowanie strukturalnych wyników
+- **Vapi** — platforma orkiestracji agentów głosowych, telefonia, interakcja głosowa z niskim opóźnieniem
 
-Both are hackathon sponsor technologies, which strengthens theme alignment scoring.
+Obie są technologiami sponsorów hackathonu, co wzmacnia ocenę zgodności z tematem.
 
-### 3. Three-Phase Product Flow
+### 3. Trójfazowy przepływ produktu
 
-Every plan (Maks, Adam, Przemek) describes a variant of the same end-to-end pipeline:
+Każdy plan (Maks, Adam, Przemek) opisuje wariant tego samego pipeline'u end-to-end:
 
-| Phase | Maks | Adam (TeamTwin) | Przemek (OrgBrain) |
-|-------|------|-----------------|-------------------|
-| **1. Knowledge analysis** | Analyze team artifacts, identify competency gap | Knowledge Clone agent — talk to the "digital twin" | Skills heatmap + departure impact simulation |
-| **2. Hiring pack generation** | Gap summary, JD, scorecard, interview questions | Recruitment Generator agent — ultra-specific JD, task, rubric | Role recommendation, transfer plan, hiring materials |
-| **3. Candidate screening** | Voice screening via Vapi, match score | AI Interviewer agent — adaptive technical interview | Voice query + real-time scoring dashboard |
+| Faza | Maks | Adam (TeamTwin) | Przemek (OrgBrain) |
+|------|------|-----------------|-------------------|
+| **1. Analiza wiedzy** | Analiza artefaktów zespołu, identyfikacja luki kompetencyjnej | Agent Knowledge Clone — rozmowa z „cyfrowym bliźniakiem" | Heatmapa umiejętności + symulacja wpływu odejścia |
+| **2. Generowanie pakietu rekrutacyjnego** | Podsumowanie luki, JD, scorecard, pytania rekrutacyjne | Agent Recruitment Generator — ultra-specyficzny JD, zadanie, rubryk | Rekomendacja roli, plan transferu, materiały rekrutacyjne |
+| **3. Screening kandydatów** | Screening głosowy przez Vapi, score dopasowania | Agent AI Interviewer — adaptacyjna rozmowa techniczna | Zapytanie głosowe + dashboard scoringowy w czasie rzeczywistym |
 
-### 4. Multimodal Input Requirement
+### 4. Wymóg multimodalnego wejścia
 
-All plans agree: the demo must show at least **3 input modalities** to defend "multimodal agent" theme alignment:
-- Text (Slack messages, transcripts, docs)
-- Documents/PDFs (CVs, architecture diagrams, KEPs)
-- Voice (live conversation with the agent)
+Wszystkie plany zgadzają się: demo musi pokazać co najmniej **3 modalności wejścia**, aby obronić zgodność z tematem „multimodalny agent":
+- Tekst (wiadomości Slack, transkrypcje, dokumenty)
+- Dokumenty/PDF (CV, diagramy architektoniczne, KEP-y)
+- Głos (rozmowa na żywo z agentem)
 
-### 5. Evidence-Based Output
+### 5. Output oparty na dowodach
 
-Strong consensus that agent outputs must include **concrete evidence** (source citations, snippets, confidence scores), not just generated text. This addresses jury skepticism about hallucination and builds trust.
+Silny konsensus, że wyniki agenta muszą zawierać **konkretne dowody** (cytowania źródeł, fragmenty, oceny pewności), a nie tylko wygenerowany tekst. To odpowiada na sceptycyzm jury wobec halucynacji i buduje zaufanie.
 
-- Maks: "3 concrete evidence snippets are better than 2 pages of generated role description"
-- Adam: Agent cites specific meetings ("remember when I said on the March 12 standup...")
-- Przemek: "Based on 47 Slack messages and 3 design documents, Sarah Chen has deep expertise"
+- Maks: „3 konkretne fragmenty-dowody są lepsze niż 2 strony wygenerowanego opisu roli"
+- Adam: Agent cytuje konkretne spotkania („pamiętasz, jak powiedziałem na standupie 12 marca...")
+- Przemek: „Na podstawie 47 wiadomości Slack i 3 dokumentów projektowych, Sarah Chen ma głęboką ekspertyzę"
 
-### 6. Mock / Synthetic Data Strategy
+### 6. Strategia mock / danych syntetycznych
 
-All plans assume **pre-prepared mock data** rather than building a real-time ingestion pipeline during the hackathon. The data plans (Mike, K8s) provide detailed sourcing strategies for realistic content.
+Wszystkie plany zakładają **wstępnie przygotowane dane mockowe** zamiast budowania pipeline'u ingestion w czasie rzeczywistym podczas hackathonu. Plany danych (Mike, K8s) dostarczają szczegółowe strategie pozyskiwania realistycznej zawartości.
 
-### 7. Demo Safety Net
+### 7. Siatka bezpieczeństwa demo
 
-Both Adam and Przemek explicitly recommend: **record a backup demo video** before the live presentation. Maks implicitly supports this through scope minimization.
+Adam i Przemek jawnie rekomendują: **nagraj zapasowe wideo demo** przed prezentacją na żywo. Maks pośrednio wspiera to przez minimalizację zakresu.
 
 ---
 
-## Divergence Points
+## Punkty rozbieżności
 
-### 1. Scope Philosophy
+### 1. Filozofia zakresu
 
-| Plan | Approach | Risk Profile |
-|------|----------|-------------|
-| **Maks** | Brutally minimal — 3 screens, 3 data sources, one linear flow. Explicitly warns against "building multiple products at once" | Low risk, potentially lower wow factor |
-| **Adam (TeamTwin)** | 3 full voice agents, each with distinct personality and function. More ambitious but still focused | Medium risk, strong wow if all agents work |
-| **Przemek (OrgBrain)** | Broadest scope — adds Neo4j knowledge graph, D3.js heatmap, WebSocket sync, FastAPI backend, React frontend | Highest risk, highest potential impact |
+| Plan | Podejście | Profil ryzyka |
+|------|-----------|---------------|
+| **Maks** | Brutalnie minimalistyczny — 3 ekrany, 3 źródła danych, jeden liniowy przepływ. Wyraźnie ostrzega przed „budowaniem wielu produktów naraz" | Niskie ryzyko, potencjalnie niższy efekt wow |
+| **Adam (TeamTwin)** | 3 pełne agenty głosowe, każdy z odrębną osobowością i funkcją. Ambitniejszy, ale wciąż skupiony | Średnie ryzyko, silny wow jeśli wszystkie agenty działają |
+| **Przemek (OrgBrain)** | Najszerszy zakres — dodaje Neo4j knowledge graph, D3.js heatmapę, WebSocket sync, FastAPI backend, React frontend | Najwyższe ryzyko, najwyższy potencjalny impact |
 
-**Key tension:** Maks explicitly identifies broad scope as the #1 risk, while Przemek proposes the most components. Adam sits in the middle.
+**Kluczowe napięcie:** Maks jawnie identyfikuje szeroki zakres jako ryzyko #1, podczas gdy Przemek proponuje najwięcej komponentów. Adam jest pośrodku.
 
-### 2. Technical Architecture
+### 2. Architektura techniczna
 
-| Component | Maks | Adam | Przemek |
+| Komponent | Maks | Adam | Przemek |
 |-----------|------|------|---------|
-| **AI backbone** | Gemini (unspecified details) | Gemini 3.1 with 2M context window (no RAG needed) | Gemini 2.5 Flash (voice) + Gemini 3 Pro (analysis) |
-| **Knowledge storage** | Not specified | Direct context loading into Gemini | Neo4j AuraDB graph database |
-| **Backend** | Not specified | Not specified | FastAPI with API endpoints |
-| **Frontend** | 3 simple screens | Optional dashboard | React + D3.js visualizations + WebSocket |
-| **Voice** | Vapi (basic) | Vapi with 3 configured agents (Squads) | Vapi with synchronized voice + dashboard updates |
-| **Embedding** | Not discussed | Not discussed | Gemini Embedding 2 (multimodal embeddings) |
+| **Backbone AI** | Gemini (brak szczegółów) | Gemini 3.1 z oknem kontekstu 2M (RAG niepotrzebny) | Gemini 2.5 Flash (głos) + Gemini 3 Pro (analiza) |
+| **Przechowywanie wiedzy** | Nie określono | Bezpośrednie ładowanie kontekstu do Gemini | Neo4j AuraDB graph database |
+| **Backend** | Nie określono | Nie określono | FastAPI z endpointami API |
+| **Frontend** | 3 proste ekrany | Opcjonalny dashboard | React + wizualizacje D3.js + WebSocket |
+| **Głos** | Vapi (podstawowy) | Vapi z 3 skonfigurowanymi agentami (Squads) | Vapi ze zsynchronizowanym głosem + aktualizacjami dashboardu |
+| **Embedding** | Nie omówiono | Nie omówiono | Gemini Embedding 2 (multimodalne embeddingi) |
 
-**Key divergence:** Adam bets on Gemini's massive context window to avoid RAG complexity entirely. Przemek builds a proper graph database. Maks intentionally avoids architecture decisions to focus on product.
+**Kluczowa rozbieżność:** Adam stawia na ogromne okno kontekstu Gemini, by uniknąć złożoności RAG. Przemek buduje pełną graph database. Maks celowo unika decyzji architektonicznych, skupiając się na produkcie.
 
-### 3. Clone Persona / Data Source
+### 3. Persona klona / źródło danych
 
-| Plan | Who Gets Cloned | Data Type |
-|------|----------------|-----------|
-| **Maks** | "Ania" — fictional senior backend engineer | Generic mock data |
-| **Adam** | "Tomek" — fictional developer | Realistic mock data |
-| **Mike plan** | **Mike Grabowski** — real person, CTO of Callstack, React Native core team | Real public data (GitHub PRs, conference talks, podcasts, blog posts) |
-| **K8s plan** | Anonymous Kubernetes SIG-Network contributor | Real open-source community data (KEPs, SIG meetings, GitHub, KubeCon talks) |
+| Plan | Kto jest klonowany | Typ danych |
+|------|-------------------|------------|
+| **Maks** | „Ania" — fikcyjna senior backend engineer | Generyczne dane mockowe |
+| **Adam** | „Tomek" — fikcyjny developer | Realistyczne dane mockowe |
+| **Plan Mike** | **Mike Grabowski** — prawdziwa osoba, CTO Callstack, React Native core team | Prawdziwe publiczne dane (GitHub PR-y, konferencje, podcasty, posty blogowe) |
+| **Plan K8s** | Anonimowy kontrybutor Kubernetes SIG-Network | Prawdziwe dane społeczności open-source (KEP-y, spotkania SIG, GitHub, KubeCon talks) |
 
-**Key divergence:** The Mike/K8s plans use **real, publicly available data** from recognizable figures, making the demo far more impressive but raising privacy considerations. The other plans use fictional personas with synthetic data.
+**Kluczowa rozbieżność:** Plany Mike/K8s używają **prawdziwych, publicznie dostępnych danych** od rozpoznawalnych osób, co czyni demo znacznie bardziej imponującym, ale rodzi kwestie prywatności. Pozostałe plany używają fikcyjnych person z danymi syntetycznymi.
 
-### 4. Demo Format
+### 4. Format demo
 
-| Plan | Duration | Physical Setup | Key Moment |
-|------|----------|---------------|------------|
-| **Maks** | 3 min (timed to the second: 0:00-0:40 ingest, 0:40-1:30 gap, 1:30-2:20 screening, 2:20-3:00 result) | Not specified | Match score + recommendation at the end |
-| **Adam** | 5 min (3 acts) | **Two physical phones on a table** + screen with dashboard | Agent quotes a specific standup meeting from memory |
-| **Przemek** | 3 min | Screen with dashboard | **"Simulate departure"** button triggers instant impact analysis while voice responds simultaneously |
+| Plan | Czas trwania | Konfiguracja fizyczna | Kluczowy moment |
+|------|-------------|----------------------|-----------------|
+| **Maks** | 3 min (czas co do sekundy: 0:00-0:40 ingest, 0:40-1:30 luka, 1:30-2:20 screening, 2:20-3:00 wynik) | Nie określono | Score dopasowania + rekomendacja na koniec |
+| **Adam** | 5 min (3 akty) | **Dwa fizyczne telefony na stole** + ekran z dashboardem | Agent cytuje konkretny standup z pamięci |
+| **Przemek** | 3 min | Ekran z dashboardem | Przycisk **„Symuluj odejście"** uruchamia natychmiastową analizę wpływu, podczas gdy głos odpowiada jednocześnie |
 
-### 5. Product Naming & Pitch
+### 5. Nazwa produktu i pitch
 
-| Plan | Product Name | Pitch Style |
-|------|-------------|-------------|
-| **Maks** | No name proposed | Functional: "We turn messy company knowledge into hiring action" |
-| **Adam** | **TeamTwin** | Emotional: "What if you could call a colleague who left?" |
-| **Przemek** | **OrgBrain** (alternatives: KnowledgeGraph.ai, Hivemind) | Data-driven: "$31.5B lost annually to poor knowledge sharing" |
+| Plan | Nazwa produktu | Styl pitcha |
+|------|---------------|-------------|
+| **Maks** | Brak proponowanej nazwy | Funkcjonalny: „Zamieniamy chaotyczną wiedzę firmową w akcję rekrutacyjną" |
+| **Adam** | **TeamTwin** | Emocjonalny: „A gdybyś mógł zadzwonić do kolegi, który odszedł?" |
+| **Przemek** | **OrgBrain** (alternatywy: KnowledgeGraph.ai, Hivemind) | Oparty na danych: „31,5 mld $ traconych rocznie na słabe dzielenie się wiedzą" |
 
-### 6. Market Research Depth
+### 6. Głębokość badań rynkowych
 
-| Plan | Research Level |
-|------|---------------|
-| **Maks** | None — pure product/demo focus |
-| **Adam** | None — pure technical/UX focus |
-| **Przemek** | **Extensive** — TechWolf ($53M raised), Eightfold ($2.1B valuation), Gloat ($1B), Interloom ($16.5M), Aware, Glean ($4.6B). McKinsey stats, IDC data, WEF Future of Jobs 2025, Deloitte 2025. Specific pitch numbers: $31.5B (IDC), 42% (Panopto), 87% firms (McKinsey) |
+| Plan | Poziom badań |
+|------|-------------|
+| **Maks** | Brak — czysty fokus na produkcie/demo |
+| **Adam** | Brak — czysty fokus techniczny/UX |
+| **Przemek** | **Rozbudowany** — TechWolf (53 mln $ pozyskane), Eightfold (wycena 2,1 mld $), Gloat (1 mld $), Interloom (16,5 mln $), Aware, Glean (4,6 mld $). Statystyki McKinsey, dane IDC, WEF Future of Jobs 2025, Deloitte 2025. Konkretne liczby do pitcha: 31,5 mld $ (IDC), 42% (Panopto), 87% firm (McKinsey) |
 
-### 7. Privacy & Ethics Stance
+### 7. Stanowisko wobec prywatności i etyki
 
-| Plan | Position |
-|------|----------|
-| **Maks** | Warns: never promise automatic hiring, say "assists hiring teams", "final decision remains with the hiring team" |
-| **Adam** | Brief closing: "TeamTwin is not a replacement for people" |
-| **Przemek** | Specific: needs a "privacy by design" slide, references Aware media backlash from 2024 |
-| **Mike plan** | Not addressed — uses real person's public data without explicit consent discussion |
+| Plan | Pozycja |
+|------|---------|
+| **Maks** | Ostrzega: nigdy nie obiecuj automatycznego zatrudniania, mów „asystuje zespołom rekrutacyjnym", „finalna decyzja należy do zespołu rekrutacyjnego" |
+| **Adam** | Krótkie zamknięcie: „TeamTwin nie jest zamiennikiem dla ludzi" |
+| **Przemek** | Konkretny: potrzeba slajdu „privacy by design", odwołanie do backlashu medialnego Aware z 2024 |
+| **Plan Mike** | Nie adresowany — używa publicznych danych prawdziwej osoby bez jawnej dyskusji o zgodzie |
 
-### 8. Data Sourcing Depth
+### 8. Głębokość pozyskiwania danych
 
-| Plan | Data Strategy |
-|------|--------------|
-| **Maks** | Abstract — "3 types of data: repo/docs, transcripts, CV" |
-| **Adam** | 6 components listed (data ingestion, context builder, agent configs, Gemini integration, output generator, frontend) |
-| **Mike plan** | **Extremely detailed** — 4 cloning layers, 11+ GitHub repos with exact commands, 9 YouTube search queries, podcast episodes by name, Reactiflux Q&A transcript URL, Medium/Twitter sources, synthetic data templates (Slack threads, Jira tickets, 1:1 notes, ADRs) |
-| **K8s plan** | **Equally detailed** — 7 data categories, folder structure, pipeline steps with time estimates, concrete Slack thread examples, Jira ticket templates, competency profile template, checklist with minimum viable data requirements |
+| Plan | Strategia danych |
+|------|-----------------|
+| **Maks** | Abstrakcyjna — „3 typy danych: repo/docs, transkrypcje, CV" |
+| **Adam** | 6 komponentów wymienionych (ingestion danych, context builder, konfiguracje agentów, integracja Gemini, generator wyników, frontend) |
+| **Plan Mike** | **Niezwykle szczegółowy** — 4 warstwy klonowania, 11+ repozytoriów GitHub z dokładnymi poleceniami, 9 zapytań wyszukiwania YouTube, odcinki podcastów po nazwie, URL transkrypcji Q&A Reactiflux, źródła Medium/Twitter, szablony danych syntetycznych (wątki Slack, tickety Jira, notatki 1:1, ADR-y) |
+| **Plan K8s** | **Równie szczegółowy** — 7 kategorii danych, struktura folderów, kroki pipeline'u z estymacjami czasu, konkretne przykłady wątków Slack, szablony ticketów Jira, szablon profilu kompetencji, checklista z minimalnymi wymaganiami danych |
 
-### 9. Unique Contributions Per Plan
+### 9. Unikalne wkłady każdego planu
 
-| Plan | Unique Element |
-|------|---------------|
-| **Maks** | Systematic **scoring framework** (Running Code / Innovation / Impact / Theme Alignment) applied to 3 alternative directions. Only plan that explicitly ranks options with criteria |
-| **Adam** | **Agent personality** concept — extracting communication style from transcripts to make the clone sound like the real person, not a generic chatbot. Strongest "wow" element |
-| **Przemek** | **Synchronized voice + visualization** moment — voice response plays while dashboard updates in real-time via WebSocket. Also: extensive **post-hackathon vision** (M&A due diligence, incident response, onboarding buddy, AI readiness assessment) |
-| **Mike plan** | Only plan using a **real, recognizable public figure** — Mike Grabowski is known in the React Native ecosystem. Demo would be immediately credible |
-| **K8s plan** | Best-defined **data pipeline and folder structure** — ready to implement with copy-paste commands. Includes time estimates per phase and clear ownership (Dev vs. non-dev tasks) |
-
----
-
-## Scoring Comparison
-
-All three main plans (Maks, Adam, Przemek) provide self-assessments against hackathon criteria:
-
-| Criterion | Maks (after narrowing) | Adam (TeamTwin) | Przemek (OrgBrain) |
-|-----------|----------------------|-----------------|-------------------|
-| **Running Code** | 4/5 | 4-5/5 | Not scored (implies 4-5 based on plan) |
-| **Innovation & Creativity** | 4/5 | 4-5/5 | Not scored (implies 4-5) |
-| **Real-world Impact** | 4/5 | 5/5 | Not scored (extensive market validation) |
-| **Theme Alignment** | 4/5 (with voice + multimodal inputs) | 5/5 (3 voice agents on Gemini + Vapi) | 9/10 (voice-first + graph viz + multimodal) |
+| Plan | Unikalny element |
+|------|-----------------|
+| **Maks** | Systematyczny **framework scoringowy** (Running Code / Innovation / Impact / Theme Alignment) zastosowany do 3 alternatywnych kierunków. Jedyny plan, który jawnie rankuje opcje z kryteriami |
+| **Adam** | Koncept **osobowości agenta** — ekstrakcja stylu komunikacji z transkrypcji, żeby klon brzmiał jak prawdziwa osoba, nie generyczny chatbot. Najsilniejszy element „wow" |
+| **Przemek** | Moment **zsynchronizowanego głosu + wizualizacji** — odpowiedź głosowa gra, podczas gdy dashboard aktualizuje się w czasie rzeczywistym przez WebSocket. Także: rozbudowana **wizja post-hackathonowa** (due diligence M&A, incident response, buddy onboardingowy, ocena gotowości AI) |
+| **Plan Mike** | Jedyny plan używający **prawdziwej, rozpoznawalnej publicznej postaci** — Mike Grabowski jest znany w ekosystemie React Native. Demo byłoby natychmiast wiarygodne |
+| **Plan K8s** | Najlepiej zdefiniowany **pipeline danych i struktura folderów** — gotowy do implementacji z poleceniami copy-paste. Zawiera estymacje czasu na fazę i jasny podział zadań Dev/non-dev |
 
 ---
 
-## Task Allocation Comparison
+## Porównanie scoringu
 
-### Maks — No Explicit Allocation
-Focuses on what to cut, not who does what. Defines scope constraints as the primary planning tool.
+Wszystkie trzy główne plany (Maks, Adam, Przemek) dostarczają samooceny wobec kryteriów hackathonu:
 
-### Adam (TeamTwin) — 5 Phases
-
-| Phase | Time | Focus |
-|-------|------|-------|
-| Foundation | 2-3h | Mock data prep, Gemini + Vapi setup, proof of concept |
-| Knowledge Clone | 2-3h | Context builder, system prompt with personality, multimodal integration |
-| Recruitment Generator | 2h | Templates, prompt engineering, voice iteration |
-| Interview Agent | 2h | Question bank, adaptive logic, real-time scoring |
-| Polish + Demo | 1-2h | Dashboard, end-to-end rehearsal, backup plan |
-
-### Przemek (OrgBrain) — 7-Hour Plan
-
-| Phase | Time | Focus |
-|-------|------|-------|
-| Setup | 0-1h | Repo init, Vapi account, API keys, React boilerplate, demo script, mock data |
-| Core Build | 1-3h | Vapi agent + 3 tools (Dev 1), FastAPI + Neo4j (Dev 2), React dashboard + D3.js (Dev 3) |
-| Integration | 3-5h | Voice → API → graph → voice response, frontend → API, end-to-end test |
-| Polish | 5-6.5h | Bug fixes, demo path hardening, 3x demo rehearsal |
-| Insurance | 6.5h | Record backup video |
-| Present | 7-8h | Freeze code, clean browser, present |
-
-### Data Plans — Separate Timelines
-
-| Phase | Mike Plan | K8s Plan |
-|-------|-----------|----------|
-| Automated data collection | 2-3h | 2-3h |
-| Manual/semi-automated collection | 1-2h | — |
-| Synthetic data creation | 2-3h | 1.5-2h |
-| Profile building | — | 1h |
-| Processing & structuring | — | 1h |
-| Agent configuration | — | 1-2h |
-| **Total** | **5-8h** | **6-9h** |
+| Kryterium | Maks (po zawężeniu) | Adam (TeamTwin) | Przemek (OrgBrain) |
+|-----------|---------------------|-----------------|-------------------|
+| **Running Code** | 4/5 | 4-5/5 | Bez oceny (plan sugeruje 4-5) |
+| **Innovation & Creativity** | 4/5 | 4-5/5 | Bez oceny (sugeruje 4-5) |
+| **Real-world Impact** | 4/5 | 5/5 | Bez oceny (rozbudowana walidacja rynkowa) |
+| **Theme Alignment** | 4/5 (z głosem + multimodalnymi wejściami) | 5/5 (3 agenty głosowe na Gemini + Vapi) | 9/10 (voice-first + graph viz + multimodal) |
 
 ---
 
-## Risk Matrix (Aggregated)
+## Porównanie alokacji zadań
 
-| Risk | Identified By | Mitigation |
-|------|--------------|------------|
-| Scope too broad | Maks, Adam | Cut ruthlessly — one flow, 3 inputs max |
-| Cannot defend recommendation accuracy | Maks | Evidence layer with source citations |
-| Demo looks like "just another RAG SaaS" | Maks | Voice interaction + multimodal inputs make it feel different |
-| **"It's just NotebookLM"** | **Meeting 1** | **Hiring pack generation is the must-have differentiator. Also: auto-update, multi-person, competency mapping** |
-| Latency issues (Vapi + Gemini) | Adam | Test early, fallback to Gemini Flash |
-| Agent sounds robotic | Adam | Tune system prompt with "personality", test voice settings |
-| Live demo failure | Adam, Przemek | Record backup video at hour 6.5 |
-| Mock data quality | Adam, K8s plan | Invest time in realistic, internally consistent data |
-| Privacy backlash | Maks, Przemek | "Privacy by design" slide, "assists" not "decides" framing |
-| Too many integrations | Maks | Limit to 2-3 data sources, well-connected in one flow |
-| Neo4j adds complexity | (implicit in Przemek) | Consider dropping graph DB if behind schedule — Gemini context window may suffice |
+### Maks — brak jawnej alokacji
+Skupia się na tym, co wyciąć, nie na tym, kto co robi. Definiuje ograniczenia zakresu jako główne narzędzie planistyczne.
+
+### Adam (TeamTwin) — 5 faz
+
+| Faza | Czas | Fokus |
+|------|------|-------|
+| Fundament | 2-3h | Przygotowanie danych mockowych, setup Gemini + Vapi, proof of concept |
+| Knowledge Clone | 2-3h | Context builder, system prompt z osobowością, integracja multimodalna |
+| Recruitment Generator | 2h | Szablony, prompt engineering, iteracja głosu |
+| Interview Agent | 2h | Bank pytań, logika adaptacyjna, scoring w czasie rzeczywistym |
+| Polerowanie + Demo | 1-2h | Dashboard, próba end-to-end, plan awaryjny |
+
+### Przemek (OrgBrain) — plan 7-godzinny
+
+| Faza | Czas | Fokus |
+|------|------|-------|
+| Setup | 0-1h | Init repo, konto Vapi, klucze API, boilerplate React, skrypt demo, dane mockowe |
+| Core Build | 1-3h | Agent Vapi + 3 narzędzia (Dev 1), FastAPI + Neo4j (Dev 2), dashboard React + D3.js (Dev 3) |
+| Integracja | 3-5h | Głos → API → graph → odpowiedź głosowa, frontend → API, test end-to-end |
+| Polerowanie | 5-6.5h | Bugfixy, utwardzanie ścieżki demo, 3x próba demo |
+| Ubezpieczenie | 6.5h | Nagranie zapasowego wideo |
+| Prezentacja | 7-8h | Zamrożenie kodu, czysty browser, prezentacja |
+
+### Plany danych — oddzielne timeline'y
+
+| Faza | Plan Mike | Plan K8s |
+|------|-----------|----------|
+| Automatyczne zbieranie danych | 2-3h | 2-3h |
+| Zbieranie ręczne/półautomatyczne | 1-2h | — |
+| Tworzenie danych syntetycznych | 2-3h | 1.5-2h |
+| Budowanie profilu | — | 1h |
+| Przetwarzanie i strukturyzacja | — | 1h |
+| Konfiguracja agenta | — | 1-2h |
+| **Łącznie** | **5-8h** | **6-9h** |
 
 ---
 
-## Synthesis: Strengths to Combine
+## Macierz ryzyk (zagregowana)
 
-The strongest possible hackathon entry would combine:
-
-1. **From Maks** — Scope discipline, 3-minute demo timing, scoring framework, product framing ("assists hiring teams")
-2. **From Adam (TeamTwin)** — Agent personality concept, "call your former colleague" hook, two-phone stage setup, 3-agent architecture
-3. **From Przemek (OrgBrain)** — Market research numbers for the pitch ($31.5B, 87%, 42%), synchronized voice + dashboard moment, competitive positioning, post-hackathon vision
-4. **From Mike plan** — Real-person data sourcing strategy (adaptable to chosen persona), 4-layer cloning model (knowledge, thinking style, communication style, organizational context)
-5. **From K8s plan** — Folder structure, data pipeline commands, checklist-driven readiness, clear Dev/non-dev task ownership
+| Ryzyko | Zidentyfikowane przez | Mitygacja |
+|--------|----------------------|-----------|
+| Zbyt szeroki zakres | Maks, Adam | Tnij bezlitośnie — jeden przepływ, max 3 wejścia |
+| Nie da się obronić dokładności rekomendacji | Maks | Warstwa dowodów z cytowaniami źródeł |
+| Demo wygląda jak „kolejny RAG SaaS" | Maks | Interakcja głosowa + multimodalne wejścia sprawiają, że czuje się inaczej |
+| **„To po prostu NotebookLM"** | **Spotkanie 1** | **Generowanie pakietu rekrutacyjnego to must-have wyróżnik. Także: auto-aktualizacja, wiele osób, mapowanie kompetencji** |
+| Problemy z latencją (Vapi + Gemini) | Adam | Testuj wcześnie, fallback na Gemini Flash |
+| Agent brzmi robotycznie | Adam | Dostrój system prompt z „osobowością", testuj ustawienia głosu |
+| Awaria demo na żywo | Adam, Przemek | Nagraj zapasowe wideo o godz. 6.5 |
+| Jakość danych mockowych | Adam, plan K8s | Zainwestuj czas w realistyczne, wewnętrznie spójne dane |
+| Backlash prywatności | Maks, Przemek | Slajd „privacy by design", framing „asystuje" a nie „decyduje" |
+| Za dużo integracji | Maks | Ogranicz do 2-3 źródeł danych, dobrze połączonych w jednym przepływie |
+| Neo4j dodaje złożoność | (pośrednio w planie Przemka) | Rozważ porzucenie graph DB jeśli opóźnienie — okno kontekstu Gemini może wystarczyć |
 
 ---
 
-## Decisions from Meeting 1 (2026-03-28)
+## Synteza: mocne strony do połączenia
 
-The team meeting resolved most of the previously open decisions. See `summary_narada1.md` for full details.
+Najsilniejszy możliwy wpis hackathonowy łączyłby:
 
-### Resolved Decisions
+1. **Od Maksa** — Dyscyplina zakresu, 3-minutowy timing demo, framework scoringowy, ramowanie produktowe („asystuje zespołom rekrutacyjnym")
+2. **Od Adama (TeamTwin)** — Koncept osobowości agenta, hak „zadzwoń do byłego kolegi", setup z dwoma telefonami na scenie, architektura 3 agentów
+3. **Od Przemka (OrgBrain)** — Liczby z badań rynkowych do pitcha (31,5 mld $, 87%, 42%), moment zsynchronizowanego głosu + dashboardu, pozycjonowanie konkurencyjne, wizja post-hackathonowa
+4. **Od planu Mike** — Strategia pozyskiwania danych prawdziwej osoby (adaptowalny do wybranej persony), 4-warstwowy model klonowania (wiedza, styl myślenia, styl komunikacji, kontekst organizacyjny)
+5. **Od planu K8s** — Struktura folderów, polecenia pipeline'u danych, gotowość oparta na checkliście, jasny podział zadań Dev/non-dev
 
-| # | Question | Decision |
-|---|----------|----------|
-| 1 | **Who do we clone?** | **Mike Grabowski** — real person, real public data. Multi-person support is deferred to future. |
-| 2 | **Architecture** | **Vapi** (voice layer) + **Google Agent SDK / ADK** (agent brain). No Neo4j — ADK handles knowledge. ADK process can be visualized during demo. |
-| 3 | **Demo flow** | Two-phase: (1) Knowledge query — call Mike, ask about a project decision; (2) Hiring pack — ask Mike to generate JD, tasks, criteria for his replacement. |
-| 4 | **Multimodality** | Minimum: **voice + text**. Optional extras (video, graphics) if time permits. Two modalities are considered sufficient. |
-| 5 | **Data preparation** | Adam organizes pre-collected data (GitHub, podcasts, synthetic). Data must be in Markdown/JSON. Refresh function desired but not required for demo. |
-| 6 | **Task division** | Max+Janusz → core dev; Adam → data; Przemek+Mieszko → story, name, presentation, UI. |
-| 7 | **What makes it not NotebookLM?** | The hiring pack / competency gap feature is the key differentiator. Auto-updating data and multi-person routing are secondary differentiators. |
+---
 
-### Still Open
+## Decyzje ze spotkania 1 (2026-03-28)
 
-| # | Question | Status |
-|---|----------|--------|
-| 1 | **Product name** | Not decided — Przemek + Mieszko to propose |
-| 2 | **Exact demo script with timing** | To be iterated after ~1 hour |
-| 3 | **Demo duration** | Not explicitly set (plans range from 3 to 5 min) |
-| 4 | **UI specifics** | Product team to define, then devs help implement |
-| 5 | **Website** | To be created by Przemek + Mieszko |
+Spotkanie zespołu rozwiązało większość wcześniej otwartych decyzji. Szczegóły w `summary_narada1.md`.
 
-### Critical Risk Identified: NotebookLM Comparison
+### Rozwiązane decyzje
 
-The team spent significant time discussing the risk that a jury member could say: *"This is just NotebookLM with a phone number."*
+| # | Pytanie | Decyzja |
+|---|---------|---------|
+| 1 | **Kogo klonujemy?** | **Mike Grabowski** — prawdziwa osoba, prawdziwe publiczne dane. Wsparcie wielu osób odłożone na przyszłość. |
+| 2 | **Architektura** | **Vapi** (warstwa głosowa) + **Google Agent SDK / ADK** (mózg agenta). Bez Neo4j — ADK obsługuje wiedzę. Proces ADK można wizualizować podczas demo. |
+| 3 | **Przebieg demo** | Dwie fazy: (1) Zapytanie o wiedzę — zadzwoń do Mike'a, zapytaj o decyzję projektową; (2) Pakiet rekrutacyjny — poproś Mike'a o wygenerowanie JD, zadań, kryteriów na jego zastępstwo. |
+| 4 | **Multimodalność** | Minimum: **głos + tekst**. Opcjonalne dodatki (wideo, grafika) jeśli starczy czasu. Dwie modalności uznane za wystarczające. |
+| 5 | **Przygotowanie danych** | Adam organizuje wstępnie zebrane dane (GitHub, podcasty, syntetyczne). Dane muszą być w Markdown/JSON. Funkcja odświeżania pożądana, ale nie wymagana na demo. |
+| 6 | **Podział zadań** | Max+Janusz → core dev; Adam → dane; Przemek+Mieszko → narracja, nazwa, prezentacja, UI. |
+| 7 | **Co odróżnia to od NotebookLM?** | Pakiet rekrutacyjny / funkcja luki kompetencyjnej jest kluczowym wyróżnikiem. Auto-aktualizacja danych i routing wielu osób to wyróżniki drugorzędne. |
 
-**Agreed mitigation strategy:**
+### Wciąż otwarte
 
-| Differentiator | NotebookLM | Our System |
-|---------------|------------|------------|
-| Auto-updating | Static, manual upload | Continuous ingestion and reindexing |
-| Multi-person | Single knowledge blob | Distinct per-person personas (future, but shown in architecture) |
-| Actionable output | Q&A only | Hiring packs, JDs, recruitment tasks, evaluation criteria |
-| Competency mapping | None | Skill extraction, gap identification, person-routing |
-| Scale | Limited context | Organization-scale across multiple people |
+| # | Pytanie | Status |
+|---|---------|--------|
+| 1 | **Nazwa produktu** | Nie zdecydowano — Przemek + Mieszko mają zaproponować |
+| 2 | **Dokładny skrypt demo z timingiem** | Do iteracji po ~1 godzinie |
+| 3 | **Czas trwania demo** | Nie ustalono jawnie (plany wahają się od 3 do 5 min) |
+| 4 | **Szczegóły UI** | Zespół produktowy ma zdefiniować, potem devs pomagają implementować |
+| 5 | **Strona WWW** | Do stworzenia przez Przemka + Mieszka |
 
-The hiring pack generation is the **must-have** feature that defends against this objection. Without it, the product is vulnerable.
+### Zidentyfikowane krytyczne ryzyko: porównanie z NotebookLM
 
-### Product Vision (Refined in Meeting)
+Zespół poświęcił znaczną ilość czasu na omówienie ryzyka, że członek jury powie: *„To po prostu NotebookLM z numerem telefonu."*
 
-The meeting sharpened the positioning beyond the original plans:
+**Uzgodniona strategia mitygacji:**
 
-> A platform for C-level that supports organizational growth by identifying the best competency investments — who to hire, what skills are missing, and how to find the right people.
+| Wyróżnik | NotebookLM | Nasz system |
+|-----------|------------|-------------|
+| Auto-aktualizacja | Statyczny, ręczne wgrywanie | Ciągłe pozyskiwanie i reindeksowanie |
+| Wiele osób | Jeden blob wiedzy | Odrębne persony per osoba (przyszłość, ale pokazane w architekturze) |
+| Wartość akcyjna | Tylko Q&A | Pakiety rekrutacyjne, JD, zadania rekrutacyjne, kryteria oceny |
+| Mapowanie kompetencji | Brak | Ekstrakcja umiejętności, identyfikacja luk, routing do właściwej osoby |
+| Skala | Ograniczony kontekst | Skala organizacji, wiele osób |
 
-Key insight from discussion: the product solves a **meta-problem** — organizations that can't articulate what competencies they need. The system analyzes work artifacts and translates tacit knowledge into structured hiring requirements.
+Generowanie pakietu rekrutacyjnego jest **must-have** funkcją broniącą przed tym zarzutem. Bez niej produkt jest podatny.
 
-Target users: fast-growing startups, teams losing key people, organizations without dedicated HR/Chief of Staff.
+### Wizja produktu (doprecyzowana na spotkaniu)
+
+Spotkanie wyostrzyło pozycjonowanie wykraczające poza oryginalne plany:
+
+> Platforma dla C-level, która wspiera wzrost organizacyjny poprzez identyfikację najlepszych inwestycji kompetencyjnych — kogo zatrudnić, jakich umiejętności brakuje i jak znaleźć właściwych ludzi.
+
+Kluczowy insight z dyskusji: produkt rozwiązuje **meta-problem** — organizacje, które nie potrafią artykułować jakich kompetencji potrzebują. System analizuje artefakty pracy i przekłada wiedzę ukrytą (tacit knowledge) na ustrukturyzowane wymagania rekrutacyjne.
+
+Docelowi użytkownicy: szybko rosnące startupy, zespoły tracące kluczowe osoby, organizacje bez dedykowanego HR/Chief of Staff.
