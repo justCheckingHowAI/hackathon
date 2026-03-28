@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }} - Gemellus Admin</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f5f1e8;
+        --surface: #fffdfa;
+        --surface-alt: #f0e8d8;
+        --border: #d8ccb4;
+        --text: #1f1a14;
+        --muted: #6f6557;
+        --accent: #136f63;
+        --accent-2: #e0f0ed;
+        --danger: #9d2f2f;
+        --success: #1d6b35;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top left, #fffaf1, var(--bg));
+        color: var(--text);
+      }
+      a { color: var(--accent); text-decoration: none; }
+      .layout {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .nav a {
+        padding: 10px 14px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--surface);
+      }
+      .hero {
+        background: linear-gradient(135deg, var(--surface), var(--surface-alt));
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 24px;
+        margin-bottom: 20px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 20px;
+      }
+      .flash {
+        padding: 12px 14px;
+        border-radius: 12px;
+        margin-bottom: 16px;
+      }
+      .flash.success { background: #e7f6eb; color: var(--success); border: 1px solid #b7ddc1; }
+      .flash.error { background: #fdecec; color: var(--danger); border: 1px solid #efc0c0; }
+      form { display: grid; gap: 12px; }
+      label { display: grid; gap: 6px; font-size: 14px; color: var(--muted); }
+      input, select, textarea, button {
+        font: inherit;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: #fff;
+      }
+      textarea { min-height: 96px; resize: vertical; }
+      button {
+        background: var(--accent);
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      button.secondary { background: #746a5d; }
+      button.danger { background: var(--danger); }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      th, td {
+        padding: 10px 8px;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+        vertical-align: top;
+      }
+      .actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .actions form { display: inline; }
+      .pill {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: var(--accent-2);
+        color: var(--accent);
+        font-size: 12px;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+      }
+      .stat {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 14px;
+      }
+      .stat strong {
+        display: block;
+        font-size: 28px;
+        margin-top: 4px;
+      }
+      @media (max-width: 700px) {
+        .layout { padding: 16px; }
+        .hero, .card { padding: 16px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="nav">
+        <a href="/ui">Dashboard</a>
+        <a href="/ui/people">People</a>
+        <a href="/ui/skills">Skills</a>
+        <a href="/ui/projects">Projects</a>
+        <a href="/ui/relationships">Relationships</a>
+      </nav>
+
+      {% if success %}
+      <div class="flash success">{{ success }}</div>
+      {% endif %}
+      {% if error %}
+      <div class="flash error">{{ error }}</div>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+  </html>

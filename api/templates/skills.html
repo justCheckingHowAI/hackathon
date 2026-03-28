@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <h1>Skills</h1>
+  <p>Maintain the organization-wide skill dictionary for matching and evidence.</p>
+</section>
+
+<div class="grid">
+  <section class="card">
+    <h2>{% if edit_skill %}Edit skill{% else %}Add skill{% endif %}</h2>
+    <form method="post" action="{% if edit_skill %}/ui/skills/{{ edit_skill.id }}/update{% else %}/ui/skills{% endif %}">
+      <label>
+        Organization
+        <select name="organization_id" required>
+          {% for organization in organizations %}
+          <option value="{{ organization.id }}" {% if (edit_skill and edit_skill.organization_id == organization.id) or (not edit_skill and default_organization_id == organization.id) %}selected{% endif %}>{{ organization.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Canonical name <input type="text" name="canonical_name" value="{{ edit_skill.canonical_name if edit_skill else '' }}" required /></label>
+      <label>Category <input type="text" name="category" value="{{ edit_skill.category if edit_skill else '' }}" required /></label>
+      <label>Description <textarea name="description">{{ edit_skill.description if edit_skill else '' }}</textarea></label>
+      <button type="submit">{% if edit_skill %}Save changes{% else %}Create skill{% endif %}</button>
+      {% if edit_skill %}<a href="/ui/skills">Cancel editing</a>{% endif %}
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>All skills</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Org</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for skill in skills %}
+        <tr>
+          <td>
+            <strong>{{ skill.canonical_name }}</strong><br />
+            <span>{{ skill.description or '' }}</span>
+          </td>
+          <td>{{ skill.category }}</td>
+          <td>{{ skill.organization_name }}</td>
+          <td class="actions">
+            <a href="/ui/skills?edit_id={{ skill.id }}">Edit</a>
+            <form method="post" action="/ui/skills/{{ skill.id }}/delete" onsubmit="return confirm('Delete this skill?');">
+              <button class="danger" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4">No skills yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
+{% endblock %}

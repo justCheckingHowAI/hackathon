@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <h1>Projects</h1>
+  <p>Track systems, domains, and initiatives that skills map onto.</p>
+</section>
+
+<div class="grid">
+  <section class="card">
+    <h2>{% if edit_project %}Edit project{% else %}Add project{% endif %}</h2>
+    <form method="post" action="{% if edit_project %}/ui/projects/{{ edit_project.id }}/update{% else %}/ui/projects{% endif %}">
+      <label>
+        Organization
+        <select name="organization_id" required>
+          {% for organization in organizations %}
+          <option value="{{ organization.id }}" {% if (edit_project and edit_project.organization_id == organization.id) or (not edit_project and default_organization_id == organization.id) %}selected{% endif %}>{{ organization.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Name <input type="text" name="name" value="{{ edit_project.name if edit_project else '' }}" required /></label>
+      <label>Slug <input type="text" name="slug" value="{{ edit_project.slug if edit_project else '' }}" required /></label>
+      <label>
+        Status
+        <select name="status">
+          {% for value in ['active', 'archived'] %}
+          <option value="{{ value }}" {% if (edit_project and edit_project.status == value) or (not edit_project and value == 'active') %}selected{% endif %}>{{ value }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Description <textarea name="description">{{ edit_project.description if edit_project else '' }}</textarea></label>
+      <button type="submit">{% if edit_project %}Save changes{% else %}Create project{% endif %}</button>
+      {% if edit_project %}<a href="/ui/projects">Cancel editing</a>{% endif %}
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>All projects</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Slug</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for project in projects %}
+        <tr>
+          <td>
+            <strong>{{ project.name }}</strong><br />
+            <span>{{ project.organization_name }}</span>
+          </td>
+          <td>{{ project.slug }}</td>
+          <td><span class="pill">{{ project.status }}</span></td>
+          <td class="actions">
+            <a href="/ui/projects?edit_id={{ project.id }}">Edit</a>
+            <form method="post" action="/ui/projects/{{ project.id }}/delete" onsubmit="return confirm('Delete this project?');">
+              <button class="danger" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4">No projects yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
+{% endblock %}

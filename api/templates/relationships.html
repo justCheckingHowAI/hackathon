@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <h1>Relationships</h1>
+  <p>Capture collaboration, mentorship, backup coverage, and knowledge dependencies.</p>
+</section>
+
+<div class="grid">
+  <section class="card">
+    <h2>{% if edit_relationship %}Edit relationship{% else %}Add relationship{% endif %}</h2>
+    <form method="post" action="{% if edit_relationship %}/ui/relationships/{{ edit_relationship.id }}/update{% else %}/ui/relationships{% endif %}">
+      <label>
+        Organization
+        <select name="organization_id" required>
+          {% for organization in organizations %}
+          <option value="{{ organization.id }}" {% if (edit_relationship and edit_relationship.organization_id == organization.id) or (not edit_relationship and default_organization_id == organization.id) %}selected{% endif %}>{{ organization.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>
+        From person
+        <select name="from_person_id" required>
+          {% for person in people %}
+          <option value="{{ person.id }}" {% if edit_relationship and edit_relationship.from_person_id == person.id %}selected{% endif %}>{{ person.full_name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>
+        To person
+        <select name="to_person_id" required>
+          {% for person in people %}
+          <option value="{{ person.id }}" {% if edit_relationship and edit_relationship.to_person_id == person.id %}selected{% endif %}>{{ person.full_name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>
+        Relationship type
+        <select name="relationship_type" required>
+          {% for value in relationship_types %}
+          <option value="{{ value }}" {% if edit_relationship and edit_relationship.relationship_type == value %}selected{% endif %}>{{ value }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Strength (0-1) <input type="number" min="0" max="1" step="0.001" name="strength" value="{{ edit_relationship.strength if edit_relationship else '' }}" /></label>
+      <label>Confidence (0-1) <input type="number" min="0" max="1" step="0.001" name="confidence" value="{{ edit_relationship.confidence if edit_relationship else '1' }}" required /></label>
+      <label>Source <input type="text" name="source" value="{{ edit_relationship.source if edit_relationship else '' }}" /></label>
+      <label>Notes <textarea name="notes">{{ edit_relationship.notes if edit_relationship else '' }}</textarea></label>
+      <button type="submit">{% if edit_relationship %}Save changes{% else %}Create relationship{% endif %}</button>
+      {% if edit_relationship %}<a href="/ui/relationships">Cancel editing</a>{% endif %}
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>All relationships</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>People</th>
+          <th>Type</th>
+          <th>Strength</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for relationship in relationships %}
+        <tr>
+          <td>
+            <strong>{{ relationship.from_person }}</strong> -> <strong>{{ relationship.to_person }}</strong><br />
+            <span>{{ relationship.source or '' }}</span>
+          </td>
+          <td><span class="pill">{{ relationship.relationship_type }}</span></td>
+          <td>{{ relationship.strength or '-' }} / {{ relationship.confidence }}</td>
+          <td class="actions">
+            <a href="/ui/relationships?edit_id={{ relationship.id }}">Edit</a>
+            <form method="post" action="/ui/relationships/{{ relationship.id }}/delete" onsubmit="return confirm('Delete this relationship?');">
+              <button class="danger" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4">No relationships yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
+{% endblock %}

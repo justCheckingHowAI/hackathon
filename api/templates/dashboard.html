@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <h1>Gemellus Admin</h1>
+  <p>Simple FastAPI admin to test the database before the React app is ready.</p>
+</section>
+
+<section class="stats">
+  <div class="stat"><span>Organizations</span><strong>{{ counts.organizations }}</strong></div>
+  <div class="stat"><span>People</span><strong>{{ counts.people }}</strong></div>
+  <div class="stat"><span>Skills</span><strong>{{ counts.skills }}</strong></div>
+  <div class="stat"><span>Projects</span><strong>{{ counts.projects }}</strong></div>
+  <div class="stat"><span>Relationships</span><strong>{{ counts.relationships }}</strong></div>
+</section>
+{% endblock %}

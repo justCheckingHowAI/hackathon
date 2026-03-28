@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <h1>People</h1>
+  <p>Create and manage personas, employees, and future clones.</p>
+</section>
+
+<div class="grid">
+  <section class="card">
+    <h2>{% if edit_person %}Edit person{% else %}Add person{% endif %}</h2>
+    <form method="post" action="{% if edit_person %}/ui/people/{{ edit_person.id }}/update{% else %}/ui/people{% endif %}">
+      <label>
+        Organization
+        <select name="organization_id" required>
+          {% for organization in organizations %}
+          <option value="{{ organization.id }}" {% if (edit_person and edit_person.organization_id == organization.id) or (not edit_person and default_organization_id == organization.id) %}selected{% endif %}>{{ organization.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>External key <input type="text" name="external_key" value="{{ edit_person.external_key if edit_person else '' }}" required /></label>
+      <label>Full name <input type="text" name="full_name" value="{{ edit_person.full_name if edit_person else '' }}" required /></label>
+      <label>Display name <input type="text" name="display_name" value="{{ edit_person.display_name if edit_person else '' }}" /></label>
+      <label>Role title <input type="text" name="role_title" value="{{ edit_person.role_title if edit_person else '' }}" /></label>
+      <label>Seniority <input type="text" name="seniority" value="{{ edit_person.seniority if edit_person else '' }}" /></label>
+      <label>Department <input type="text" name="department" value="{{ edit_person.department if edit_person else '' }}" /></label>
+      <label>GitHub login <input type="text" name="github_login" value="{{ edit_person.github_login if edit_person else '' }}" /></label>
+      <label>
+        Clone status
+        <select name="clone_status">
+          {% for value in ['pending', 'enabled', 'disabled'] %}
+          <option value="{{ value }}" {% if (edit_person and edit_person.clone_status == value) or (not edit_person and value == 'pending') %}selected{% endif %}>{{ value }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>
+        Status
+        <select name="status">
+          {% for value in ['active', 'inactive'] %}
+          <option value="{{ value }}" {% if (edit_person and edit_person.status == value) or (not edit_person and value == 'active') %}selected{% endif %}>{{ value }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>Bio <textarea name="bio">{{ edit_person.bio if edit_person else '' }}</textarea></label>
+      <button type="submit">{% if edit_person %}Save changes{% else %}Create person{% endif %}</button>
+      {% if edit_person %}<a href="/ui/people">Cancel editing</a>{% endif %}
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>All people</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Org</th>
+          <th>State</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for person in people %}
+        <tr>
+          <td>
+            <strong>{{ person.full_name }}</strong><br />
+            <span>{{ person.external_key }}</span>
+          </td>
+          <td>{{ person.role_title or '-' }}</td>
+          <td>{{ person.organization_name }}</td>
+          <td>
+            <span class="pill">{{ person.clone_status }}</span>
+            <span class="pill">{{ person.status }}</span>
+          </td>
+          <td class="actions">
+            <a href="/ui/people?edit_id={{ person.id }}">Edit</a>
+            <form method="post" action="/ui/people/{{ person.id }}/delete" onsubmit="return confirm('Delete this person?');">
+              <button class="danger" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5">No people yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
+{% endblock %}
