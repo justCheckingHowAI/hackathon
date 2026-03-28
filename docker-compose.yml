@@ -2,6 +2,8 @@ services:
   app:
     build:
       context: ./app
+    environment:
+      BACKEND_URL: ${BACKEND_URL}
     restart: unless-stopped
 
   api:
