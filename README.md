@@ -33,10 +33,12 @@ VAPI_DEFAULT_PHONE_NUMBER=+12604002243
 
 ## Start z Docker
 
+`docker-compose.yml` jest bazą, a `dev-docker-compose.yml` jest override pod local dev.
+
 Najprostszy wariant developerski:
 
 ```bash
-docker compose -f dev-docker-compose.yml up --build
+docker compose -f docker-compose.yml -f dev-docker-compose.yml up --build
 ```
 
 Po starcie:
@@ -55,7 +57,7 @@ Najwygodniej odpalić infrastrukturę pomocniczą z Dockera, a app/API lokalnie.
 1. Postgres i Redis:
 
 ```bash
-docker compose -f dev-docker-compose.yml up -d postgres redis
+docker compose -f docker-compose.yml -f dev-docker-compose.yml up -d postgres redis
 ```
 
 2. Backend:

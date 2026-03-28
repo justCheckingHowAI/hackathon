@@ -1,77 +1,16 @@
 services:
   app:
-    build:
-      context: ./app
     env_file:
       - .env
     ports:
       - "8000:80"
-    restart: unless-stopped
 
   api:
-    build:
-      context: ./api
     env_file:
       - .env
-    environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      GCP_PROJECT_ID: ${GCP_PROJECT_ID}
-      GCP_LOCATION: ${GCP_LOCATION:-us-east4}
-      VERTEX_RAG_EMBEDDING_MODEL: ${VERTEX_RAG_EMBEDDING_MODEL:-publishers/google/models/text-embedding-005}
-      REDIS_URL: redis://redis:6379/0
     ports:
       - "8001:80"
-    restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_started
 
   api-worker:
-    build:
-      context: ./api
     env_file:
       - .env
-    command: ["taskiq", "worker", "taskiq_broker:broker", "tasks"]
-    environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      GCP_PROJECT_ID: ${GCP_PROJECT_ID}
-      GCP_LOCATION: ${GCP_LOCATION:-us-east4}
-      VERTEX_RAG_EMBEDDING_MODEL: ${VERTEX_RAG_EMBEDDING_MODEL:-publishers/google/models/text-embedding-005}
-      REDIS_URL: redis://redis:6379/0
-    restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_started
-
-  postgres:
-    image: postgres:16
-    env_file:
-      - .env
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    ports:
-      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./api/sql:/docker-entrypoint-initdb.d:ro
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "127.0.0.1:6379:6379"
-    restart: unless-stopped
-
-volumes:
-  postgres_data:
