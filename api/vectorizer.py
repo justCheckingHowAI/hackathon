@@ -84,6 +84,7 @@ class VectorizerService:
     @cached_property
     def _rag_module(self) -> Any:
         try:
+            import google.auth
             import vertexai
             from vertexai import rag
             from google.oauth2.credentials import Credentials
@@ -95,6 +96,15 @@ class VectorizerService:
 
         creds = Credentials(token=get_google_access_token())
         vertexai.init(project=self.settings.project_id, location=self.settings.location, credentials=creds)
+
+        # Monkey-patch google.auth.default so the Vertex AI SDK always uses
+        # our access-token credentials instead of Application Default Credentials.
+        _original_default = google.auth.default
+
+        def _patched_default(*args: Any, **kwargs: Any) -> tuple:
+            return creds, self.settings.project_id
+
+        google.auth.default = _patched_default  # type: ignore[assignment]
         return rag
 
     def corpus_display_name(self) -> str:
