@@ -1,6 +1,7 @@
 from fastapi.testclient import TestClient
 
 from main import Settings, app, get_settings, get_vapi_client
+from tools import WHOAMI_RESULT
 
 
 class StubVapiClient:
@@ -216,10 +217,7 @@ def test_whoami_tool_returns_result() -> None:
         "results": [
             {
                 "toolCallId": "tool-call-123",
-                "result": (
-                    "You are Mike Grabowski, CTO & Founder at Callstack. "
-                    "Public profile: https://www.callstack.com/team/mike-grabowski"
-                ),
+                "result": WHOAMI_RESULT,
             }
         ]
     }
@@ -249,10 +247,165 @@ def test_whoami_tool_ignores_tool_name_on_dedicated_endpoint() -> None:
         "results": [
             {
                 "toolCallId": "tool-call-999",
-                "result": (
-                    "You are Mike Grabowski, CTO & Founder at Callstack. "
-                    "Public profile: https://www.callstack.com/team/mike-grabowski"
-                ),
+                "result": WHOAMI_RESULT,
             }
         ]
     }
+
+
+def test_run_cypher_query_tool_returns_database_result(monkeypatch) -> None:
+    client = TestClient(app)
+
+    def fake_run_cypher_query(query: str, parameters: dict) -> dict:
+        assert query == "MATCH (n) RETURN count(n) AS count LIMIT 1"
+        assert parameters == {"label": "Person"}
+        return {
+            "columns": ["count"],
+            "rowCount": 1,
+            "rows": [[42]],
+        }
+
+    monkeypatch.setattr("tools.run_cypher_query", fake_run_cypher_query)
+
+    response = client.post(
+        "/vapi/tools/run-cypher-query",
+        json={
+            "message": {
+                "type": "tool-calls",
+                "toolCallList": [
+                    {
+                        "id": "tool-call-cypher-1",
+                        "name": "run_cypher_query",
+                        "arguments": {
+                            "query": "MATCH (n) RETURN count(n) AS count LIMIT 1",
+                            "parameters": {"label": "Person"},
+                        },
+                    }
+                ],
+            }
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "results": [
+            {
+                "toolCallId": "tool-call-cypher-1",
+                "result": {
+                    "columns": ["count"],
+                    "rowCount": 1,
+                    "rows": [[42]],
+                },
+            }
+        ]
+    }
+
+
+def test_run_cypher_query_tool_returns_error_for_blocked_query(monkeypatch) -> None:
+    client = TestClient(app)
+
+    def fake_run_cypher_query(query: str, parameters: dict) -> dict:
+        raise ValueError("Only read-only Cypher queries are allowed.")
+
+    monkeypatch.setattr("tools.run_cypher_query", fake_run_cypher_query)
+
+    response = client.post(
+        "/vapi/tools/run-cypher-query",
+        json={
+            "message": {
+                "type": "tool-calls",
+                "toolCallList": [
+                    {
+                        "id": "tool-call-cypher-2",
+                        "name": "run_cypher_query",
+                        "arguments": {
+                            "query": "CREATE (n:Test)",
+                        },
+                    }
+                ],
+            }
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "results": [
+            {
+                "toolCallId": "tool-call-cypher-2",
+                "error": "Only read-only Cypher queries are allowed.",
+            }
+        ]
+    }
+
+
+def test_retrieve_rag_contexts_tool_returns_contexts(monkeypatch) -> None:
+    client = TestClient(app)
+
+    def fake_retrieve_rag_contexts(query: str) -> dict:
+        assert query == "What is Mike working on?"
+        return {
+            "ragCorpus": "projects/test/locations/europe-west2/ragCorpora/123",
+            "count": 1,
+            "contexts": [
+                {
+                    "index": 1,
+                    "sourceUri": "gs://docs/mike.txt",
+                    "text": "Mike works on AI voice tooling.",
+                    "score": 0.91,
+                }
+            ],
+        }
+
+    monkeypatch.setattr("tools.retrieve_rag_contexts", fake_retrieve_rag_contexts)
+
+    response = client.post(
+        "/vapi/tools/retrieve-rag-contexts",
+        json={
+            "message": {
+                "type": "tool-calls",
+                "toolCallList": [
+                    {
+                        "id": "tool-call-rag-1",
+                        "name": "retrieve_rag_contexts",
+                        "arguments": {
+                            "query": "What is Mike working on?",
+                        },
+                    }
+                ],
+            }
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "results": [
+            {
+                "toolCallId": "tool-call-rag-1",
+                "result": {
+                    "ragCorpus": "projects/test/locations/europe-west2/ragCorpora/123",
+                    "count": 1,
+                    "contexts": [
+                        {
+                            "index": 1,
+                            "sourceUri": "gs://docs/mike.txt",
+                            "text": "Mike works on AI voice tooling.",
+                            "score": 0.91,
+                        }
+                    ],
+                },
+            }
+        ]
+    }
+
+
+def test_tool_endpoint_returns_empty_results_for_invalid_payload() -> None:
+    client = TestClient(app)
+
+    response = client.post(
+        "/vapi/tools/retrieve-rag-contexts",
+        content=b"not-json",
+        headers={"content-type": "application/json"},
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {"results": []}

@@ -47,7 +47,7 @@ class VapiToolResult(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
     tool_call_id: Annotated[str, Field(alias='toolCallId')]
-    result: str | None = None
+    result: Any | None = None
     error: str | None = None
 
 

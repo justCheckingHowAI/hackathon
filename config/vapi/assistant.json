@@ -27,7 +27,56 @@
           }
         },
         "server": {
-          "url": "https://fast-tables-pay.loca.lt/vapi/tools/whoami"
+          "url": "https://api.gemellus.app/vapi/tools/whoami"
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "run_cypher_query",
+          "description": "Runs a read-only Cypher query against the Neo4j knowledge graph. Use it to inspect graph relationships, project ownership, dependencies, timelines, or other structured graph data.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "A read-only Cypher query. Prefer MATCH, WHERE, RETURN, ORDER BY, and LIMIT. Never attempt to create, update, delete, merge, drop, or call write procedures."
+              },
+              "parameters": {
+                "type": "object",
+                "description": "Optional Cypher query parameters.",
+                "additionalProperties": true
+              }
+            },
+            "required": [
+              "query"
+            ]
+          }
+        },
+        "server": {
+          "url": "https://api.gemellus.app/vapi/tools/run-cypher-query"
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "retrieve_rag_contexts",
+          "description": "Retrieves relevant context snippets from the configured Vertex AI RAG corpus. Use it for knowledge-grounded answers when you need document evidence before answering.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The search query to send to the RAG corpus. Use a focused natural-language query that reflects the caller's question."
+              }
+            },
+            "required": [
+              "query"
+            ]
+          }
+        },
+        "server": {
+          "url": "https://api.gemellus.app/vapi/tools/retrieve-rag-contexts"
         }
       }
     ]
