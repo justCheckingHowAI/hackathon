@@ -2,8 +2,6 @@ import { type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import {
   Users,
-  FileSearch,
-  UserCheck,
   type LucideIcon,
 } from "lucide-react";
 
