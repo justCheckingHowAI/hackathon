@@ -22,7 +22,6 @@ from tools import run_cypher_query_tool, run_retrieve_rag_contexts_tool, run_who
 
 router = APIRouter(tags=['vapi'])
 
-
 @router.get('/vapi/assistant/{assistant_id}')
 async def get_vapi_assistant(
     assistant_id: str,

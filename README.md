@@ -34,6 +34,24 @@ VAPI_DEFAULT_PHONE_NUMBER=+12604002243
 
 Jeśli tworzysz workspace przez Superset, repo ma `.superset/setup.sh`, który przy setupie nadpisuje workspace-local `.env` kopią z głównego worktree.
 
+## Start w Superset
+
+Repo ma skonfigurowany `run` w `.superset/config.json`, więc przycisk Run w Superset odpala jednym wywołaniem:
+- backend FastAPI na `http://localhost:8001`
+- frontend Vite na `http://localhost:8000`
+
+To samo możesz uruchomić z terminala:
+
+```bash
+./.superset/run.sh
+```
+
+Przy pierwszym starcie skrypt:
+- tworzy `.venv` i instaluje `api/requirements.txt`, jeśli venv jeszcze nie istnieje
+- robi `npm install` w `app`, jeśli brakuje `node_modules`
+
+Do zatrzymania użyj stop w panelu Run albo `Ctrl+C`.
+
 ## Start z Docker
 
 `docker-compose.yml` jest bazą, a `dev-docker-compose.yml` jest override pod local dev.
@@ -56,6 +74,12 @@ Po starcie:
 ## Start lokalny
 
 Najwygodniej odpalić infrastrukturę pomocniczą z Dockera, a app/API lokalnie.
+
+Jeśli chcesz uruchomić backend i frontend jednym callem, użyj:
+
+```bash
+./.superset/run.sh
+```
 
 1. Postgres i Redis:
 
@@ -94,7 +118,7 @@ PYTHONPATH=api taskiq worker taskiq_broker:broker tasks
 ```bash
 cd app
 npm install
-npm run dev -- --host 0.0.0.0 --port 8000
+VITE_API_URL=http://127.0.0.1:8001 npm run dev -- --host 0.0.0.0 --port 8000
 ```
 
 ## Vapi API
