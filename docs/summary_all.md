@@ -2,7 +2,9 @@
 
 ## Overview
 
-This document summarizes and compares five hackathon planning documents created by team members. All plans converge on a single core idea — a **multimodal voice agent that preserves departing employee knowledge and accelerates backfill hiring** — but differ in scope, architecture, data strategy, and demo approach.
+This document summarizes and compares five hackathon planning documents and one team meeting transcript. All plans converge on a single core idea — a **multimodal voice agent that preserves departing employee knowledge and accelerates backfill hiring** — but differ in scope, architecture, data strategy, and demo approach.
+
+**After Meeting 1 (2026-03-28), several open decisions have been resolved.** See the "Decisions from Meeting 1" section below.
 
 ### Documents Analyzed
 
@@ -13,6 +15,18 @@ This document summarizes and compares five hackathon planning documents created 
 | `przemek-hackathon-plan.md` | Przemek | OrgBrain — market research, competitive analysis, full-stack architecture |
 | `mike-grabowski-cloning-plan.md` | (data plan) | Real-person cloning strategy for Mike Grabowski (CTO Callstack) |
 | `kubernetes-data-sourcing-plan.md` | (data plan) | Data sourcing pipeline for Kubernetes SIG-Network contributor |
+| `narada1_transkrypcja.txt` | All | Team meeting transcript — key decisions and task division |
+| `summary_narada1.md` | (summary) | Detailed meeting summary with decisions, task split, and next steps |
+
+### Team Composition
+
+| Person | Role | Hackathon Focus |
+|--------|------|----------------|
+| **Max** | Developer (core) | Google API, Vapi, Agent SDK, backend |
+| **Janusz** | Developer (core) | Google API, Vapi, Agent SDK, backend |
+| **Adam** | Product / VC / vibecoder | Data collection & organization |
+| **Przemek** | Product / VC / vibecoder | Demo story, presentation, UI, product name |
+| **Mieszko** | Creative / artistic | Demo narrative, UI design, presentation visuals |
 
 ---
 
@@ -221,6 +235,7 @@ Focuses on what to cut, not who does what. Defines scope constraints as the prim
 | Scope too broad | Maks, Adam | Cut ruthlessly — one flow, 3 inputs max |
 | Cannot defend recommendation accuracy | Maks | Evidence layer with source citations |
 | Demo looks like "just another RAG SaaS" | Maks | Voice interaction + multimodal inputs make it feel different |
+| **"It's just NotebookLM"** | **Meeting 1** | **Hiring pack generation is the must-have differentiator. Also: auto-update, multi-person, competency mapping** |
 | Latency issues (Vapi + Gemini) | Adam | Test early, fallback to Gemini Flash |
 | Agent sounds robotic | Adam | Tune system prompt with "personality", test voice settings |
 | Live demo failure | Adam, Przemek | Record backup video at hour 6.5 |
@@ -243,14 +258,54 @@ The strongest possible hackathon entry would combine:
 
 ---
 
-## Open Decisions
+## Decisions from Meeting 1 (2026-03-28)
 
-Before implementation, the team needs to align on:
+The team meeting resolved most of the previously open decisions. See `summary_narada1.md` for full details.
 
-1. **Scope level** — Maks-minimal (3 screens) vs Adam-medium (3 agents) vs Przemek-full (graph + viz + voice)?
-2. **Who do we clone** — Fictional persona with synthetic data, or real public figure (Mike Grabowski / K8s contributor)?
-3. **Architecture** — Gemini context window only (Adam) vs Neo4j graph (Przemek)?
-4. **Product name** — TeamTwin, OrgBrain, or something else?
-5. **Demo duration** — 3 minutes (Maks/Przemek) or 5 minutes (Adam)?
-6. **Voice demo target** — Candidate screening (Maks), hiring manager conversation (Adam), or skill query + departure simulation (Przemek)?
-7. **Data preparation** — Who prepares mock data, and by when (before hackathon or during first hours)?
+### Resolved Decisions
+
+| # | Question | Decision |
+|---|----------|----------|
+| 1 | **Who do we clone?** | **Mike Grabowski** — real person, real public data. Multi-person support is deferred to future. |
+| 2 | **Architecture** | **Vapi** (voice layer) + **Google Agent SDK / ADK** (agent brain). No Neo4j — ADK handles knowledge. ADK process can be visualized during demo. |
+| 3 | **Demo flow** | Two-phase: (1) Knowledge query — call Mike, ask about a project decision; (2) Hiring pack — ask Mike to generate JD, tasks, criteria for his replacement. |
+| 4 | **Multimodality** | Minimum: **voice + text**. Optional extras (video, graphics) if time permits. Two modalities are considered sufficient. |
+| 5 | **Data preparation** | Adam organizes pre-collected data (GitHub, podcasts, synthetic). Data must be in Markdown/JSON. Refresh function desired but not required for demo. |
+| 6 | **Task division** | Max+Janusz → core dev; Adam → data; Przemek+Mieszko → story, name, presentation, UI. |
+| 7 | **What makes it not NotebookLM?** | The hiring pack / competency gap feature is the key differentiator. Auto-updating data and multi-person routing are secondary differentiators. |
+
+### Still Open
+
+| # | Question | Status |
+|---|----------|--------|
+| 1 | **Product name** | Not decided — Przemek + Mieszko to propose |
+| 2 | **Exact demo script with timing** | To be iterated after ~1 hour |
+| 3 | **Demo duration** | Not explicitly set (plans range from 3 to 5 min) |
+| 4 | **UI specifics** | Product team to define, then devs help implement |
+| 5 | **Website** | To be created by Przemek + Mieszko |
+
+### Critical Risk Identified: NotebookLM Comparison
+
+The team spent significant time discussing the risk that a jury member could say: *"This is just NotebookLM with a phone number."*
+
+**Agreed mitigation strategy:**
+
+| Differentiator | NotebookLM | Our System |
+|---------------|------------|------------|
+| Auto-updating | Static, manual upload | Continuous ingestion and reindexing |
+| Multi-person | Single knowledge blob | Distinct per-person personas (future, but shown in architecture) |
+| Actionable output | Q&A only | Hiring packs, JDs, recruitment tasks, evaluation criteria |
+| Competency mapping | None | Skill extraction, gap identification, person-routing |
+| Scale | Limited context | Organization-scale across multiple people |
+
+The hiring pack generation is the **must-have** feature that defends against this objection. Without it, the product is vulnerable.
+
+### Product Vision (Refined in Meeting)
+
+The meeting sharpened the positioning beyond the original plans:
+
+> A platform for C-level that supports organizational growth by identifying the best competency investments — who to hire, what skills are missing, and how to find the right people.
+
+Key insight from discussion: the product solves a **meta-problem** — organizations that can't articulate what competencies they need. The system analyzes work artifacts and translates tacit knowledge into structured hiring requirements.
+
+Target users: fast-growing startups, teams losing key people, organizations without dedicated HR/Chief of Staff.
