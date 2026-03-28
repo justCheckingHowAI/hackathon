@@ -10,7 +10,7 @@ from typing import Any
 
 DEFAULT_LOCATION = "us-east4"
 DEFAULT_EMBEDDING_MODEL = "publishers/google/models/text-embedding-005"
-PERSON_CORPUS_PREFIX = "person"
+DEFAULT_CORPUS_NAME = "gemelius corpus"
 
 
 class VectorizerError(Exception):
@@ -34,7 +34,7 @@ class VectorizerSettings:
     project_id: str
     location: str = DEFAULT_LOCATION
     embedding_model: str = DEFAULT_EMBEDDING_MODEL
-    corpus_prefix: str = PERSON_CORPUS_PREFIX
+    corpus_name: str = DEFAULT_CORPUS_NAME
     chunk_size: int = 512
     chunk_overlap: int = 100
     max_embedding_requests_per_min: int = 1_000
@@ -51,7 +51,7 @@ class VectorizerSettings:
             project_id=project_id,
             location=os.getenv("GCP_LOCATION", DEFAULT_LOCATION),
             embedding_model=os.getenv("VERTEX_RAG_EMBEDDING_MODEL", DEFAULT_EMBEDDING_MODEL),
-            corpus_prefix=os.getenv("VERTEX_RAG_CORPUS_PREFIX", PERSON_CORPUS_PREFIX),
+            corpus_name=os.getenv("VERTEX_RAG_CORPUS_NAME", DEFAULT_CORPUS_NAME),
             chunk_size=int(os.getenv("VERTEX_RAG_CHUNK_SIZE", "512")),
             chunk_overlap=int(os.getenv("VERTEX_RAG_CHUNK_OVERLAP", "100")),
             max_embedding_requests_per_min=int(
@@ -95,7 +95,7 @@ class VectorizerService:
         return rag
 
     def corpus_display_name(self) -> str:
-        return f"{self.settings.corpus_prefix}-default"
+        return self.settings.corpus_name
 
     def ensure_corpus(self) -> str:
         display_name = self.corpus_display_name()
