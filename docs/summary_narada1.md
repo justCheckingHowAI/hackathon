@@ -159,7 +159,7 @@ To pozycjonuje produkt jako rozwiązanie meta-problemu: **organizacje, które ni
 
 | Element | Status | Uwagi |
 |---------|--------|-------|
-| Nazwa produktu | **Nie zdecydowano** | Do stworzenia (Przemek + Mieszko) |
+| Nazwa produktu | **ROZWIĄZANE** | **[Gemellus](https://gemellus.app/)** |
 | Dokładny skrypt demo z timingiem | **Nie sfinalizowano** | Będzie iterowany za ~1 godzinę po podziale zadań |
 | Wsparcie klonowania wielu osób | **Odłożone (przyszłość)** | Tylko Mike na hackathon |
 | Pipeline auto-ingestion | **Odłożony (przyszłość)** | Wstępnie załadowane dane na demo, funkcja odświeżania jako stretch goal |
@@ -173,5 +173,5 @@ To pozycjonuje produkt jako rozwiązanie meta-problemu: **organizacje, które ni
 
 1. **Max + Janusz** — Konfiguracja środowiska dev, klucze Google API, konto Vapi, start integracji Agent SDK
 2. **Adam** — Organizacja zebranych danych Mike'a Grabowskiego w strukturalny format do ingestion
-3. **Przemek + Mieszko** — Zdefiniowanie narracji demo, start prac nad nazwą produktu, początek prezentacji
+3. **Przemek + Mieszko** — Zdefiniowanie narracji demo, ~~start prac nad nazwą produktu~~ (ROZWIĄZANE: **Gemellus**), początek prezentacji
 4. **Wszyscy** — Spotkanie za ~1 godzinę, przegląd postępów i iteracja nad przebiegiem demo
