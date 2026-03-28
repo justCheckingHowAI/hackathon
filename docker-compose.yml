@@ -24,7 +24,7 @@ services:
     build:
       context: ./api
     restart: unless-stopped
-    command: ["taskiq", "worker", "taskiq_broker:broker", "tasks"]
+    command: ["/api/start-worker.sh"]
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       GCP_PROJECT_ID: ${GCP_PROJECT_ID}

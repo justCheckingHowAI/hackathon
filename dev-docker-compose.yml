@@ -1,11 +1,16 @@
 services:
   app:
+    build:
+      context: ./app
+    restart: unless-stopped
     env_file:
       - .env
     ports:
       - "8000:80"
 
   api:
+    build:
+      context: ./api
     env_file:
       - .env
     ports:
@@ -27,7 +32,7 @@ services:
     build:
       context: ./api
     restart: unless-stopped
-    command: ["taskiq", "worker", "taskiq_broker:broker", "tasks"]
+    command: ["/api/start-worker.sh"]
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-gemellus}:${POSTGRES_PASSWORD:-gemellus}@postgres:5432/${POSTGRES_DB:-gemellus}
       GCP_PROJECT_ID: ${GCP_PROJECT_ID}
