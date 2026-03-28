@@ -32,6 +32,8 @@ VAPI_DEFAULT_PHONE_NUMBER=+12604002243
 
 `VAPI_DEFAULT_PHONE_NUMBER_ID` jest opcjonalne. Jeśli go nie ustawisz, API spróbuje znaleźć numer po `VAPI_DEFAULT_PHONE_NUMBER`.
 
+Jeśli tworzysz workspace przez Superset, repo ma `.superset/setup.sh`, który przy setupie nadpisuje workspace-local `.env` kopią z głównego worktree.
+
 ## Start z Docker
 
 `docker-compose.yml` jest bazą, a `dev-docker-compose.yml` jest override pod local dev.
