@@ -10,3 +10,4 @@ redis==5.2.1
 taskiq==0.11.18
 taskiq-redis==1.0.6
 uvicorn[standard]==0.35.0
+vapi_server_sdk==1.9.0

@@ -5,7 +5,13 @@ from typing import Any
 from fastapi import APIRouter, Depends
 
 from schemas_vapi import OutboundCallRequest, PhoneNumbersResponse, Settings
-from service_vapi import VapiClient, get_settings, get_vapi_client, resolve_phone_number_id
+from service_vapi import (
+    VapiClient,
+    get_settings,
+    get_vapi_client,
+    resolve_assistant_id,
+    resolve_phone_number_id,
+)
 
 
 router = APIRouter(tags=['vapi'])
@@ -32,6 +38,7 @@ async def create_vapi_call(
     settings: Settings = Depends(get_settings),
     vapi_client: VapiClient = Depends(get_vapi_client),
 ) -> dict[str, Any]:
+    assistant_id = resolve_assistant_id(request, settings)
     phone_number_id = await resolve_phone_number_id(request, settings, vapi_client)
 
     customer: dict[str, Any] = {'number': request.customer_number}
@@ -39,7 +46,7 @@ async def create_vapi_call(
         customer['name'] = request.customer_name
 
     payload = {
-        'assistantId': request.assistant_id,
+        'assistantId': assistant_id,
         'phoneNumberId': phone_number_id,
         'customer': customer,
     }

@@ -26,6 +26,7 @@ cp .env.example .env
 POSTGRES_PASSWORD=change-me
 GCP_PROJECT_ID=twoj-projekt
 VAPI_PRIVATE_KEY=twoj_vapi_private_key
+VAPI_ASSISTANT_ID=f1941929-8416-486f-ba81-154de28fb7d1
 VAPI_DEFAULT_PHONE_NUMBER=+12604002243
 ```
 
@@ -96,6 +97,8 @@ npm run dev -- --host 0.0.0.0 --port 8000
 
 ## Vapi API
 
+Repo trzyma konfigurację jednego zarządzanego assistanta w [config/vapi/assistant.json](/Users/maksymilian/.superset/worktrees/hackathon/feature/vapi/config/vapi/assistant.json). `VAPI_ASSISTANT_ID` wskazuje dokładnie ten obiekt w Vapi i jest źródłem prawdy dla deploya.
+
 Dostępne endpointy backendowe:
 - `GET /vapi/assistant/{assistant_id}`
 - `GET /vapi/phone-numbers`
@@ -107,15 +110,38 @@ Przykład outbound call:
 curl -X POST http://127.0.0.1:8001/vapi/calls \
   -H 'Content-Type: application/json' \
   -d '{
-    "assistantId": "YOUR_ASSISTANT_ID",
     "customerNumber": "+48XXXXXXXXX"
   }'
 ```
 
-Jeśli chcesz nadpisać numer źródłowy na pojedynczy request, możesz dodać `phoneNumberId` do payloadu.
+`assistantId` jest opcjonalne. Jeśli go nie podasz, backend użyje `VAPI_ASSISTANT_ID` z env. Jeśli chcesz nadpisać numer źródłowy na pojedynczy request, możesz dodać `phoneNumberId` do payloadu.
+
+## Sync assistanta
+
+Po załadowaniu envów:
+
+```bash
+set -a
+source .env
+set +a
+```
+
+Pobranie obecnej konfiguracji assistanta do repo:
+
+```bash
+PYTHONPATH=api .venv/bin/python api/scripts/sync_vapi_assistant.py pull
+```
+
+Wysłanie konfiguracji z repo do Vapi:
+
+```bash
+PYTHONPATH=api .venv/bin/python api/scripts/sync_vapi_assistant.py push
+```
+
+Po pierwszym `pull` traktuj [config/vapi/assistant.json](/Users/maksymilian/.superset/worktrees/hackathon/feature/vapi/config/vapi/assistant.json) jako source of truth. Kolejne zmiany promptu, modelu i toolsów rób w repo i wypychaj przez `push`.
 
 ## Testy
 
 ```bash
-PYTHONPATH=api .venv/bin/python -m pytest api/tests/test_main.py -q
+PYTHONPATH=api .venv/bin/python -m pytest api/tests/test_main.py api/tests/test_vapi_sync.py -q
 ```

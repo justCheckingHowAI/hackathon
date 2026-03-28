@@ -4,8 +4,9 @@ import os
 from functools import lru_cache
 from typing import Any
 
-import httpx
 from fastapi import Depends, HTTPException
+from vapi import AsyncVapi
+from vapi.core.api_error import ApiError
 
 from schemas_vapi import OutboundCallRequest, Settings
 
@@ -14,63 +15,101 @@ from schemas_vapi import OutboundCallRequest, Settings
 def get_settings() -> Settings:
     return Settings(
         private_key=os.getenv('VAPI_PRIVATE_KEY'),
+        assistant_id=os.getenv('VAPI_ASSISTANT_ID'),
         default_phone_number=os.getenv('VAPI_DEFAULT_PHONE_NUMBER'),
         default_phone_number_id=os.getenv('VAPI_DEFAULT_PHONE_NUMBER_ID'),
         base_url=os.getenv('VAPI_BASE_URL', 'https://api.vapi.ai'),
     )
 
 
+def serialize_vapi_model(value: Any) -> Any:
+    if hasattr(value, 'model_dump'):
+        return value.model_dump(mode='json', by_alias=True, exclude_none=True)
+    if isinstance(value, list):
+        return [serialize_vapi_model(item) for item in value]
+    if isinstance(value, dict):
+        return {key: serialize_vapi_model(item) for key, item in value.items()}
+    return value
+
+
+def camel_to_snake(name: str) -> str:
+    chars: list[str] = []
+    for char in name:
+        if char.isupper():
+            chars.extend(['_', char.lower()])
+        else:
+            chars.append(char)
+    return ''.join(chars)
+
+
+def prepare_assistant_update_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    return {camel_to_snake(key): value for key, value in payload.items()}
+
+
 class VapiClient:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
+        self.client = AsyncVapi(
+            token=settings.private_key,
+            base_url=settings.base_url,
+            timeout=30.0,
+        )
 
     async def get_assistant(self, assistant_id: str) -> dict[str, Any]:
-        response = await self._request('GET', f'/assistant/{assistant_id}')
-        if not isinstance(response, dict):
+        try:
+            assistant = await self.client.assistants.get(assistant_id)
+        except ApiError as exc:
+            self._raise_api_error(exc)
+        payload = serialize_vapi_model(assistant)
+        if not isinstance(payload, dict):
             raise HTTPException(status_code=502, detail='Unexpected assistant response from Vapi.')
-        return response
+        return payload
 
     async def list_phone_numbers(self) -> list[dict[str, Any]]:
-        response = await self._request('GET', '/phone-number')
-        if isinstance(response, list):
-            return [item for item in response if isinstance(item, dict)]
-        if isinstance(response, dict):
-            for key in ('items', 'results', 'data'):
-                value = response.get(key)
-                if isinstance(value, list):
-                    return [item for item in value if isinstance(item, dict)]
+        try:
+            phone_numbers = await self.client.phone_numbers.list()
+        except ApiError as exc:
+            self._raise_api_error(exc)
+        payload = serialize_vapi_model(phone_numbers)
+        if isinstance(payload, list):
+            return [item for item in payload if isinstance(item, dict)]
         raise HTTPException(status_code=502, detail='Unexpected phone-number response from Vapi.')
 
     async def create_call(self, payload: dict[str, Any]) -> dict[str, Any]:
-        response = await self._request('POST', '/call', json=payload)
+        try:
+            call = await self.client.calls.create(
+                assistant_id=payload.get('assistantId'),
+                phone_number_id=payload.get('phoneNumberId'),
+                customer=payload.get('customer'),
+            )
+        except ApiError as exc:
+            self._raise_api_error(exc)
+        response = serialize_vapi_model(call)
         if not isinstance(response, dict):
             raise HTTPException(status_code=502, detail='Unexpected call response from Vapi.')
         return response
 
-    async def _request(
-        self,
-        method: str,
-        path: str,
-        json: dict[str, Any] | None = None,
-    ) -> dict[str, Any] | list[dict[str, Any]]:
+    async def update_assistant(self, assistant_id: str, payload: dict[str, Any]) -> dict[str, Any]:
         try:
-            async with httpx.AsyncClient(
-                base_url=self.settings.base_url,
-                headers={'Authorization': f'Bearer {self.settings.private_key}'},
-                timeout=30.0,
-            ) as client:
-                response = await client.request(method, path, json=json)
-                response.raise_for_status()
-        except httpx.HTTPStatusError as exc:
-            detail = exc.response.text or exc.response.reason_phrase
-            raise HTTPException(
-                status_code=502,
-                detail=f'Vapi API error ({exc.response.status_code}): {detail}',
-            ) from exc
-        except httpx.HTTPError as exc:
-            raise HTTPException(status_code=502, detail=f'Vapi request failed: {exc}') from exc
+            assistant = await self.client.assistants.update(
+                assistant_id,
+                **prepare_assistant_update_payload(payload),
+            )
+        except ApiError as exc:
+            self._raise_api_error(exc)
+        response = serialize_vapi_model(assistant)
+        if not isinstance(response, dict):
+            raise HTTPException(status_code=502, detail='Unexpected assistant response from Vapi.')
+        return response
 
-        return response.json()
+    @staticmethod
+    def _raise_api_error(exc: ApiError) -> None:
+        status_code = exc.status_code or 502
+        body = exc.body if exc.body is not None else str(exc)
+        raise HTTPException(
+            status_code=502,
+            detail=f'Vapi API error ({status_code}): {body}',
+        ) from exc
 
 
 def get_vapi_client(settings: Settings = Depends(get_settings)) -> VapiClient:
@@ -83,6 +122,17 @@ def normalize_phone_number(number: str | None) -> str | None:
     if not number:
         return None
     return ''.join(char for char in number if char.isdigit() or char == '+')
+
+
+def resolve_assistant_id(request: OutboundCallRequest, settings: Settings) -> str:
+    if request.assistant_id:
+        return request.assistant_id
+    if settings.assistant_id:
+        return settings.assistant_id
+    raise HTTPException(
+        status_code=400,
+        detail='assistantId is required or configure VAPI_ASSISTANT_ID.',
+    )
 
 
 async def resolve_phone_number_id(
