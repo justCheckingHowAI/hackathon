@@ -1,0 +1,3 @@
+NEO4J_URI=bolt://70.34.249.162:7474
+NEO4J_USER=neo4j
+NEO4J_PASSWORD=your_password

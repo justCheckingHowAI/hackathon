@@ -18,6 +18,9 @@ from repo_catalog import (
     get_relationships_data,
     get_skills_data,
 )
+from routes_scrapers import validate_repo
+from scrape_jobs import list_scrape_jobs
+from tasks import scrape_github_repo_task
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -74,6 +77,46 @@ def ui_home(request: Request) -> HTMLResponse:
         'dashboard.html',
         {'counts': get_dashboard_counts()},
     )
+
+
+@router.get('/ui/scrapers', response_class=HTMLResponse)
+def scrapers_page(request: Request) -> HTMLResponse:
+    jobs = list_scrape_jobs(limit=100)
+    active_jobs = [job for job in jobs if job['status'] in {'queued', 'running'}]
+    completed_jobs = [job for job in jobs if job['status'] == 'completed']
+    failed_jobs = [job for job in jobs if job['status'] == 'failed']
+    return render_template(
+        request,
+        'scrapers.html',
+        {
+            'jobs': jobs,
+            'active_jobs_count': len(active_jobs),
+            'completed_jobs_count': len(completed_jobs),
+            'failed_jobs_count': len(failed_jobs),
+        },
+    )
+
+
+@router.post('/ui/scrapers')
+async def create_scraper_job(repo: str = Form(...)) -> RedirectResponse:
+    try:
+        normalized_repo = validate_repo(repo)
+    except Exception as exc:
+        return handle_db_error('/ui/scrapers', 'queue scraper', exc)
+
+    job = get_database().fetch_one(
+        '''
+        INSERT INTO scrape_jobs (provider, repo, status, step, message)
+        VALUES (%s, %s, 'queued', 'queued', 'Job queued')
+        RETURNING id::text
+        ''',
+        ('github', normalized_repo),
+    )
+    if job is None or not job.get('id'):
+        return redirect_with_message('/ui/scrapers', error='Could not create scraper job.')
+
+    await scrape_github_repo_task.kiq(job['id'], normalized_repo)
+    return redirect_with_message('/ui/scrapers', success=f'Scraper queued for {normalized_repo}.')
 
 
 @router.get('/ui/people', response_class=HTMLResponse)

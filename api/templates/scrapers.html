@@ -1,263 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scraper Jobs</title>
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: #f3efe8;
-      --panel: rgba(255, 252, 248, 0.88);
-      --panel-strong: #fffaf3;
-      --text: #2b221b;
-      --muted: #72665d;
-      --border: rgba(101, 76, 57, 0.18);
-      --accent: #b45a2a;
-      --accent-soft: rgba(180, 90, 42, 0.14);
-      --ok: #1f7a57;
-      --fail: #aa3d31;
-      --running: #8f5a00;
-      --queued: #6b5ca5;
-      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
-    }
+{% extends "base.html" %}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(180, 90, 42, 0.18), transparent 32%),
-        radial-gradient(circle at top right, rgba(56, 120, 110, 0.12), transparent 28%),
-        linear-gradient(180deg, #f8f4ed 0%, var(--bg) 100%);
-    }
+{% block content %}
+<script>
+  window.setTimeout(function () {
+    window.location.reload()
+  }, 3000)
+</script>
 
-    .page {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 32px 20px 48px;
-    }
+<section class="hero">
+  <h1>Scrapers</h1>
+  <p>Queue GitHub repo ingestion jobs and track progress without leaving the admin UI.</p>
+</section>
 
-    .hero,
-    .panel {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      box-shadow: 0 18px 60px rgba(77, 50, 28, 0.08);
-      backdrop-filter: blur(14px);
-    }
+<section class="stats" style="margin-bottom: 20px;">
+  <div class="stat"><span>Active</span><strong>{{ active_jobs_count }}</strong></div>
+  <div class="stat"><span>Completed</span><strong>{{ completed_jobs_count }}</strong></div>
+  <div class="stat"><span>Failed</span><strong>{{ failed_jobs_count }}</strong></div>
+</section>
 
-    .hero {
-      padding: 28px;
-      margin-bottom: 22px;
-    }
+<section class="grid">
+  <article class="card">
+    <h2 style="margin-top: 0;">Queue scraper</h2>
+    <p style="color: var(--muted); margin-bottom: 16px;">Enter a public GitHub repository in <code>owner/repo</code> format.</p>
 
-    h1 {
-      margin: 0 0 8px;
-      font-family: "Space Grotesk", "Segoe UI", sans-serif;
-      font-size: clamp(2rem, 5vw, 3rem);
-      line-height: 1;
-      letter-spacing: -0.04em;
-    }
+    <form method="post" action="/ui/scrapers">
+      <label>
+        Repository
+        <input name="repo" type="text" placeholder="facebook/react-native" required />
+      </label>
+      <button type="submit">Start scraper</button>
+    </form>
+  </article>
 
-    .subtle {
-      margin: 0;
-      color: var(--muted);
-      max-width: 800px;
-      line-height: 1.5;
-    }
+  <article class="card">
+    <h2 style="margin-top: 0;">How it works</h2>
+    <ul style="padding-left: 18px; color: var(--muted); margin: 0; display: grid; gap: 10px;">
+      <li>API queues a Taskiq job in Redis.</li>
+      <li>Worker scrapes PRs, commits, authors, and graph edges.</li>
+      <li>Progress is written to Postgres and refreshed on this page.</li>
+      <li>Output path appears after the job completes.</li>
+    </ul>
+  </article>
+</section>
 
-    .form-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 12px;
-      margin-top: 22px;
-    }
-
-    input {
-      width: 100%;
-      box-sizing: border-box;
-      border: 1px solid var(--border);
-      background: var(--panel-strong);
-      border-radius: 14px;
-      padding: 14px 16px;
-      font: inherit;
-      color: var(--text);
-    }
-
-    button {
-      border: 0;
-      border-radius: 14px;
-      padding: 14px 18px;
-      font: inherit;
-      font-weight: 600;
-      color: white;
-      cursor: pointer;
-      background: linear-gradient(135deg, #b45a2a, #d27338);
-    }
-
-    .panel {
-      overflow: hidden;
-    }
-
-    .panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      padding: 18px 20px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 14px 20px;
-      text-align: left;
-      vertical-align: top;
-      border-bottom: 1px solid rgba(101, 76, 57, 0.1);
-      font-size: 0.95rem;
-    }
-
-    th {
-      color: var(--muted);
-      font-weight: 600;
-      background: rgba(255, 250, 243, 0.75);
-    }
-
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      background: rgba(114, 102, 93, 0.1);
-      color: var(--muted);
-    }
-
-    .status.queued { background: rgba(107, 92, 165, 0.12); color: var(--queued); }
-    .status.running { background: rgba(143, 90, 0, 0.14); color: var(--running); }
-    .status.completed { background: rgba(31, 122, 87, 0.12); color: var(--ok); }
-    .status.failed { background: rgba(170, 61, 49, 0.12); color: var(--fail); }
-
-    .progress-track {
-      width: 180px;
-      height: 8px;
-      background: rgba(114, 102, 93, 0.14);
-      border-radius: 999px;
-      overflow: hidden;
-      margin-top: 8px;
-    }
-
-    .progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, #c7642f, #d08d48);
-    }
-
-    .meta,
-    .error {
-      color: var(--muted);
-      font-size: 0.85rem;
-      line-height: 1.45;
-    }
-
-    .error {
-      color: var(--fail);
-      white-space: pre-wrap;
-      max-width: 380px;
-    }
-
-    @media (max-width: 820px) {
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-
-      .panel {
-        overflow-x: auto;
-      }
-
-      th,
-      td {
-        padding: 12px 14px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="page">
-    <section class="hero">
-      <h1>GitHub Repo Scrapers</h1>
-      <p class="subtle">Uruchamiasz scraper tylko na podstawie nazwy repozytorium. Widok odswieza sie automatycznie co 3 sekundy i pokazuje status, krok oraz lokalizacje wyniku.</p>
-
-      <form class="form-row" method="post" action="/scrapers/github/repo/form">
-        <input name="repo" type="text" placeholder="facebook/react-native" required>
-        <button type="submit">Start Scrape</button>
-      </form>
-    </section>
-
-    <section class="panel">
-      <div class="panel-header">
-        <strong>Recent Jobs</strong>
-        <span class="meta">Auto refresh every 3s</span>
-      </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Repo</th>
-            <th>Status</th>
-            <th>Step</th>
-            <th>Progress</th>
-            <th>Output</th>
-            <th>Created</th>
-            <th>Error</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for job in jobs %}
-          <tr>
-            <td>
-              <strong>{{ job.repo }}</strong>
-              <div class="meta">{{ job.id }}</div>
-            </td>
-            <td>
-              <span class="status {{ job.status }}">{{ job.status }}</span>
-            </td>
-            <td>{{ job.step or '-' }}</td>
-            <td>
-              {% set total = job.progress_total or 0 %}
-              {% set current = job.progress_current or 0 %}
-              {% set pct = (current / total * 100) if total else 0 %}
-              <div>{{ current }} / {{ total }}</div>
-              <div class="progress-track"><div class="progress-bar" style="width: {{ pct }}%;"></div></div>
-              <div class="meta">{{ job.message or '' }}</div>
-            </td>
-            <td class="meta">{{ job.output_dir or '-' }}</td>
-            <td class="meta">{{ job.created_at }}</td>
-            <td class="error">{{ job.error or '' }}</td>
-          </tr>
-          {% else %}
-          <tr>
-            <td colspan="7" class="meta">No scraper jobs yet.</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </section>
+<section class="card" style="margin-top: 20px;">
+  <div style="display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 12px; flex-wrap: wrap;">
+    <h2 style="margin: 0;">Recent jobs</h2>
+    <span class="pill">Refresh page to see latest progress</span>
   </div>
 
-  <script>
-    window.setTimeout(function () {
-      window.location.reload();
-    }, 3000);
-  </script>
-</body>
-</html>
+  <table>
+    <thead>
+      <tr>
+        <th>Repo</th>
+        <th>Status</th>
+        <th>Step</th>
+        <th>Progress</th>
+        <th>Message</th>
+        <th>Output</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for job in jobs %}
+      <tr>
+        <td>
+          <strong>{{ job.repo }}</strong><br />
+          <small style="color: var(--muted);">{{ job.id }}</small>
+        </td>
+        <td><span class="pill">{{ job.status }}</span></td>
+        <td>{{ job.step or '-' }}</td>
+        <td>{{ job.progress_current }} / {{ job.progress_total }}</td>
+        <td>{{ job.message or '-' }}</td>
+        <td style="max-width: 220px; overflow-wrap: anywhere;">{{ job.output_dir or '-' }}</td>
+        <td>
+          {{ job.created_at }}
+          {% if job.error %}
+          <br /><small style="color: var(--danger);">{{ job.error }}</small>
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="7">No scraper jobs yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

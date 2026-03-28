@@ -1,0 +1,6 @@
+commit_sha,repo,author_id,author_login,author_name,author_email_hash,committer_login,committer_name,committed_at,message,parent_count,is_merge_commit,html_url
+7fd1a60b01f91b314f59955a4e4d4e80d8edf11d,octocat/Hello-World,github:octocat,octocat,The Octocat,aa9d01e5ea6efe67297eb320bc3276870a318023a9af7796e4a91b07205e2b0e,octocat,The Octocat,2012-03-06T23:06:50Z,"Merge pull request #6 from Spaceghost/patch-1
+
+New line at end of file.",2,True,https://github.com/octocat/Hello-World/commit/7fd1a60b01f91b314f59955a4e4d4e80d8edf11d
+762941318ee16e59dabbacb1b4049eec22f0d303,octocat/Hello-World,github:spaceghost,Spaceghost,Johnneylee Jack Rollins,e5f4946688a53cd49ecbad1dfa025056269e6a91aac3abc55f310af4276ee4aa,Spaceghost,Johnneylee Jack Rollins,2011-09-14T04:42:41Z,New line at end of file. --Signed off by Spaceghost,1,False,https://github.com/octocat/Hello-World/commit/762941318ee16e59dabbacb1b4049eec22f0d303
+553c2077f0edc3d5dc5d17262f6aa498e69d6f8e,octocat/Hello-World,github:cameron423698,Cameron423698,cameronmcefee,a3db4b5dd90ca2c85b79fc8676868321a64f9b03c06c44203f485abc1e0e03e7,Cameron423698,cameronmcefee,2011-01-26T19:06:08Z,first commit,0,False,https://github.com/octocat/Hello-World/commit/553c2077f0edc3d5dc5d17262f6aa498e69d6f8e
