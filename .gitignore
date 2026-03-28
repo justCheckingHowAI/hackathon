@@ -1,0 +1,36 @@
+# macOS
+.DS_Store
+
+# Python / FastAPI
+__pycache__/
+*.py[cod]
+.Python
+.python-version
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Node / React
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+coverage/
+vite.svg
+*.tsbuildinfo
+
+# Editors
+.vscode/
+.idea/
