@@ -496,7 +496,8 @@ export function IntakePage({ onAnalysisComplete }: IntakePageProps) {
               {/* Uploaded files list */}
               {uploadedFiles.length > 0 && (
                 <div className="mt-4 space-y-2">
-                  {uploadedFiles.map((file) => {
+                  {/* Show individual files that are currently uploading or have errors */}
+                  {uploadedFiles.filter(f => f.status !== "done").map((file) => {
                     const Icon = getFileIcon(file.type);
                     return (
                       <div
@@ -535,6 +536,9 @@ export function IntakePage({ onAnalysisComplete }: IntakePageProps) {
                               </button>
                             </div>
                           </div>
+                          {file.status === "error" && (
+                            <p className="text-xs text-red-500 mt-0.5">{file.errorMessage}</p>
+                          )}
                           <div className="flex items-center gap-2 mt-0.5">
                             <span className="text-xs text-muted-foreground">
                               {formatFileSize(file.size)}
@@ -552,6 +556,23 @@ export function IntakePage({ onAnalysisComplete }: IntakePageProps) {
                       </div>
                     );
                   })}
+                  
+                  {/* Summary for done files to prevent rendering 15k items */}
+                  {uploadedFiles.filter(f => f.status === "done").length > 0 && (
+                    <div className="flex items-center gap-3 rounded-lg border border-border bg-secondary/20 p-3">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary/15 text-primary">
+                        <CheckCircle2 className="h-4 w-4" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-sm font-medium text-foreground block">
+                          {uploadedFiles.filter(f => f.status === "done").length.toLocaleString()} files uploaded and vectorized
+                        </span>
+                        <span className="text-xs text-muted-foreground mt-0.5 block">
+                          Ready for analysis
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </CardContent>
