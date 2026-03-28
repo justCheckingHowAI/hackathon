@@ -21,18 +21,6 @@ const steps: Step[] = [
     icon: Users,
     description: "Select person & data",
   },
-  {
-    id: 2,
-    label: "Hiring Pack",
-    icon: FileSearch,
-    description: "Skills & recruitment",
-  },
-  {
-    id: 3,
-    label: "Candidate Screen",
-    icon: UserCheck,
-    description: "CV & voice screening",
-  },
 ];
 
 interface LayoutProps {
@@ -91,15 +79,15 @@ export function Layout({
                     className={cn(
                       "flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-all",
                       isActive &&
-                        "bg-primary/10 text-primary border border-primary/20",
+                      "bg-primary/10 text-primary border border-primary/20",
                       isCompleted &&
-                        "text-primary/70 hover:text-primary",
+                      "text-primary/70 hover:text-primary",
                       !isActive &&
-                        !isCompleted &&
-                        isAccessible &&
-                        "text-muted-foreground hover:text-foreground",
+                      !isCompleted &&
+                      isAccessible &&
+                      "text-muted-foreground hover:text-foreground",
                       !isAccessible &&
-                        "text-muted-foreground/40 cursor-not-allowed"
+                      "text-muted-foreground/40 cursor-not-allowed"
                     )}
                   >
                     <div
@@ -107,10 +95,10 @@ export function Layout({
                         "flex h-7 w-7 items-center justify-center rounded-md text-xs",
                         isActive && "bg-primary text-primary-foreground",
                         isCompleted &&
-                          "bg-primary/20 text-primary",
+                        "bg-primary/20 text-primary",
                         !isActive &&
-                          !isCompleted &&
-                          "bg-secondary text-muted-foreground"
+                        !isCompleted &&
+                        "bg-secondary text-muted-foreground"
                       )}
                     >
                       {isCompleted ? (
