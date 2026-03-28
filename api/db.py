@@ -54,6 +54,18 @@ class Database:
                 cur.execute(query, params)
             conn.commit()
 
+    def execute_returning(
+        self,
+        query: str,
+        params: tuple[Any, ...] = (),
+    ) -> dict[str, Any] | None:
+        with self.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(query, params)
+                row = cur.fetchone()
+            conn.commit()
+        return dict(row) if row else None
+
     def ping(self) -> None:
         with self.connection() as conn:
             with conn.cursor() as cur:

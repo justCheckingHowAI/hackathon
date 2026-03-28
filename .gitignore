@@ -20,6 +20,7 @@ env/
 htmlcov/
 dist/
 build/
+api/outputs/
 *.egg-info/
 
 # Node / React
@@ -38,3 +39,4 @@ vite.svg
 
 google
 data/github-graph
+AGENTS.md
