@@ -1,0 +1,90 @@
+20260328-131721-Rec39.hda
+
+Creation Time: 2026/3/28
+
+
+Transcription
+
+00:00:02 - 00:01:09 Unknown Speaker:
+
+bo trzeba PRD przygotować, Demo jest tak. Dzwonimy do agenta, czy jest Mike? Mike jest? Bo jest na urlopie, ale ten jego klon jest. I mówimy, w ostatnim tam projekcie robiłeś e-balle, brakuje nam ewaluacji jakiegoś konkretnego skilla, na przykład w React Nighting, też powiedz, jak byś to opierdolił. No i Mike. po prostu zaczyna o tym opowiadać i mówi jak to może ogarnąć, Czy robimy tak, czy robimy bardziej rekrutacyjny angle, że potrzebujemy kogoś znaleźć kto to ogarnie? Chyba rekrutacyjny nie, że bardziej takiego... Czyli to właśnie, No dobra. Chłopaki skupcie się, zaraz to wrzucisz, to jest dobre podczas demo, no i potem pokazujemy na demo, że zingestowaliśmy to z tych wszystkich informacji, zrobiliśmy potem knowledge base i tak dalej, Potrzebujecie powtórki? Ja nie. Ja skarżę. I mamy dwa komponenty. Mamy komponent voice'owy, który jest po prostu spięciem z naszym agentem.
+
+00:01:09 - 00:02:00 Unknown Speaker:
+
+Można zrobić tak, że ten cały proces, który szedł na backendzie, możemy wyświetlać w ADK, w sensie jako przykład. No to w tym ADK od Google'a to można potem pokazywać, że to faktycznie się zadziało, to co miało miejsce. I my sobie to wszystko będziemy ingestować jakimś narzędziem, Jakieś to po prostu... W zależności od tego po prostu zrobimy sobie tam co ma wykonywać i myślę, że wyjdzie fajnie w praniu. No dobra, no to mamy to. To teraz by fajnie było podzielić po prostu zadania pomiędzy ludzi, Potrzebna nam będzie na pewno jedna rola. Jedna osoba, która z... rozkminić zainjestowanie wszystkich danych, Czyli po prostu nam zrzuci to w jakimś formacie, który sobie możemy to przeformatować. To może być Markdown, to może być JSON i tak dalej, Jakich danych jeszcze?
+
+00:02:01 - 00:02:52 Unknown Speaker:
+
+Chcemy githuby, wszystkie comity, na przykład jakieś, czy też nie wiem, czy to nie powinno być na zasadzie, czy to powinniśmy robić na żywo, czy powinniśmy po prostu wszystko zeskanować, Musi być funkcja, która pozwoli Ci to po prostu odświeżyć. Tu już ma zebrane, ma podcasty, ma syntetyczne dane wygenerowane. Ty już to zrzuciłeś, No nie, jeszcze tylko zrzuciłem. Czyli robimy ograniczenie na razie, nie skupiamy się na całym teamie, żeby obsługiwało tylko i wyłącznie Mike. Bo to można zmapować każdego członka zespołu, wtedy można powiedzieć dobra pytaj Majka, albo dobra pytaj Grześka, albo dobra pytaj Jakuba, I każdy Jakub ma swoją personę jakby taką, Ale no dobra, ale to teraz znowu, żeby to było używalne, to jest tak, że robimy funkcjonalność, która pozwala podpiąć dowolną osobę, ale nie dzisiaj to zrobimy, to jest... Dzisiaj będzie Majk. To jest future.
+
+00:02:52 - 00:03:31 Unknown Speaker:
+
+I Mateusz na koniec. czyli dzisiaj mamy estetycznie zebrane osoby, docelowo będzie to jako funkcjonalność odbrania, czegoś takiego. Docelowo nawet mogłoby to być automatyczne, czyli po prostu masz członka w zespole i on zbiera te wszystkie rzeczy w tle, dochodzą nowe rzeczy, on cały czas uzupełnia knowledge base, I cały czas reindeksuje się, jeśli tu jest rak i tak dalej, ale to jeśli mamy, no bo jak mamy tego Mike'a, to mamy jedną osobę, to nie jesteśmy w stanie powiedzieć, kogo brakuje albo tam podobne rzeczy? No nie, no właśnie dlatego mówiliśmy, że podczas demo się skupiamy na tym, że Mike'u brakuje nam informacji, które ty posiadasz, I ktoś inny to w tym momencie będzie koził, dlatego że z Mike'iem już pogadał. Albo Mike'u potrzebujemy zatrudnić kogoś, żeby pisał e-wale, No dobra.
+
+00:03:32 - 00:04:23 Unknown Speaker:
+
+I powiedz mi, jakich skilli potrzebujemy. Będziemy pisali job description, weź to pyknij. No dobra. No dobra, czyli Adam to zbiera tą całą bazę, no bo już i tak mamy w dużej mierze zrobione, więc tylko musi to poukładać. ktoś chciał musi zespiąć wapi, czyli żeby można było faktycznie telefon zrobić, ogarnąć to, że zadzwonimy do niego i się go zapytamy, Czy to, co będziemy mogli pokazać na demo podczas telefonu. Mamy utworzenie na podstawie zebranych, zagregowanych danych Knowledge Base i nasz React Search, I mamy agenta, tak naprawdę, który będzie spięty z WAPI, Czyli agent, do którego gadasz, no bo WAPI to będzie tylko i wyłącznie voice, text to speech i WIP, A pod spodem musimy zrobić agent SDK od Googla, I fajnie by było, jakbyśmy ingestowali dane, nie tylko i wyłącznie czysty tekst.
+
+00:04:24 - 00:05:24 Unknown Speaker:
+
+tylko żebyśmy byli w stanie jakąś multimodalność tam zrobić, czyli żeby zingestować jeszcze jakieś coś, co jest nieczystym tekstem, To byłoby super. W sensie jakieś takie... Nie wiem, wideo na przykład zingestować. Albo dźwięk. ale multimodalność systemu jest, Czyli że masz na przykład, nie wiem, nagranie podcasta w MP4, i on sam robi tą multimodalność. Generalnie tak myślę, nie rzucam, co może być... voice jest multimodalne i tekst jest multimodalny, wystarczająca multimodalność. starsze dwie. W stanie filmu nie jest multimodalności. starsze dwie multimodalności. Przetworzenie danych. mamy tekst, mamy voice. No tak. No tak, może być jako feature jeszcze dodany tam ewentualnie obróbka jakichś materiałów graficznych, typu jakieś tam grafy, no bo to... Jak te dane, to można sobie w sumie wkodować, co będziemy chcieli. Tylko fajnie, żeby to obrać w jeden stosowny produkt, czyli to, co będzie od początku do końca miało sens.
+
+00:05:25 - 00:06:11 Unknown Speaker:
+
+Mnie się bardziej podobała ta wersja z tym, gdzie idziesz do końca do rekrutacji, bo były te luki kompetencyjne, które pojawiają się po tym, jak kogoś nie ma, i co ewentualnie możesz od razu uzupełnić daną osobą. skąd jakby demo wyglądało. W sensie, że dzwonisz do... jak by to wyglądało. Ja sobie wyobrażam raczej demo chyba od drugiej strony, w sensie, że ktoś mówi, że odchodzi. No akurat mamy trochę zły przykład z Kolesnakiem, ale byłem na przykład, bo jakś sobie jakaś... Idę na miesiąc w loku. Dojeżdżam do Tajlandii i z rodziną mam was w dupie przez miesiąc. I sobie bierzesz dewelopera na godzinę. To też jest głupi scenariusz. Czyli ktoś jeździ sobie na urlop na miesiąc, ewentualnie opisujesz kompetencje i przypisujesz do osób w zespole, które mogą to pociągnąć.
+
+00:06:11 - 00:06:52 Unknown Speaker:
+
+To nie jest tak, że jedna osoba odchodzi, jedna go zastępuje, bardziej często jest tak, że jedna tam na chwilę znika i tą pracę można jakoś rozłożyć w zespole, żeby dalej utrzymać ciągłość. Nie może to być takie super proste, że dzwonię do wirtualnego Majka, bo akurat go nie ma i popytam o jakąś rzecz z projektu i to pokazujemy jako taki wow efekt, a potem pokazujemy. Ale to by zadziałało też w takim kresie jak XYZ i wtedy na przykład możesz stworzyć tutaj dokumentację, tutaj rekrutację, tutaj zadania rekrutacyjne, tutaj tyteria oceny. Właśnie dlatego tak ja też myślałem, skąd też to moje demo tak się zaczęło. Właśnie zastanawiam się, mnie martwi jedna rzecz, że końcowo zepnie się to do tego, spłacając to bardzo technicznie.
+
+00:06:53 - 00:07:45 Unknown Speaker:
+
+że po prostu masz chatbota, który po prostu działa głosowo, czyli po prostu ma raga i tak dalej, a jakby dochodziło do tego wartości, że my dziś mamy podsumowane, skille i tak dalej, w sensie jakby dochodzi do tego elementu rekrutacji, no to masz wtedy trochę więcej tego produktu niż samo to, że masz na przykład takie notebooka po czasie. To zadajmy dwa pytania. Pierwsze pytanie będzie takie, że jesteś na Urlopie, ale powiedz mi, co nam się zadziało w projekcie takim i takim i dlaczego była taka decyzja podjęta, A potem zadajesz pytanie. No dobra, Mike tutaj nie będzie już kontrybutorem do tego projektu, to teraz w jaki sposób, czy tam, nie wiem, kogo musimy szukać? Kogo musimy szukać? Pokazujemy implementację praktyczną i pokazujemy na prezentacji, że to jest położony system, który ma bardzo dużą źródło.
+
+00:07:45 - 00:08:30 Unknown Speaker:
+
+którą ja sobie teraz wymyśliłem, to gdyby na przykład brakuje Ci członka zespołu, który musi zatrudnić na miejsce kogoś innego, to to, żeby on na przykład wtedy zrobił tą rozmowę reprezentacyjną, o której kiedyś Ty mówiłeś na początku, że rozmawiaj, prowadź tę rozmowę reprezentacyjną na podstawie tej wiedzy, którą ma i żebyśmy na przykład mogli oszacować koszty, ile w kursach bądź roboczo godzin by mu zajęło wdrożenie do projektu. I wówczas masz jasną wartość i możesz sobie zostawić konkretnych ludzi na to miejsce, które jest najbardziej opłacalne względem kosztów i skilli, które reprezentuje. To jest takie pytanie, ale to, że mówicie, że to jest chatbot. Interfejs tak wygląda jak byłby chatbot. jak to działa multimodalnie na prezentacji, na demo. W slajdach pokazujemy, jak działa cała architektura i ile źródeł danych tam jest, żeby one były cały czas zaupdate'owane i żeby one pokazywały, co się dzieje w projektach.
+
+00:08:30 - 00:09:17 Unknown Speaker:
+
+No tak, że według mnie brakuje tej wartości ponad tym, że odpytujesz człowieka i dostajesz odpowiedzi, bo to jest notebook LEM. Złośliwy jury ci tak powie, że jakby... A wiecie, co to jest notebook LEM? Korzystałeś kiedyś? Ale nie, no czekaj, Notebook LM też pozwala Ci integrować githuba, wszystkie spotkania i rzeczywistości. Ja się zgadzam z tym. Możesz tam wrzucić wszystko. Możesz to wszystko, co tutaj wziąłeś, możesz dorzucić w Notebook LM. I on będzie z Tobą gadać właśnie tak jak Mike. No dobra, tylko że to się nie update'uje w automatyczny sposób, a my chcemy pokazać, że mamy taki system, który zbiera te dane cały czas. Poza tym on nie jest tylko Mike'iem. mamy cały, na przykład wszystkie repozytory Polstaka mapujemy i mamy tam innego. Jeżeli to nie byłby teraz Mike, to możemy zadać pytanie do drugiego pozioma.
+
+00:09:17 - 00:10:07 Unknown Speaker:
+
+I to już jest trochę co innego, bo to już jest Tulsy, które muszą holować pod spodem, wyciągać te konkretne rzeczy. To już nie jest nowy element. No tak, ale to rozszerzamy o to, że chcemy mieć też innych kontrybutorów, bo teraz mówiliśmy tylko o Mike'u. A żeby to pokazać, to musisz pokazać, że tam inne osoby też kontrybuują. Możemy dwóch wrzucić, Możemy dwóch wrzucić, jak byśmy chcieli. Wystarczy włożyć mu wiedzę całej organizacji, a nie tylko Majka, więc znów będzie zarzut, że jest... Ale notebook element chyba tego już nie ogarnie ci takich rzeczy, bo to jest po prostu statyczne i dość kontekst na przykład masz ograniczony, bo ja właśnie wrzuciłem mu podcast z Chrobokiem i... No dobra, ale chodzi o to, że musiałbyś rzucić wszystkie podcasty Horbockiem, ale przy okazji to jest team, więc oprócz Horbocka w tym teamie jest jeszcze Mieszko, jeszcze jest Max.
+
+00:10:07 - 00:11:08 Unknown Speaker:
+
+Każdy z nich ma swoje podcasty i w tym momencie Notebook LM musi już... Notebook to ogarnie. Która osoba... Moim zdaniem to... No właśnie moim zdaniem to wyłapie. On to wyłapał na przykładzie, który mu wrzuciłem. W twoim zdaniu czy tak jest? Tak jest. Zresztą pokażę. Jeżeli wrzucasz podcasty pięciu osób i nasza pani wie, Wrzuciłem jeden? no to właśnie o tym rozmawiamy. Jest źródeł pięciu osób. ale też case jest troszeczkę taki inny, że mamy na przykład repozytorium z ewalami i mówimy, że brakuje ewaluacji pod takie i takie coś i musimy to dopisać. I on musi rozkminić na podstawie tego repozytorium na przykład, który członek zespołu to będzie odpowiedni. I to będzie Mike, no i kurczę zapytać Mike'a jak to zrobić. Wypełniamy lukę kompetencyjną w tym momencie. to przejdźmy po prostu do działania w tym, a wymyślmy w trakcie co jest tym efektem wow.
+
+00:11:09 - 00:11:54 Unknown Speaker:
+
+Najlepiej jest demo flow mieć od samego początku. Co my chcemy pokazać na scenie? To z tą rozmową telefoniczną, gdzie kogoś pytacie, tam nie jest w porządku, tylko brakuje tego końcowego elementu, który będzie tym efektem wow, że jakby poza tym, że sobie odpytałeś, czyli zbudowałeś komunikację wiedzy i go odpytałeś, bo równie dobrze moglibyśmy zrobić to we wszystkim. To może być w HR-ze i tak dalej. Bo to output może być taki, że ty po prostu powiesz, słuchaj Mike, to weź mi przygotuj hiring pack, bo potrzebujemy taką osobę do zespołu i tak dobrać, bo ty będziesz miał mało czasu, Robi się hiring pack, który się generuje cały elegancki, to możemy pokazać już wygenerowane. Zadania rekrutacyjne, kryteria oceny kandydata. Takie coś, że potem rekruter wchodzi, może zrobić job interview, ma przygotowane na podstawie tego planu i tak dalej.
+
+00:11:54 - 00:12:44 Unknown Speaker:
+
+Czyli efektywnie to jest zajebista aplikacja dla startupów, które bardzo szybko się skalują. I nagle potrzebujecie nowego człowieka, który będzie dodawał, na przykład macie roadmap jakiś, mówimy chcemy jeszcze zrobić to, ale brakuje nam ludzi, bo ten, ten jest tym zajęty, Przygotuj hiring pack. Ale w sumie, gdyby to zbierała na przykład transkrypcja wszystkich waszych spotkań w Gaiusie, to by wam po tygodniu powiedziało, że czegoś wam nie idzie na przykład, Auto market albo coś, potrzebujecie takiego i tego człowieka. Generalnie tak, tylko że... Zgadza się. Tylko pytanie ile by nam... Bo my jesteśmy świadomi czego nie jesteśmy w stanie zrobić, czego nam brakuje, co nie? Współpracujemy z dodatkowego deva, który byłby w stanie ogarnąć... Ale nie wiesz jak go szukać, bo czasami nie potrafisz nazwać tego, czego ci brakuje. no dla mnie to jest po prostu fajny developer, który jest zwinny, co nie?
+
+00:12:44 - 00:13:27 Unknown Speaker:
+
+Ale no dobra, teraz mówisz o devie, a na przykład o marketingowo, nie wiem, Rozmawiamy o case'ie i robimy wszystko pod... Bo jest nam w tym momencie łatwo pod use case MVP rzutu danych. A jakbyśmy byli partnerem... to byśmy mieli twoje z twojego Slacka, byśmy mieli rozmowy twoje o marketingu, byśmy mieli inne twoje źródła spięte, jakieś dokumentacje Notion na przykład, gdzie byś miał wszystkie swoje runbooki i tym podobne rzeczy, albo braki tych runbooków i byś powiedział, ja chcę teraz odpalić kampanię adsową Agaiusa i by okazało się, że nie ma tych kurwa rzeczy u was, o to trzeba taką osobę znaleźć. Na przykład. A z tymi developerami też to nie jest zawsze takie liniowe, że nazwiesz na Python developer. Zgadzam się, to znaleźć drugiego witka u nas to byłby duży problem. Ale teraz jak go szukać?
+
+00:13:28 - 00:14:15 Unknown Speaker:
+
+To jest zajebiste na przykład, jak sklonować witka i w ogóle jak szukać takiej osoby. To jest zajebiste challenge'a. Znaczy to jedno, a dwa, dobrze opisać też, znaczy na tyle dobrze opisać ogłoszenie, żeby ono było zachęcające dla... Żeby było wiadomo, co on będzie robił. Żeby on też wiedział dokładnie, jakie są oczekiwania wobec niego, bo on dzięki temu jakby dwie strony zyskuje, To jest jeszcze głębiej niż to, co na początku Max mówił o tym odpytywaniu firmy nawet przy podcaście. to może teraz tak, no bo generalnie no to jakby apka, znaczy platforma sprowadza się do tego, że służy do... szybkiego setupowania teamu, w sensie wskazywania zasobów potrzebnych w teamie w ramach szybko rosnących organizacji. I czy to będą deweloperzy, czy marketerzy, czy dowolnie inna osoba, to jest drugorzędne?
+
+00:14:19 - 00:15:00 Unknown Speaker:
+
+To nie jest szybka organizacja, tylko po prostu ktoś wymiara, a nie masz nikogo, kto by to kompletnie ogarniał, więc też nie wiesz, jak to nazwać. No tak, no to jakby szybkie łamane na specjalistyczne. W sensie, że albo potrzebujesz wysokiego specjalisty i trochę nie masz kompetencji w tym, żeby go znaleźć, więc system Ci w tym jest w stanie pomóc. Nie masz Chief of Staff, nie masz HR-a. Z drugiej strony jest to organizacja, która szybko rośnie i potrzebuje uzupełnienia, najbardziej precyzyjnego uzupełnienia zasobów w ramach tego wzrostu i pomaga trochę tam C-level decydować, kogo my teraz powinniśmy zatrudnić, żeby osiągnąć... jak największy efekt. Czyli Mike'a wtedy możemy pytać o to, a nie o problem w projekcie. potrzebujemy tutaj dołożyć więcej capacity, powiedz mi, kogo szukamy i hiring pack przygotowuje dzisiaj, wysyłać się na maila.
+
+00:15:00 - 00:16:01 Unknown Speaker:
+
+Czyli generalnie to platforma sprawdza się do tego, że jest takim dla C-level systemem do wspierania rozwoju o najlepsze kompetencje swojej organizacji. Podział na teraz to bym zrobił trochę tak, że my spróbujmy z Adamem może trochę pokminić z Mieszkiem, czyli Przemek, jak do tego podejść, żeby lepszą historię opowiedzieć. A i tak mamy już ustalone te rzeczy do tych API i temu podobne rzeczy. Trzeba zobaczyć, jak te dane w ogóle wyglądają, to słuchaj, ja właśnie tak chcę zrobić. First things first, no to jakby wy sobie setupujcie te rzeczy związane z API, czyli z Googlem, z WAPI i... Co tam było trzecie jeszcze? Google i coś takiego tam do głosu. Ale jeszcze było do generowania... Ale nie, to było takie... A to żeby design zrobić, ale to tego...
+
+00:16:01 - 00:16:50 Unknown Speaker:
+
+To design to wy możecie zrobić, żebyśmy się tak realnie podzielili, bo tak, i tak jest w chuj rzeczy do zrobienia, Więc jakby tą część taką hardcodową po prostu wy we dwóch weźcie i sobie już sami podzielcie, jak wam pasuje. Żeby już jakby nie dyskutować w pełnym gronie, bo to nie ma sensu. Adam się skupia na danych plus z Mieszkiem... opowieść całego tego demo plus jeszcze za chwilę będziemy musieli wymyślić nazwę, zacząć robić prezentację, strony internetowe itd. i my to bierzemy na siebie. Plus wkład tych danych... I potem nam w UI jeszcze przygotujecie do tej... cokolwiek będziemy musieli pokazać w UI jakiejkolwiek do tego naszego backendu, to jeszcze nam pomożecie w tym. No tak, no to... Te stitchy jest dobre, Więc spróbujmy to zrobić w ten sposób. My teraz się skupiamy na tym, żeby zrobić historię.
+
+00:16:51 - 00:17:12 Unknown Speaker:
+
+Wy sobie już setupujcie środowisko developerskie. Ja już myślę, że wiem co z Januszem się możemy podzielić. Ja za sekundę zrobię jeszcze transkrypcję z tego i zrobię podsumowanie, żebyśmy mieli super podział. znaczy zrobię clean z tego tylko, ale też wrzucę na ten plan, co już mamy i będziemy ten iterować, co tam za godzinę powiedzmy zrobimy. To pokaż mi Janusz teraz.
