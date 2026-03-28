@@ -1,0 +1,153 @@
+[Applause]
+first of all thank you very much for
+coming here and being part of this
+conference I think that there are more
+than 200 people in this hotel interested
+in react native this week which is
+exciting
+so before we start let me tell you why
+we decided to organize this conference
+in first place react native has been out
+there in a while for more than two years
+now it's not longer at soy or yet
+another fancy framework that can just
+disappear the day after it's now a
+serious platform that can have real
+impact on the progress building and it
+also changes the way we think about
+mobile development in general right the
+promise of platform agnostic JavaScript
+that can run on many platforms at once
+is attracting many developers from
+different backgrounds starting from
+project management and ending up with
+native mobile development and so since
+they all approach react native and
+mobile development from a different
+perspective the problems they are facing
+are different I've read once on the
+internet that attending conferences
+doesn't make any sense they are
+expensive the talks are recorded that
+I'm being uploaded to the Internet so
+what's the point right if all you can
+get is free materials on YouTube well
+for me it's us the community we don't
+attend conferences just to listen to the
+talks that you will be hearing after my
+after my talk we attend these
+conferences to talk with each other to
+share our experience and learn how we
+can write better apps together and
+that's the reason and that's the real
+reason why events like this exists you
+know I'm also super excited about the
+lineup that we have I believe that next
+two days will change the way you think
+about mobile development with react
+native we have carefully selected 20
+speakers each using react native in a
+different way to sure that your
+experience these challenges they are
+facing on daily basis you will hear
+everything here in order to get
+productive react native starting from
+how to plan the app in general ending up
+with how to use condoms deployment
+services in
+to deploy your app right away to your
+users since there is no dedicated time
+for questions after each talk I
+encourage you to remember your questions
+and find speakers during coffee breaks
+and just ask them there are a few
+companies that I wanted to mention here
+first of all thank you very much
+formidable array index for coming here
+and doing workshops on free as you know
+the workshops that we decided to do this
+year were slightly different than our
+competitors regularly do other
+conferences let's say we wanted to make
+a university university that everyone
+can attend and so we made it in a way
+that we try to talk to as many people
+and as many companies as possible and
+try to convince them that the nonprofit
+idea of a workshop is the best thing
+that can happen for the community also
+thank you very much in fin red for
+partnering with us sharing your Twitter
+sharing your customers user base to help
+us kickstart the idea of react native
+you and get very very first followers so
+thank you very much for this without you
+we wouldn't be here and you know now may
+be a question did you already have
+coffee today or planning to have yeah so
+you can now go to native base repo give
+them a star because today we are having
+coffee thanks to them thank you and of
+course this entire event wouldn't be
+wouldn't happen if it wasn't for Cole
+stack
+now Cole stack is a company I co-founded
+with Anna she's here on she's here in
+the audience as well
+we are JavaScript experts focused on the
+reactive react native in particular we
+have a lot of activity in the open
+source and in the community if you are
+following react native you probably seen
+us doing releases from science a time or
+you heard about Hall which is a
+alternative to react native package or
+that we doing and we are based here in
+verse 12 so if this sounds like a geek
+for you let us know we will be happy to
+tell you more how how does it feel to
+work at Cole Stagg and how you can apply
+feel free to ask anyone from coal stock
+about details we are wearing our
+custom-made sweet work clothes military
+style so we are kind of easy to locate
+today and finally I just wanted to give
+you a quick reminder about our code of
+conduct that you can read in detail at
+code of conduct comm since we kind of
+put the link in the footer and I'm
+pretty sure that some of you missed it
+I'm just going to read it quick version
+now and then we can start our conference
+is dedicated to providing a harassment
+free conference experience for everyone
+regardless of gender gender identity and
+expression age sexual orientation
+disability physical appearance body size
+race religion or lack thereof or
+technology choices we do not tolerate
+harassment of conference participants in
+any form sexual language and imagery is
+not appropriate for any conference venue
+including talks workshops parties
+Twitter and other online media
+conference participants violating these
+rules may be sanctioned or expelled from
+the conference with other we found at
+the discretion of the conference
+organizers so I just wanted to remind
+you that we are here together as a
+community to have a great time and to
+learn from each other about reactive so
+let's make this time perfect for each
+other
+in case you experience any of this or
+witness any of these activities please
+report immediately to staff members or
+to CoStar employees wearing our shooter
+style so that's it for now I'm going to
+come when I unplug my laptop the first
+speaker will come up here and let the
+party begin thank you very much and
+enjoy the next two days
+[Applause]

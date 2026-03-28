@@ -1,0 +1,1775 @@
+1
+00:00:00,000 --> 00:00:01,220
+
+this is the day I've been looking
+
+2
+00:00:01,220 --> 00:00:01,230
+this is the day I've been looking
+ 
+
+3
+00:00:01,230 --> 00:00:03,949
+this is the day I've been looking
+forward since last December when our
+
+4
+00:00:03,949 --> 00:00:03,959
+forward since last December when our
+ 
+
+5
+00:00:03,959 --> 00:00:05,420
+forward since last December when our
+Edition when our previous Edition
+
+6
+00:00:05,420 --> 00:00:05,430
+Edition when our previous Edition
+ 
+
+7
+00:00:05,430 --> 00:00:07,280
+Edition when our previous Edition
+finished and I really give you just
+
+8
+00:00:07,280 --> 00:00:07,290
+finished and I really give you just
+ 
+
+9
+00:00:07,290 --> 00:00:09,919
+finished and I really give you just
+happy to see you all here there are many
+
+10
+00:00:09,919 --> 00:00:09,929
+happy to see you all here there are many
+ 
+
+11
+00:00:09,929 --> 00:00:12,589
+happy to see you all here there are many
+new faces which is great that means our
+
+12
+00:00:12,589 --> 00:00:12,599
+new faces which is great that means our
+ 
+
+13
+00:00:12,599 --> 00:00:15,919
+new faces which is great that means our
+community is growing we are going to
+
+14
+00:00:15,919 --> 00:00:15,929
+community is growing we are going to
+ 
+
+15
+00:00:15,929 --> 00:00:17,779
+community is growing we are going to
+have a great time over the next two days
+
+16
+00:00:17,779 --> 00:00:17,789
+have a great time over the next two days
+ 
+
+17
+00:00:17,789 --> 00:00:20,480
+have a great time over the next two days
+and I hope the experience you will get
+
+18
+00:00:20,480 --> 00:00:20,490
+and I hope the experience you will get
+ 
+
+19
+00:00:20,490 --> 00:00:22,550
+and I hope the experience you will get
+out of this conference will influence
+
+20
+00:00:22,550 --> 00:00:22,560
+out of this conference will influence
+ 
+
+21
+00:00:22,560 --> 00:00:25,849
+out of this conference will influence
+the way you create products on a regular
+
+22
+00:00:25,849 --> 00:00:25,859
+the way you create products on a regular
+ 
+
+23
+00:00:25,859 --> 00:00:29,630
+the way you create products on a regular
+basis so before we get started let me go
+
+24
+00:00:29,630 --> 00:00:29,640
+basis so before we get started let me go
+ 
+
+25
+00:00:29,640 --> 00:00:31,070
+basis so before we get started let me go
+through some important informations
+
+26
+00:00:31,070 --> 00:00:31,080
+through some important informations
+ 
+
+27
+00:00:31,080 --> 00:00:34,750
+through some important informations
+about the conference so maybe just an
+
+28
+00:00:34,750 --> 00:00:34,760
+about the conference so maybe just an
+ 
+
+29
+00:00:34,760 --> 00:00:38,720
+about the conference so maybe just an
+interaction - to me some Mike and I'll
+
+30
+00:00:38,720 --> 00:00:38,730
+interaction - to me some Mike and I'll
+ 
+
+31
+00:00:38,730 --> 00:00:41,030
+interaction - to me some Mike and I'll
+be your MC for the next two days I'm
+
+32
+00:00:41,030 --> 00:00:41,040
+be your MC for the next two days I'm
+ 
+
+33
+00:00:41,040 --> 00:00:43,220
+be your MC for the next two days I'm
+also see do at call stack company that
+
+34
+00:00:43,220 --> 00:00:43,230
+also see do at call stack company that
+ 
+
+35
+00:00:43,230 --> 00:00:44,869
+also see do at call stack company that
+organizes this conference for you and
+
+36
+00:00:44,869 --> 00:00:44,879
+organizes this conference for you and
+ 
+
+37
+00:00:44,879 --> 00:00:47,569
+organizes this conference for you and
+I'm also doing react native on the core
+
+38
+00:00:47,569 --> 00:00:47,579
+I'm also doing react native on the core
+ 
+
+39
+00:00:47,579 --> 00:00:49,160
+I'm also doing react native on the core
+team in particular are responsible for
+
+40
+00:00:49,160 --> 00:00:49,170
+team in particular are responsible for
+ 
+
+41
+00:00:49,170 --> 00:00:57,200
+team in particular are responsible for
+releases and some CI stuff so we as a
+
+42
+00:00:57,200 --> 00:00:57,210
+releases and some CI stuff so we as a
+ 
+
+43
+00:00:57,210 --> 00:00:58,880
+releases and some CI stuff so we as a
+company quickly jumped on the bandwagon
+
+44
+00:00:58,880 --> 00:00:58,890
+company quickly jumped on the bandwagon
+ 
+
+45
+00:00:58,890 --> 00:01:01,610
+company quickly jumped on the bandwagon
+of react native back in a day and have
+
+46
+00:01:01,610 --> 00:01:01,620
+of react native back in a day and have
+ 
+
+47
+00:01:01,620 --> 00:01:03,439
+of react native back in a day and have
+been excited by its opportunities since
+
+48
+00:01:03,439 --> 00:01:03,449
+been excited by its opportunities since
+ 
+
+49
+00:01:03,449 --> 00:01:06,530
+been excited by its opportunities since
+then I think we were one of the very
+
+50
+00:01:06,530 --> 00:01:06,540
+then I think we were one of the very
+ 
+
+51
+00:01:06,540 --> 00:01:08,510
+then I think we were one of the very
+first deaf shops to focus on the react
+
+52
+00:01:08,510 --> 00:01:08,520
+first deaf shops to focus on the react
+ 
+
+53
+00:01:08,520 --> 00:01:11,560
+first deaf shops to focus on the react
+native and to sort of go cross-platform
+
+54
+00:01:11,560 --> 00:01:11,570
+native and to sort of go cross-platform
+ 
+
+55
+00:01:11,570 --> 00:01:14,899
+native and to sort of go cross-platform
+all in and so we felt like we need to
+
+56
+00:01:14,899 --> 00:01:14,909
+all in and so we felt like we need to
+ 
+
+57
+00:01:14,909 --> 00:01:17,390
+all in and so we felt like we need to
+give back to the community we felt like
+
+58
+00:01:17,390 --> 00:01:17,400
+give back to the community we felt like
+ 
+
+59
+00:01:17,400 --> 00:01:19,219
+give back to the community we felt like
+we were given this beautiful opportunity
+
+60
+00:01:19,219 --> 00:01:19,229
+we were given this beautiful opportunity
+ 
+
+61
+00:01:19,229 --> 00:01:21,260
+we were given this beautiful opportunity
+to actually create an even for you so
+
+62
+00:01:21,260 --> 00:01:21,270
+to actually create an even for you so
+ 
+
+63
+00:01:21,270 --> 00:01:23,300
+to actually create an even for you so
+that you can all meet together that you
+
+64
+00:01:23,300 --> 00:01:23,310
+that you can all meet together that you
+ 
+
+65
+00:01:23,310 --> 00:01:24,649
+that you can all meet together that you
+can all interact with each other and
+
+66
+00:01:24,649 --> 00:01:24,659
+can all interact with each other and
+ 
+
+67
+00:01:24,659 --> 00:01:27,950
+can all interact with each other and
+learn from each other so for the next
+
+68
+00:01:27,950 --> 00:01:27,960
+learn from each other so for the next
+ 
+
+69
+00:01:27,960 --> 00:01:30,340
+learn from each other so for the next
+two days hundreds of great developers
+
+70
+00:01:30,340 --> 00:01:30,350
+two days hundreds of great developers
+ 
+
+71
+00:01:30,350 --> 00:01:33,469
+two days hundreds of great developers
+from the react native community will be
+
+72
+00:01:33,469 --> 00:01:33,479
+from the react native community will be
+ 
+
+73
+00:01:33,479 --> 00:01:35,990
+from the react native community will be
+hanging out here in broad swath and if
+
+74
+00:01:35,990 --> 00:01:36,000
+hanging out here in broad swath and if
+ 
+
+75
+00:01:36,000 --> 00:01:37,910
+hanging out here in broad swath and if
+someone has suggested this to me a few
+
+76
+00:01:37,910 --> 00:01:37,920
+someone has suggested this to me a few
+ 
+
+77
+00:01:37,920 --> 00:01:39,560
+someone has suggested this to me a few
+years ago I would probably call him
+
+78
+00:01:39,560 --> 00:01:39,570
+years ago I would probably call him
+ 
+
+79
+00:01:39,570 --> 00:01:41,539
+years ago I would probably call him
+crazy like how is this even possible
+
+80
+00:01:41,539 --> 00:01:41,549
+crazy like how is this even possible
+ 
+
+81
+00:01:41,549 --> 00:01:43,609
+crazy like how is this even possible
+that people from all around the world
+
+82
+00:01:43,609 --> 00:01:43,619
+that people from all around the world
+ 
+
+83
+00:01:43,619 --> 00:01:45,530
+that people from all around the world
+will be sitting in one place in broad
+
+84
+00:01:45,530 --> 00:01:45,540
+will be sitting in one place in broad
+ 
+
+85
+00:01:45,540 --> 00:01:47,649
+will be sitting in one place in broad
+swath and I will not have to travel
+
+86
+00:01:47,649 --> 00:01:47,659
+swath and I will not have to travel
+ 
+
+87
+00:01:47,659 --> 00:01:51,980
+swath and I will not have to travel
+hours to meet my friends so it's the
+
+88
+00:01:51,980 --> 00:01:51,990
+hours to meet my friends so it's the
+ 
+
+89
+00:01:51,990 --> 00:01:54,069
+hours to meet my friends so it's the
+opportunity that I wish I had myself
+
+90
+00:01:54,069 --> 00:01:54,079
+opportunity that I wish I had myself
+ 
+
+91
+00:01:54,079 --> 00:01:57,350
+opportunity that I wish I had myself
+when I was starting react and I hope it
+
+92
+00:01:57,350 --> 00:01:57,360
+when I was starting react and I hope it
+ 
+
+93
+00:01:57,360 --> 00:01:59,330
+when I was starting react and I hope it
+will have a positive impact as I said on
+
+94
+00:01:59,330 --> 00:01:59,340
+will have a positive impact as I said on
+ 
+
+95
+00:01:59,340 --> 00:02:03,050
+will have a positive impact as I said on
+you as developers so I wouldn't be
+
+96
+00:02:03,050 --> 00:02:03,060
+you as developers so I wouldn't be
+ 
+
+97
+00:02:03,060 --> 00:02:04,819
+you as developers so I wouldn't be
+standing here in front of you if it
+
+98
+00:02:04,819 --> 00:02:04,829
+standing here in front of you if it
+ 
+
+99
+00:02:04,829 --> 00:02:06,530
+standing here in front of you if it
+wasn't for all the awesome companies and
+
+100
+00:02:06,530 --> 00:02:06,540
+wasn't for all the awesome companies and
+ 
+
+101
+00:02:06,540 --> 00:02:08,740
+wasn't for all the awesome companies and
+people that believed in our mission and
+
+102
+00:02:08,740 --> 00:02:08,750
+people that believed in our mission and
+ 
+
+103
+00:02:08,750 --> 00:02:11,780
+people that believed in our mission and
+decided to contribute to the event they
+
+104
+00:02:11,780 --> 00:02:11,790
+decided to contribute to the event they
+ 
+
+105
+00:02:11,790 --> 00:02:12,860
+decided to contribute to the event they
+didn't just do it for
+
+106
+00:02:12,860 --> 00:02:12,870
+didn't just do it for
+ 
+
+107
+00:02:12,870 --> 00:02:14,960
+didn't just do it for
+recruitment and marketing they did it
+
+108
+00:02:14,960 --> 00:02:14,970
+recruitment and marketing they did it
+ 
+
+109
+00:02:14,970 --> 00:02:17,570
+recruitment and marketing they did it
+because they believe in our community
+
+110
+00:02:17,570 --> 00:02:17,580
+because they believe in our community
+ 
+
+111
+00:02:17,580 --> 00:02:19,789
+because they believe in our community
+and they want to make it even better so
+
+112
+00:02:19,789 --> 00:02:19,799
+and they want to make it even better so
+ 
+
+113
+00:02:19,799 --> 00:02:21,410
+and they want to make it even better so
+please give them a huge round of
+
+114
+00:02:21,410 --> 00:02:21,420
+please give them a huge round of
+ 
+
+115
+00:02:21,420 --> 00:02:29,880
+please give them a huge round of
+applause
+
+116
+00:02:29,880 --> 00:02:29,890
+
+ 
+
+117
+00:02:29,890 --> 00:02:33,850
+
+all right so react native Europe is a
+
+118
+00:02:33,850 --> 00:02:33,860
+all right so react native Europe is a
+ 
+
+119
+00:02:33,860 --> 00:02:35,890
+all right so react native Europe is a
+two-day single track conference it's the
+
+120
+00:02:35,890 --> 00:02:35,900
+two-day single track conference it's the
+ 
+
+121
+00:02:35,900 --> 00:02:37,509
+two-day single track conference it's the
+fact that you probably are already aware
+
+122
+00:02:37,509 --> 00:02:37,519
+fact that you probably are already aware
+ 
+
+123
+00:02:37,519 --> 00:02:40,149
+fact that you probably are already aware
+of with more than 20 speakers from all
+
+124
+00:02:40,149 --> 00:02:40,159
+of with more than 20 speakers from all
+ 
+
+125
+00:02:40,159 --> 00:02:42,430
+of with more than 20 speakers from all
+around the world and since react native
+
+126
+00:02:42,430 --> 00:02:42,440
+around the world and since react native
+ 
+
+127
+00:02:42,440 --> 00:02:44,649
+around the world and since react native
+can be using variety of ways from
+
+128
+00:02:44,649 --> 00:02:44,659
+can be using variety of ways from
+ 
+
+129
+00:02:44,659 --> 00:02:47,259
+can be using variety of ways from
+Greenfield to brownfield apps we try to
+
+130
+00:02:47,259 --> 00:02:47,269
+Greenfield to brownfield apps we try to
+ 
+
+131
+00:02:47,269 --> 00:02:49,720
+Greenfield to brownfield apps we try to
+select lineup in a way that everyone
+
+132
+00:02:49,720 --> 00:02:49,730
+select lineup in a way that everyone
+ 
+
+133
+00:02:49,730 --> 00:02:52,839
+select lineup in a way that everyone
+fund finds satisfied satisfying no
+
+134
+00:02:52,839 --> 00:02:52,849
+fund finds satisfied satisfying no
+ 
+
+135
+00:02:52,849 --> 00:02:54,430
+fund finds satisfied satisfying no
+matter the background and what you are
+
+136
+00:02:54,430 --> 00:02:54,440
+matter the background and what you are
+ 
+
+137
+00:02:54,440 --> 00:02:58,920
+matter the background and what you are
+looking in as far as using react native
+
+138
+00:02:58,920 --> 00:02:58,930
+looking in as far as using react native
+ 
+
+139
+00:02:58,930 --> 00:03:01,210
+looking in as far as using react native
+so we ask that there are no questions
+
+140
+00:03:01,210 --> 00:03:01,220
+so we ask that there are no questions
+ 
+
+141
+00:03:01,220 --> 00:03:04,720
+so we ask that there are no questions
+during it or right after the talk best
+
+142
+00:03:04,720 --> 00:03:04,730
+during it or right after the talk best
+ 
+
+143
+00:03:04,730 --> 00:03:06,490
+during it or right after the talk best
+to reach out the speakers during either
+
+144
+00:03:06,490 --> 00:03:06,500
+to reach out the speakers during either
+ 
+
+145
+00:03:06,500 --> 00:03:09,759
+to reach out the speakers during either
+coffee break or after-party if you have
+
+146
+00:03:09,759 --> 00:03:09,769
+coffee break or after-party if you have
+ 
+
+147
+00:03:09,769 --> 00:03:11,680
+coffee break or after-party if you have
+ troubles locating them just let
+
+148
+00:03:11,680 --> 00:03:11,690
+troubles locating them just let
+ 
+
+149
+00:03:11,690 --> 00:03:13,440
+troubles locating them just let
+me know or anyone from coastal security
+
+150
+00:03:13,440 --> 00:03:13,450
+me know or anyone from coastal security
+ 
+
+151
+00:03:13,450 --> 00:03:18,550
+me know or anyone from coastal security
+will help you out and you can also
+
+152
+00:03:18,550 --> 00:03:18,560
+will help you out and you can also
+ 
+
+153
+00:03:18,560 --> 00:03:21,099
+will help you out and you can also
+submit a question to our Q&A panel which
+
+154
+00:03:21,099 --> 00:03:21,109
+submit a question to our Q&A panel which
+ 
+
+155
+00:03:21,109 --> 00:03:22,710
+submit a question to our Q&A panel which
+I'll tell you we're about in a second
+
+156
+00:03:22,710 --> 00:03:22,720
+I'll tell you we're about in a second
+ 
+
+157
+00:03:22,720 --> 00:03:25,330
+I'll tell you we're about in a second
+and every once in a while we'll have
+
+158
+00:03:25,330 --> 00:03:25,340
+and every once in a while we'll have
+ 
+
+159
+00:03:25,340 --> 00:03:27,729
+and every once in a while we'll have
+coffee breaks as well we know that only
+
+160
+00:03:27,729 --> 00:03:27,739
+coffee breaks as well we know that only
+ 
+
+161
+00:03:27,739 --> 00:03:29,770
+coffee breaks as well we know that only
+fully hydrated and fed attendees can
+
+162
+00:03:29,770 --> 00:03:29,780
+fully hydrated and fed attendees can
+ 
+
+163
+00:03:29,780 --> 00:03:31,870
+fully hydrated and fed attendees can
+enjoy the conference experience at a
+
+164
+00:03:31,870 --> 00:03:31,880
+enjoy the conference experience at a
+ 
+
+165
+00:03:31,880 --> 00:03:34,780
+enjoy the conference experience at a
+hundred percent so we try our best to
+
+166
+00:03:34,780 --> 00:03:34,790
+hundred percent so we try our best to
+ 
+
+167
+00:03:34,790 --> 00:03:37,270
+hundred percent so we try our best to
+prepare a wide range of tasty foods and
+
+168
+00:03:37,270 --> 00:03:37,280
+prepare a wide range of tasty foods and
+ 
+
+169
+00:03:37,280 --> 00:03:40,629
+prepare a wide range of tasty foods and
+drinks just for you so once you grab a
+
+170
+00:03:40,629 --> 00:03:40,639
+drinks just for you so once you grab a
+ 
+
+171
+00:03:40,639 --> 00:03:42,670
+drinks just for you so once you grab a
+snag and drink coffee it's time to break
+
+172
+00:03:42,670 --> 00:03:42,680
+snag and drink coffee it's time to break
+ 
+
+173
+00:03:42,680 --> 00:03:44,890
+snag and drink coffee it's time to break
+the ice right to make things easier we
+
+174
+00:03:44,890 --> 00:03:44,900
+the ice right to make things easier we
+ 
+
+175
+00:03:44,900 --> 00:03:47,140
+the ice right to make things easier we
+have prepared special stickers where you
+
+176
+00:03:47,140 --> 00:03:47,150
+have prepared special stickers where you
+ 
+
+177
+00:03:47,150 --> 00:03:49,750
+have prepared special stickers where you
+can list topics that the others can ask
+
+178
+00:03:49,750 --> 00:03:49,760
+can list topics that the others can ask
+ 
+
+179
+00:03:49,760 --> 00:03:52,330
+can list topics that the others can ask
+you about so it's a great way to lower
+
+180
+00:03:52,330 --> 00:03:52,340
+you about so it's a great way to lower
+ 
+
+181
+00:03:52,340 --> 00:03:54,939
+you about so it's a great way to lower
+the barrier to entry when starting a new
+
+182
+00:03:54,939 --> 00:03:54,949
+the barrier to entry when starting a new
+ 
+
+183
+00:03:54,949 --> 00:03:56,589
+the barrier to entry when starting a new
+conversation and if you don't have a
+
+184
+00:03:56,589 --> 00:03:56,599
+conversation and if you don't have a
+ 
+
+185
+00:03:56,599 --> 00:03:58,839
+conversation and if you don't have a
+sticker yet there are plenty of them at
+
+186
+00:03:58,839 --> 00:03:58,849
+sticker yet there are plenty of them at
+ 
+
+187
+00:03:58,849 --> 00:04:00,580
+sticker yet there are plenty of them at
+the registration desk and by the way you
+
+188
+00:04:00,580 --> 00:04:00,590
+the registration desk and by the way you
+ 
+
+189
+00:04:00,590 --> 00:04:03,009
+the registration desk and by the way you
+shout out to folks from anything thread
+
+190
+00:04:03,009 --> 00:04:03,019
+shout out to folks from anything thread
+ 
+
+191
+00:04:03,019 --> 00:04:04,539
+shout out to folks from anything thread
+for organizing change we hug and bring
+
+192
+00:04:04,539 --> 00:04:04,549
+for organizing change we hug and bring
+ 
+
+193
+00:04:04,549 --> 00:04:06,520
+for organizing change we hug and bring
+it up this idea I really enjoy it out
+
+194
+00:04:06,520 --> 00:04:06,530
+it up this idea I really enjoy it out
+ 
+
+195
+00:04:06,530 --> 00:04:08,289
+it up this idea I really enjoy it out
+and we were more than happy to have it
+
+196
+00:04:08,289 --> 00:04:08,299
+and we were more than happy to have it
+ 
+
+197
+00:04:08,299 --> 00:04:10,860
+and we were more than happy to have it
+here as well
+
+198
+00:04:10,860 --> 00:04:10,870
+
+ 
+
+199
+00:04:10,870 --> 00:04:16,140
+
+[Applause]
+
+200
+00:04:16,140 --> 00:04:16,150
+
+ 
+
+201
+00:04:16,150 --> 00:04:19,360
+
+it's just a couple of things about the
+
+202
+00:04:19,360 --> 00:04:19,370
+it's just a couple of things about the
+ 
+
+203
+00:04:19,370 --> 00:04:23,200
+it's just a couple of things about the
+venue it's kind of bigger than last year
+
+204
+00:04:23,200 --> 00:04:23,210
+venue it's kind of bigger than last year
+ 
+
+205
+00:04:23,210 --> 00:04:25,120
+venue it's kind of bigger than last year
+and on the right side is where we are
+
+206
+00:04:25,120 --> 00:04:25,130
+and on the right side is where we are
+ 
+
+207
+00:04:25,130 --> 00:04:27,430
+and on the right side is where we are
+it's the conference on the opposite side
+
+208
+00:04:27,430 --> 00:04:27,440
+it's the conference on the opposite side
+ 
+
+209
+00:04:27,440 --> 00:04:29,800
+it's the conference on the opposite side
+we'll have the lunch and evening party
+
+210
+00:04:29,800 --> 00:04:29,810
+we'll have the lunch and evening party
+ 
+
+211
+00:04:29,810 --> 00:04:31,960
+we'll have the lunch and evening party
+chill-out zone and coffee break if you
+
+212
+00:04:31,960 --> 00:04:31,970
+chill-out zone and coffee break if you
+ 
+
+213
+00:04:31,970 --> 00:04:33,550
+chill-out zone and coffee break if you
+are tired - feel free to go there and
+
+214
+00:04:33,550 --> 00:04:33,560
+are tired - feel free to go there and
+ 
+
+215
+00:04:33,560 --> 00:04:35,770
+are tired - feel free to go there and
+have some rest and don't worry it has
+
+216
+00:04:35,770 --> 00:04:35,780
+have some rest and don't worry it has
+ 
+
+217
+00:04:35,780 --> 00:04:37,300
+have some rest and don't worry it has
+live streaming inside so we will not
+
+218
+00:04:37,300 --> 00:04:37,310
+live streaming inside so we will not
+ 
+
+219
+00:04:37,310 --> 00:04:40,980
+live streaming inside so we will not
+miss any talks unless you really intend
+
+220
+00:04:40,980 --> 00:04:40,990
+miss any talks unless you really intend
+ 
+
+221
+00:04:40,990 --> 00:04:43,570
+miss any talks unless you really intend
+there is you know we all know that there
+
+222
+00:04:43,570 --> 00:04:43,580
+there is you know we all know that there
+ 
+
+223
+00:04:43,580 --> 00:04:45,910
+there is you know we all know that there
+is no better way to get answers to most
+
+224
+00:04:45,910 --> 00:04:45,920
+is no better way to get answers to most
+ 
+
+225
+00:04:45,920 --> 00:04:47,890
+is no better way to get answers to most
+compelling questions than having Q&A and
+
+226
+00:04:47,890 --> 00:04:47,900
+compelling questions than having Q&A and
+ 
+
+227
+00:04:47,900 --> 00:04:49,660
+compelling questions than having Q&A and
+being able to actually interact with
+
+228
+00:04:49,660 --> 00:04:49,670
+being able to actually interact with
+ 
+
+229
+00:04:49,670 --> 00:04:52,210
+being able to actually interact with
+developers there are building stuff that
+
+230
+00:04:52,210 --> 00:04:52,220
+developers there are building stuff that
+ 
+
+231
+00:04:52,220 --> 00:04:55,060
+developers there are building stuff that
+you're interested in so we tried our
+
+232
+00:04:55,060 --> 00:04:55,070
+you're interested in so we tried our
+ 
+
+233
+00:04:55,070 --> 00:04:57,550
+you're interested in so we tried our
+best to make s comprehensive panel as
+
+234
+00:04:57,550 --> 00:04:57,560
+best to make s comprehensive panel as
+ 
+
+235
+00:04:57,560 --> 00:04:58,960
+best to make s comprehensive panel as
+possible with representatives from
+
+236
+00:04:58,960 --> 00:04:58,970
+possible with representatives from
+ 
+
+237
+00:04:58,970 --> 00:05:00,940
+possible with representatives from
+companies such as Expo Facebook
+
+238
+00:05:00,940 --> 00:05:00,950
+companies such as Expo Facebook
+ 
+
+239
+00:05:00,950 --> 00:05:03,640
+companies such as Expo Facebook
+Playstation and McKinsey & Company it's
+
+240
+00:05:03,640 --> 00:05:03,650
+Playstation and McKinsey & Company it's
+ 
+
+241
+00:05:03,650 --> 00:05:05,470
+Playstation and McKinsey & Company it's
+going to be perfect opportunity for you
+
+242
+00:05:05,470 --> 00:05:05,480
+going to be perfect opportunity for you
+ 
+
+243
+00:05:05,480 --> 00:05:07,450
+going to be perfect opportunity for you
+to us anything related to react native
+
+244
+00:05:07,450 --> 00:05:07,460
+to us anything related to react native
+ 
+
+245
+00:05:07,460 --> 00:05:09,460
+to us anything related to react native
+from its performance at a scale and
+
+246
+00:05:09,460 --> 00:05:09,470
+from its performance at a scale and
+ 
+
+247
+00:05:09,470 --> 00:05:12,220
+from its performance at a scale and
+supporting multiple platforms till its
+
+248
+00:05:12,220 --> 00:05:12,230
+supporting multiple platforms till its
+ 
+
+249
+00:05:12,230 --> 00:05:13,660
+supporting multiple platforms till its
+performance with existing native code
+
+250
+00:05:13,660 --> 00:05:13,670
+performance with existing native code
+ 
+
+251
+00:05:13,670 --> 00:05:16,240
+performance with existing native code
+bases and any good comparisons against
+
+252
+00:05:16,240 --> 00:05:16,250
+bases and any good comparisons against
+ 
+
+253
+00:05:16,250 --> 00:05:19,570
+bases and any good comparisons against
+other technologies unfortunately
+
+254
+00:05:19,570 --> 00:05:19,580
+other technologies unfortunately
+ 
+
+255
+00:05:19,580 --> 00:05:22,450
+other technologies unfortunately
+sometimes it can be pretty hard to ask
+
+256
+00:05:22,450 --> 00:05:22,460
+sometimes it can be pretty hard to ask
+ 
+
+257
+00:05:22,460 --> 00:05:25,030
+sometimes it can be pretty hard to ask
+the question that you really want either
+
+258
+00:05:25,030 --> 00:05:25,040
+the question that you really want either
+ 
+
+259
+00:05:25,040 --> 00:05:26,620
+the question that you really want either
+there is a really long queue you are
+
+260
+00:05:26,620 --> 00:05:26,630
+there is a really long queue you are
+ 
+
+261
+00:05:26,630 --> 00:05:28,390
+there is a really long queue you are
+unsure about your language skills or you
+
+262
+00:05:28,390 --> 00:05:28,400
+unsure about your language skills or you
+ 
+
+263
+00:05:28,400 --> 00:05:30,070
+unsure about your language skills or you
+feel like the question was already asked
+
+264
+00:05:30,070 --> 00:05:30,080
+feel like the question was already asked
+ 
+
+265
+00:05:30,080 --> 00:05:32,830
+feel like the question was already asked
+and remember there are no bad questions
+
+266
+00:05:32,830 --> 00:05:32,840
+and remember there are no bad questions
+ 
+
+267
+00:05:32,840 --> 00:05:35,650
+and remember there are no bad questions
+just bad asses so to make it easier for
+
+268
+00:05:35,650 --> 00:05:35,660
+just bad asses so to make it easier for
+ 
+
+269
+00:05:35,660 --> 00:05:38,020
+just bad asses so to make it easier for
+you we prepared the form in our
+
+270
+00:05:38,020 --> 00:05:38,030
+you we prepared the form in our
+ 
+
+271
+00:05:38,030 --> 00:05:40,540
+you we prepared the form in our
+conference up where we can submit your
+
+272
+00:05:40,540 --> 00:05:40,550
+conference up where we can submit your
+ 
+
+273
+00:05:40,550 --> 00:05:42,700
+conference up where we can submit your
+questions to be asked during the panel
+
+274
+00:05:42,700 --> 00:05:42,710
+questions to be asked during the panel
+ 
+
+275
+00:05:42,710 --> 00:05:44,950
+questions to be asked during the panel
+it is open till tomorrow mid days so we
+
+276
+00:05:44,950 --> 00:05:44,960
+it is open till tomorrow mid days so we
+ 
+
+277
+00:05:44,960 --> 00:05:46,660
+it is open till tomorrow mid days so we
+got plenty of time to submit whatever
+
+278
+00:05:46,660 --> 00:05:46,670
+got plenty of time to submit whatever
+ 
+
+279
+00:05:46,670 --> 00:05:48,520
+got plenty of time to submit whatever
+you want based on today and a half of
+
+280
+00:05:48,520 --> 00:05:48,530
+you want based on today and a half of
+ 
+
+281
+00:05:48,530 --> 00:05:51,520
+you want based on today and a half of
+tomorrow and we will select as many as
+
+282
+00:05:51,520 --> 00:05:51,530
+tomorrow and we will select as many as
+ 
+
+283
+00:05:51,530 --> 00:05:53,350
+tomorrow and we will select as many as
+possible obviously to fill in the 45
+
+284
+00:05:53,350 --> 00:05:53,360
+possible obviously to fill in the 45
+ 
+
+285
+00:05:53,360 --> 00:05:55,930
+possible obviously to fill in the 45
+minutes time span we have but if you are
+
+286
+00:05:55,930 --> 00:05:55,940
+minutes time span we have but if you are
+ 
+
+287
+00:05:55,940 --> 00:05:57,970
+minutes time span we have but if you are
+interested about about that topic more
+
+288
+00:05:57,970 --> 00:05:57,980
+interested about about that topic more
+ 
+
+289
+00:05:57,980 --> 00:05:59,920
+interested about about that topic more
+make sure you have our official
+
+290
+00:05:59,920 --> 00:05:59,930
+make sure you have our official
+ 
+
+291
+00:05:59,930 --> 00:06:02,800
+make sure you have our official
+conference up on your phone and there
+
+292
+00:06:02,800 --> 00:06:02,810
+conference up on your phone and there
+ 
+
+293
+00:06:02,810 --> 00:06:05,100
+conference up on your phone and there
+you can find the form to fill it in and
+
+294
+00:06:05,100 --> 00:06:05,110
+you can find the form to fill it in and
+ 
+
+295
+00:06:05,110 --> 00:06:08,590
+you can find the form to fill it in and
+last but not least who doesn't love cool
+
+296
+00:06:08,590 --> 00:06:08,600
+last but not least who doesn't love cool
+ 
+
+297
+00:06:08,600 --> 00:06:11,530
+last but not least who doesn't love cool
+free stuff right so we have some goodies
+
+298
+00:06:11,530 --> 00:06:11,540
+free stuff right so we have some goodies
+ 
+
+299
+00:06:11,540 --> 00:06:13,780
+free stuff right so we have some goodies
+waiting for you at a ComStat booth so if
+
+300
+00:06:13,780 --> 00:06:13,790
+waiting for you at a ComStat booth so if
+ 
+
+301
+00:06:13,790 --> 00:06:15,250
+waiting for you at a ComStat booth so if
+you got some free time during one of the
+
+302
+00:06:15,250 --> 00:06:15,260
+you got some free time during one of the
+ 
+
+303
+00:06:15,260 --> 00:06:18,130
+you got some free time during one of the
+coffee breaks I just feel free to drop
+
+304
+00:06:18,130 --> 00:06:18,140
+coffee breaks I just feel free to drop
+ 
+
+305
+00:06:18,140 --> 00:06:19,780
+coffee breaks I just feel free to drop
+by and you know we'll sell you all the
+
+306
+00:06:19,780 --> 00:06:19,790
+by and you know we'll sell you all the
+ 
+
+307
+00:06:19,790 --> 00:06:24,040
+by and you know we'll sell you all the
+details and there is one more thing but
+
+308
+00:06:24,040 --> 00:06:24,050
+details and there is one more thing but
+ 
+
+309
+00:06:24,050 --> 00:06:25,680
+details and there is one more thing but
+it's the most important thing
+
+310
+00:06:25,680 --> 00:06:25,690
+it's the most important thing
+ 
+
+311
+00:06:25,690 --> 00:06:29,379
+it's the most important thing
+as I said this conference purpose is to
+
+312
+00:06:29,379 --> 00:06:29,389
+as I said this conference purpose is to
+ 
+
+313
+00:06:29,389 --> 00:06:31,689
+as I said this conference purpose is to
+create opportunities for people from all
+
+314
+00:06:31,689 --> 00:06:31,699
+create opportunities for people from all
+ 
+
+315
+00:06:31,699 --> 00:06:33,670
+create opportunities for people from all
+different backgrounds to get various
+
+316
+00:06:33,670 --> 00:06:33,680
+different backgrounds to get various
+ 
+
+317
+00:06:33,680 --> 00:06:35,740
+different backgrounds to get various
+developers and meet the community in
+
+318
+00:06:35,740 --> 00:06:35,750
+developers and meet the community in
+ 
+
+319
+00:06:35,750 --> 00:06:39,159
+developers and meet the community in
+real life let's keep that in mind and
+
+320
+00:06:39,159 --> 00:06:39,169
+real life let's keep that in mind and
+ 
+
+321
+00:06:39,169 --> 00:06:41,320
+real life let's keep that in mind and
+behave in a way that is respectful to
+
+322
+00:06:41,320 --> 00:06:41,330
+behave in a way that is respectful to
+ 
+
+323
+00:06:41,330 --> 00:06:44,439
+behave in a way that is respectful to
+all members of our conference we will
+
+324
+00:06:44,439 --> 00:06:44,449
+all members of our conference we will
+ 
+
+325
+00:06:44,449 --> 00:06:45,999
+all members of our conference we will
+not tolerate discrimination or
+
+326
+00:06:45,999 --> 00:06:46,009
+not tolerate discrimination or
+ 
+
+327
+00:06:46,009 --> 00:06:48,159
+not tolerate discrimination or
+harassment of participants in any form
+
+328
+00:06:48,159 --> 00:06:48,169
+harassment of participants in any form
+ 
+
+329
+00:06:48,169 --> 00:06:50,800
+harassment of participants in any form
+if you notice any violations of our code
+
+330
+00:06:50,800 --> 00:06:50,810
+if you notice any violations of our code
+ 
+
+331
+00:06:50,810 --> 00:06:52,870
+if you notice any violations of our code
+of conduct please report them directly
+
+332
+00:06:52,870 --> 00:06:52,880
+of conduct please report them directly
+ 
+
+333
+00:06:52,880 --> 00:06:54,939
+of conduct please report them directly
+to either me call stager security staff
+
+334
+00:06:54,939 --> 00:06:54,949
+to either me call stager security staff
+ 
+
+335
+00:06:54,949 --> 00:06:57,490
+to either me call stager security staff
+will examine them all and action will be
+
+336
+00:06:57,490 --> 00:06:57,500
+will examine them all and action will be
+ 
+
+337
+00:06:57,500 --> 00:07:00,129
+will examine them all and action will be
+taken immediately full version of our
+
+338
+00:07:00,129 --> 00:07:00,139
+taken immediately full version of our
+ 
+
+339
+00:07:00,139 --> 00:07:02,740
+taken immediately full version of our
+official conference of full version of
+
+340
+00:07:02,740 --> 00:07:02,750
+official conference of full version of
+ 
+
+341
+00:07:02,750 --> 00:07:04,180
+official conference of full version of
+our code of conduct can be found on the
+
+342
+00:07:04,180 --> 00:07:04,190
+our code of conduct can be found on the
+ 
+
+343
+00:07:04,190 --> 00:07:06,520
+our code of conduct can be found on the
+website Conference Code of Conduct calm
+
+344
+00:07:06,520 --> 00:07:06,530
+website Conference Code of Conduct calm
+ 
+
+345
+00:07:06,530 --> 00:07:08,710
+website Conference Code of Conduct calm
+you can see the link it's it's it's
+
+346
+00:07:08,710 --> 00:07:08,720
+you can see the link it's it's it's
+ 
+
+347
+00:07:08,720 --> 00:07:12,279
+you can see the link it's it's it's
+colored red on the slide alright that's
+
+348
+00:07:12,279 --> 00:07:12,289
+colored red on the slide alright that's
+ 
+
+349
+00:07:12,289 --> 00:07:14,080
+colored red on the slide alright that's
+about everything you need to know to get
+
+350
+00:07:14,080 --> 00:07:14,090
+about everything you need to know to get
+ 
+
+351
+00:07:14,090 --> 00:07:16,480
+about everything you need to know to get
+started so who's ready for reactive
+
+352
+00:07:16,480 --> 00:07:16,490
+started so who's ready for reactive
+ 
+
+353
+00:07:16,490 --> 00:07:17,500
+started so who's ready for reactive
+Europe
+
+354
+00:07:17,500 --> 00:07:17,510
+Europe
+ 
+
+355
+00:07:17,510 --> 00:07:26,329
+Europe
+[Applause]
+

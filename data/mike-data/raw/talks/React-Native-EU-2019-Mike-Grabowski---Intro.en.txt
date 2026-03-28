@@ -1,0 +1,500 @@
+[Music]
+hello everyone and welcome to react
+native you 2019 so I'm really excited to
+have you all here today and let me tell
+you why I've been excited for past few
+months so react native is doing great
+and this is the reason why I'm so
+excited to have you all here for the
+next two days to talk about it
+we're having more contributions that
+we've ever had we are merging more PRS
+every day we are shipping more features
+our conference has almost twice as many
+oddities as last year so we are growing
+as well yeah life is good so you know if
+there is anybody here in the audience
+that doesn't share this enthusiasm with
+me don't worry we got two days filled
+with talks to get you excited about that
+so let me open it up and tell you some
+details and explain you why I've been so
+crazy about react native recently nine
+months ago we asked the community what
+do you dislike about react native which
+gave us a good overview of the problems
+you are facing and to do so we have used
+the react Native community a github
+organization we have set up on our way
+to increase the transparency and move
+the discussions about the react native
+and its future into public space rather
+than happening on Twitter and closed
+circles on this card and there has been
+a lot of comments and meaningful
+feedback about react native that we have
+grouped into several categories the
+first one is the developer experience
+everything related to working and
+building react native apps the other
+category is community support so
+transparent and predictable development
+path and better support from the core
+team at Facebook and the last one is
+performance so making sure that not only
+we can shift respect from apps but also
+we can make them fast so let's go one by
+one starting from the top one the
+developer experience so based on your
+feedback and what the community is
+struggling with there is free areas that
+are getting popular that are getting
+particular attention from you that is
+upgrading react native apps and making
+sure that it's easy to do or at least
+that you know what's kind of steps you
+should perform yourself another one is
+debugging so being able to test your app
+while it's running be able to develop
+faster these are the promises of react
+native that should work out of the box
+and the last one is the documentation
+which is extremely valuable to bring in
+new developers to react native but we
+are also using it every day to look up
+the API to look up the props or read
+some guides so this is for sure
+something that we should pay extreme
+attention to so let's start with
+upgrading upgrading is personally hard
+because while making react native apps
+we are dealing with multiple build
+systems not only we have to build Java
+Script which already has hundreds of
+ways when you are doing web development
+but also you have to deal with iOS
+development Android development which
+are totally different worlds and
+different infrastructures so we've been
+working on minimizing the surface that
+you are working with so that we can
+perform more changes ourselves behind
+the scenes including breaking changes
+and we have worked on this one really
+hard
+first the contributors there are members
+of react Native community have worked
+really hard on a tool called upgrade
+helper for immediate improvements while
+we work on the other areas as well and
+so the upgrade helper tool aims to
+provide you yeah
+[Applause]
+so the upgrade helper tool Ellis to give
+you a full set of changes that happen
+between any two versions so this will
+help you to see what you exactly need to
+change yourself and aside from that this
+tool has a couple of extra handy
+features such as inline comments to help
+you have more insights as to what
+particle of fires are doing so that if
+you haven't looked into your Gradle
+files you can now figure out by the way
+this is what this file is doing which is
+really handy and there's much more than
+that so I strongly recommend you look at
+it check out the repo stir it and check
+all the features they have prepared for
+you so that's the first thing better up
+great journey with new tools and another
+one that I'm also excited about is the
+outer linking so no more react native
+link which makes your native
+dependencies work automatically all you
+have to do is to run the installation of
+your node package manager and then the
+dependencies are ready for you to use
+and this feature heavily relies on
+khakha ports on iOS and Gradle obviously
+on Android and that means it is now
+preferred and default way of handling
+third-party native dependencies and
+we're not done yet we'll continue making
+the upgrade process even better there is
+a a bunch of helpful ideas there
+floating around react native community
+so if you have any ideas or comments
+regarding these just make sure to go to
+react native community discussion and
+proposals repo where you can check
+issues and give your impact as to what
+we should be doing another area of focus
+is debugging and that's the section I'm
+excited the most because it includes
+features that we are yet about to ship
+so first thing is thanks to Hermes we
+can finally experiment with on-device
+debugging so what that means is that
+when you start debugging your code the
+code will remain running on your device
+instead of running in a Chrome browser
+so that gives you this ability to
+reproduce bags with more confidence
+since you are using the same engine as
+your users are using and I'll mention
+Hermes
+later in this section and we will hear
+about it quite a lot with the next two
+days so another great feature that maybe
+many of you haven't heard about yet that
+is about to ship is integration with
+flipper
+and the flipper is what we've been all
+waiting for this is what everybody was
+mentioning is a disadvantage of using
+react native that there was no debugging
+platform or a way to debug react native
+app and you had to use a bunch of other
+tools to do it
+one for iOS one for Android one for
+JavaScript flipper is a brand new
+platform for debugging mobile apps it
+lets you inspect the layout of your
+react native apps look up contents of
+icing storage as you work with it or
+even use react dev tools they're
+integrated right away no Easter work is
+needed and what's great is that it's not
+tied to any particular platform so as I
+said you can already use it in Android
+and iOS as well so if you are developing
+brownfield or a native apps from time to
+time as well you can use the same tool
+and don't learn new tool all over
+so that's shipping with next react
+native version watch out for updates and
+the last feature that I wanted to cover
+which is as exciting as flipper support
+is fast refresh so fast refresh is the
+new hot module reloading that works is
+fast and predictable and just to give
+you an idea how much the team is
+confident that it's stable it is turned
+on by default yes so when I was when I
+was testing it I I was like how do I
+turn this thing on and then I realized
+wow it's already working and that's
+that's that's you know that's those tiny
+little things that you'd expect from
+react native and it's already available
+in the current RC channel it's ready for
+you to try today so just make sure you
+install the latest which is 61 RC 2
+right now and let us know and on top of
+that we've been also working really hard
+on making our documentation and
+marketing much better in fact you know
+there's there is now a dedicated
+personal Facebook to constantly
+challenged our dogs and her name is
+Rachel and she's here with us today so
+if you have any ideas how to make our
+documentation better just look for
+Rachel and please have a chat and this
+area is still in development so I'm
+gonna give you an idea what we have been
+working on what the team is up to so as
+I said the Decatur team
+and as a result of what we've been
+working on in the past months the team
+has chipped a entirely new react native
+screen as well as redesigned them home
+page of react native website to give it
+more to emphasize more on the react
+native features and make it more
+exciting for developers that are looking
+to understand why is it really react
+needed I should try but we are now
+particularly looking into API Docs
+making sure that the documentation
+reflects the current state of props as
+well as providing you with more guides
+to help you build the react native apps
+not necessarily guides that only relate
+to the components and ApS that are part
+of react native but also something
+broader in the future is something we
+are considering as well so that's it
+about developer experience let's move on
+to the another section which is
+community support and for improving the
+community support and stability of the
+framework we have worked together with
+Facebook on investing more time into
+open source and prioritizing community
+contributions and in the community so as
+a part of that we have put a lot of
+effort into lean core and try to move
+faster of the peers so starting with the
+linker this is a codename for a process
+that we have started a while back ago to
+reduce the surface of react native to
+make it smaller and allow the community
+to take better care of modules that were
+not necessarily needed for core
+functionalities and that were not
+necessarily used in certainly at
+Facebook so there was no reason to tie
+these modules into the Facebook
+infrastructure and by extracting that
+code into react Native community org
+we were able to get much more people
+involved into the project these modules
+are now my team by a healthier and more
+diverse communities showing that this is
+a great step for the community where we
+have notices that by giving developers
+and community ownership and
+responsibility their development of
+these libraries accelerates to the level
+that we haven't seen before a great
+example is webview that in a first month
+of being a separate project merged over
+a hundred of peers adding features and
+functionalities people have wanted for
+long and this is significantly more than
+we were ever able before in the history
+of the webview and other modules as well
+in total we have merged over
+800 PRS combined to the extracted
+projects including webview a sink
+storage net info website of course the
+CLI we are really excited to see other
+pieces of react may be following the
+same in a future and improving their
+quality significantly so history Klee
+speaking we have sort of deprioritized
+community contributions and as a result
+of that we have accumulated almost 300
+pool requests in last December and
+that's quite a lot and we've been
+working on reducing that number to
+around 50 and simultaneously the average
+number of pull requests that people were
+selling increased from 3.5 per day to 7
+so in other words we have merged almost
+600 pairs in past six months I think
+that's that's really impressive that's
+more almost 75 of all peers ever
+submitted in that amount of time and if
+I I took a look historically at the
+ratio between merged and sent PRS and we
+are actually increasing that so I'm
+hoping to make that number even higher
+and the result is noticeable immediately
+with react native being the second most
+contributed project on github with over
+10,000 contributors of any kind and
+2,000 contributors that contributed code
+thanks to that we are moving faster and
+is a healthy thing so I think the
+takeaway from this section is that if
+you have ever sent a PR in the past and
+you burnout because we haven't murdered
+in two years give it a try again
+so aside from making all these great
+contributions that we have packed into
+more than 42 releases including major
+and minor versions I want to call out
+Microsoft and all the great tools
+they've been making for react native
+recently so obviously from Cote push up
+Center and react native windows they've
+been always extremely focused on
+building enterprise ready tooling around
+react native but now they are finally
+connecting the dots and starting to use
+react native not only in Skype and
+products similar but also in their
+flagship products including office suit
+which makes me really excited this is an
+indicator that react native is
+enterprise ready and this is
+impression that I'm also getting from
+our clients of coal stock as well and
+that's really amazing because we're real
+native shines is the brownfield
+integrations integrations with existing
+native apps which is essentially what
+Enterprise is all about and I'm really
+looking forward to Ryan's talk on Friday
+morning where we're gonna have some
+deals about Bradfield integrations as
+well as the Microsoft Talk
+where they gonna sure how do they really
+use react native and once they're yet to
+come so pretty excited about that so
+last thing I'd like to mention here is
+the performance something that I hear
+almost all the time I go start pitching
+react native especially to native
+developers everybody's like oh you got
+this async bridge thank you Rufus react
+native has already acceptable
+performance out of the box and I'm
+saying this because when I was doing
+native apps myself I did a lot of hacky
+code which ended up blocking main thread
+on iOS and so it's not that easy to
+build a fast up on iOS but with react
+native you get certain level of
+performance out of the box but that's
+not enough for us and we'll hear a lot
+about this moving next two days but
+there's just two areas that I wanted to
+highlight in this section one of them
+being Hermes and the other one being
+Metro so starting from Hermes that's
+been released a chain react another
+react native conference that you should
+save your calendar if you are especially
+coming from States and it's a JavaScript
+engine that features ahead of time
+static compile optimizations and compact
+byte code size and unlike traditional
+JavaScript engines Hermes is optimized
+specifically for running react native on
+mobile devices and it's not meant to be
+used on the web so when I asked Facebook
+team why did you really start
+investigating things like Hermes what
+they told me is that traditional
+JavaScript engines are usually optimized
+for 10 maybe 20 most impactful websites
+on the Internet and this is not how
+react native works and so this is
+actually true and the reason they and
+you can actually see the benefits of
+that approach almost immediately because
+as soon as they released it and that's
+like very first version we get the
+improvements right away for example the
+time to interaction is improved by two
+seconds just like that and the
+application size gets by 90 megabytes
+smaller
+this is not the end this is the just the
+beginning of improvements that we are
+yet to see and I think this is an
+example there's an amazing example
+showing that Facebook treats react
+native seriously there's been a lot of
+people asking whether Facebook was
+really committed to react native things
+like Hermes don't happen every day I
+don't remember seeing a JavaScript
+engine being created since I'm into
+development which is maybe like 10 years
+and only now I think this is great
+because what we are getting is high
+speed optimized engine for our use cases
+and now we can finally move especially
+Android side to the next level of
+performance so parsing and executing
+JavaScript battle is one thing but
+generating the code in a performant way
+is another thing and that's what the
+team of Metro's had been working on for
+the past few months so amongst many
+features they've shipped because since
+the extraction of packager to a separate
+project Khanna the first linker project
+they started shipping a lot a lot of
+features and I wanted to highlight a
+feature called inline requires the let's
+metro identify components that can be
+lazy loaded and as a result modules are
+required with a delay as soon as they
+are needed for us to use this is
+different to requiring everything at the
+same time and can be specifically useful
+if your app is big and contains a lot of
+modules together with Hermes this is a
+nice combination to improve your
+performance and lazy load parts of your
+bundle and if you haven't used it yet
+and working on a bigger app you can give
+it a try and let us know how it works
+for you so that was a brief look at the
+all the improvements we have shipped in
+the recent months and will continue to
+align with the community every once in a
+while to make sure that the direction we
+have picked is still aligned with the
+expectations of the community in fact we
+just started another edition of the
+survey in order to check the status of
+react native once again and see if any
+of these improvements had real impact on
+you looking forward to learning more
+about that please check discussions and
+proposals and let us know what you think
+and also I'd like to thank Christophe
+who's not here with us today he's also
+working at Facebook who's been doing all
+these great initiatives trying to gather
+feedback and then do a lot of moderation
+work Christophe thank you for that this
+is really great work
+Kaka I can I wanted he will do the
+keynote but he could very important
+things so maybe next year Christopher
+alright so I think there is a bright
+future ahead in front of react native
+with the vibrant community that you are
+part of Facebook commitment and support
+from other partners I think we are on
+the right track and at this pace
+reducing the number of issues to a bare
+minimum and improving the quality of the
+framework I think it's just a matter of
+time don't quote me on that but I think
+that most of the issues that we know
+today will soon be fing away past in
+fact some of them are already under
+heavy development and this is what this
+conference is all about getting you up
+to date and getting you know the
+community around you and around react
+native and speaking of the community I
+are open source and react Native
+community a lot working with people
+across the world gave me the opportunity
+to overcome environmental barriers that
+I was facing living in a very small city
+somewhere in the countryside of Poland
+and you know thanks to open source and
+all the great people that I've met I was
+not only able to become a bird Avella
+per but I was also able to set up coal
+stack and continue spreading the
+enthusiasm with people around me and now
+I feel privileged to be standing in
+front of you and all I want to say is
+that my goal is to give you all the same
+opportunity starting today so without
+making it any longer
+thank you for making it to the react
+native EU 2019 and I wish you have a
+great conference so let's make it
+officially start
+so before we continue to our first
+speaker I wanted to thank our sponsors
+that helped us make this conference
+happen they are with us every year and
+if they wasn't for for them we would
+probably have a hard time getting things
+set up so please give them a huge round
+of applause
+[Applause]

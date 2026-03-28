@@ -1,0 +1,668 @@
+Oh
+let's welcome the next speaker Mike
+hrabowski Universal react uh talking
+about reusing JavaScript's between react
+native react web and yeah how to really
+write once run everywhere right Mike
+hello everyone I also like to welcome
+everyone from the livestream I know
+there are lots of people watching us so
+I hope you can I enjoy this so I'm Mike
+and I'm here today to talk to you about
+the concept of universal JavaScript and
+how thanks to reacts react native we can
+build our apps faster and make them more
+maintainable before we start a little
+bit about myself I'm a CTO at that
+company called call stack that IO I've
+confounded it last year to help
+companies deliver better react native
+apps and we do a lot of in the open
+source and that's probably why you may
+recognize me from what I'm doing with
+react native react navigation and a
+couple of other repositories we are also
+organizing a conference in September
+about react native it's called react
+native EU if you are interested in
+hearing more rare native talks you
+should definitely check it out
+and so at call stack we have this great
+opportunity to iterate on products that
+already have existing version of the app
+done in the same language usually for
+web and that unique opportunity shaped
+the way I think about Universal
+JavaScript and about the patterns that I
+find useful and this talk is going to be
+inspired by the findings that we've been
+discovering over the past year so let's
+get started
+first let's start with architecture
+overview of a typical app we are usually
+building I like to think about those
+applications in terms of multi tier
+architecture it is a client
+client-server architecture in which
+presentation layer business layer and
+data access layer are kind of physically
+separated and the most widespread use of
+that architecture is the free tier
+architect
+with the three layers that I've just
+told you in apart from usual advantages
+of a module software with well-defined
+interfaces that you get such
+architecture gives you the unique
+opportunity to upgrade or replace each
+of these tiers independently during for
+instance porting your existing code base
+over to a new platform naturally there
+is no such an app that can reuse 100% of
+the code without compromising on
+platform experience and performance
+however this is what we are going to
+optimize for and this is the best-case
+scenario we are optimizing our apps for
+so let's take a step back and think how
+we used to develop applications in the
+past because historically it was never
+easy to reuse code it is because we've
+been always developing our applications
+separately from within independent code
+bases we've been kind of creating each
+of these applications separately and
+that was resulting in features where
+implemented in a different way different
+sort of bugs being created for each of
+these platforms and apart from these
+reasons that approach is fundamentally
+broken for the following three reasons
+first it is expensive to target a new
+platform for instance take an example of
+Tizen if you are into wearables and
+smartwatches you know that Tizen is a
+Samsung operating system for
+smartwatches and in fact I'm wearing one
+right now and by the way this is not
+like a paid ad and that operating system
+is really smooth really smooth and
+somehow feels better than Android wear
+in my personal opinion the only problem
+that didn't has is it like the apps no
+one is developing for it everyone is
+targeting Android wear and the system
+itself is considered complicated the
+second point is that it's slowing us
+down as you need more and more
+developers more teams to target all the
+platforms and develop these features at
+the same time and that leads to
+inconsistent implementations and
+different sort of bugs
+then has to fix down the road and
+finally there is that platform first
+approach where you really is you know
+your for example iOS applications first
+and it's not only bad for your product
+but it's also going to be solve your
+users because if they feel abandoned
+like for example take take an example of
+snapchat that everyone knows that its
+iOS first application it used to be an
+Android version was lagging behind iOS
+like it was slow it was I was unable to
+use it and that was the reason I stopped
+using it the only reason I installed it
+it was that I was in beta Channel I saw
+that they fixed it and so if you go with
+platform first approach you made peace
+of your users in a way that they will
+never try your app again and may even
+find a replacement so that is important
+from the day ones that you don't make
+that mistake and personally I think that
+one of the biggest problems and
+challenges here is that the language
+itself is not universal right because
+it's tied to a specific platform
+environment like with Android we write
+Java with objective iOS write
+objective-c
+these languages have their own runtimes
+own semantics build systems and syntax
+and it's technically possible to share
+code between these platforms you can
+write C code and reuse your low-level
+modules and this is for example what
+Dropbox is doing that however doesn't
+scale well and you can't do it for web
+so how do we solve it like I wouldn't be
+standing here yes the answer could have
+been different than JavaScript right one
+of the things that I like about it is
+that it's widely adapted and present
+almost on every machine nowadays you can
+get productive with very quickly and it
+continues to grow in popularity as more
+and more developers are using it one of
+the things that is very special about
+Jas is something that we call the J's
+which which basically which
+basically boils down to you know new
+frameworks coming out every day and
+every day but I believe this is a unique
+feature that we have our vibrant
+ecosystem keeps looking for improvements
+keeps researching and keeps inventing
+and that contributes to Rises frameworks
+there are aiming to solve the culturing
+problem and one of them is react react
+native and the entire idea of component
+based developed in the component based
+interfaces there are two things that I
+like about react here first
+I like the bahraini by layering react I
+can write not only web applications but
+now I can write iOS apps I can write
+Android apps VR with Windows Phone with
+more and more platforms to come we don't
+even know what we will be able to do
+with react native in the future and the
+second thing is that I like how react
+encourages us developers to think better
+in terms of software developer if you
+are like me probably two years ago you
+have briefly heard about functional
+programming I didn't even do it on my
+daily basis I was hoping on the road you
+know stateful actions and basically bad
+practices now thanks to react my stream
+on Twitter is full of immunity immutable
+data structure is purity functional
+programming and I even started writing
+Haskell and other languages so I like
+that react makes us better developers
+and opens up a lot of possibilities for
+us and so one of the concepts that react
+popularized was the universal JavaScript
+that we are talking about today and
+Universal back in a day called
+isomorphic stands for the ability of
+your code to run on any platform
+regardless of the environment this term
+is often brought up in a context of
+server-side rendering that means our
+react components are executed in the
+node.js environment where they can
+prefetch their data and user receives a
+pre rendered HTML output and so that
+brings us to another stack which is a
+stack of today this is more or less
+what's happening right now in variety of
+repositories and on Twitter that stack
+embraces the idea of universal
+JavaScript greatly which is greatly
+inspired by the server-side that I've
+just told you it eliminates multiple
+independent code bases and covers a
+single unified source code that is meant
+to run on every platform
+it builds upon cross-platform libraries
+like read rather or react navigation and
+uses them everywhere to navigate your
+entire web application and your entire
+mobile application at first you may feel
+like this approach is superior to the
+one we have seen before because it fixes
+it fixes code duplication because now we
+have a single codebase we can write all
+the features from the same place and it
+eliminates the platform first approach
+right because we have the short code
+base across all the platforms however at
+the same time it unnecessarily
+complicates the code base it employs a
+lot of workarounds and hacks just to get
+things working sometimes it even
+compromises on performance just to give
+give the promise of your code being
+sharable across platforms and a great
+example of such not strictly related to
+react is PhoneGap and Cordova which if
+you are following Twitter recently was
+brought up in one of rants about
+progressive web apps and all that mobile
+battle and so the problem with PhoneGap
+is that you can take arbitrary website
+and put it as a standalone mobile app
+that you can deliver to your clients
+that gives you that ability to just drop
+in your web site reuse 100% of the code
+give to your users but what about
+performance right
+what about gestures DOM is fundamentally
+a different concept and it was never
+designed to handle that complex gestures
+like pinch or rotation or whatever
+multi-touch gestures so these things and
+another a lot of other nuances from
+mobile platforms that make up a great
+user experience we know are just hard to
+do that way and that brings me to the
+brings me to the fact that I've seen
+that we keep missing a big feature here
+because we are all coming from web-based
+development we keep talking about
+server-side rendering and our mental
+model gives us the idea of showing
+everything like with server-side
+rendering our initial thinking is that
+we should just have our components
+execute on a server
+and the output is transferred right to
+me Universal JavaScript is different
+like it's it's about code portability
+than thinking about how can I make my
+rap it's run entirely on mobile I should
+think what parts of my app are capable
+of running on a different platform and
+how can I make them to contribute to
+overall application that will be done
+specifically for that platform and so
+that brings me to to the to the
+statement that we shouldn't build
+Universal applications they are over
+engineered over complicated and too much
+abstract there is no silver bullet as
+far as platform sharing is concerned and
+all boiler plates you ever saw that give
+you the promise of code reusability are
+fundamentally broken at the design level
+you can't just take a pre-made solution
+and apply it to your different use cases
+and reuse your web app to a mobile app
+and so instead of building Universal
+applications but we should really build
+our Universal libraries a new result
+universal UI components and so what that
+really means to build a universal
+libraries it's not for designing our
+systems in a way that makes our API and
+logic run on every platform regardless
+of the of the environment and at first
+you may feel that it is the same as
+universal JavaScript but the difference
+here is significant because instead of
+focusing on making your application run
+s is on any platform you start thinking
+how you can take part of it like an
+authentication logic and make it to
+contribute to entire iOS for example app
+and a web app and that contributes to a
+better development cycle within your
+product because your developers or you
+and your colleagues can focus on solving
+specific problems working inside modules
+and making sure that the quality of your
+app is still at the very high level so
+how about universal UI component I
+didn't mention react as a dominant
+Universal paradigm for no reason right
+one of its principles is that component
+based model where you don't build a moat
+well you don't build an app what you do
+is you build small building blocks and
+you compose them to create bigger and
+bigger and bigger components whereas the
+root component is what you call and up
+that's how that's how you make it with
+react and so building Universal
+components means to focus on making
+those components platform agnostic which
+makes sense and using them to create
+platform specific solutions for your
+users and that said instead of focusing
+on reusing entire navigation prefer
+using first cloth rather for the web
+user AG router for navigation on mobile
+use react navigation but you are free to
+reuse the back button right because back
+button is a small part of your app
+having is reusable is not going to
+affect the performance because patches
+and containers are very easy to port
+across platforms so you shouldn't make
+compromises here presentation layers the
+initial layer is very complicated and
+it's very hard to reach the cross
+platforms you may feel that it's easy to
+reuse it because we're because Android
+and iOS are similar but if you're going
+to use react to for example create a VR
+app it's going to get complicated and so
+in this talk I want to present you the
+stack of tomorrow which is a set of
+concept that I always apply over my code
+bases that I want to make Universal if
+you've been following this topic I gave
+a very very similar talk
+two years ago in Bratislava and I ended
+up this thought by saying that there are
+three things that has to be fixed in
+order to make this a production ready
+solution that can be very popular and
+recently I was sitting and watching
+Twitter and I've realised that we have
+made all these things and so now these
+the dots pack is ready for the primetime
+and I'll explain why in a second of
+course I'll share with you the reference
+implementation of that after the talk so
+please follow me on twitter I'll be
+showing the
+the lingerer but still keep in mind this
+is not a dropping code that you can take
+instead analyze the solutions there and
+think how many of them applies to your
+code so as I said there are three main
+aspects of writing Universal code in
+this approach that I wanted to highlight
+today first of them is setup and our
+code setup is very special for two
+reasons first we prefer Universal
+libraries and user interfaces single
+single units of our app over entire
+applications that tend to be quite
+complex ideally we want to follow that
+multi tier architecture that I told that
+I showed you at the beginning and keep
+iterating on the own parts of our
+applications independently second thing
+that makes this codebase special is the
+concept of utilities I guess like how
+many of you have ever probably everyone
+created at least one folder called utils
+or utilities whose notarizing hand is
+probably lying now but okay so the thing
+is that I like to think about utilities
+as a to be published components and
+modules right if your utility is not
+ready to be in NPM registry or public on
+github because it's tied to your
+application logic there's literally an
+utility and you should think about how
+you structured your application all that
+means that the way we are going to work
+with our code is going to is going to
+involve a lot of independent separate
+code bases and repositories which can
+get difficult to track and so to solve
+these and many other problems we can
+organize our code into the multi package
+repository that some of you may know as
+a mono repo and projects like Babel or
+react already utilize that approach to
+make the workflow easier and you can see
+the example structure on the slide that
+has three main folders one of them is
+platforms and
+but first folder has reached all the
+targets that you support now and you are
+going to support in the future and there
+is the libraries folder where all the
+packages that you want to publish in the
+future are going to live and the core
+where the shared logic is going to be
+located and by the way one of the great
+things about having libraries that you
+are eventually going to publish is the
+fact that you start thinking about the
+interface about the API and how your
+future users are going to use it which
+makes you to think twice before you
+create a file create another abstraction
+which contributes the better codebase
+and so if you want to automate the
+process of working with your codebase
+you are free to use lerna a tool that
+was designed specifically for empowering
+that kind of workflow it has a bunch of
+comments for example you can learn a
+bootstrap to automatically link all the
+repositories with each other which makes
+this process really easy this setup
+really easy to work and so very
+important part of this entire workflow
+is webpack it's been it's been quite
+it's in quite last-minute with web pack
+because we've been working on bringing
+web packs to react natives for quite a
+while and I was working on that with
+Satya you may know him Satya won 6-4
+he's also working a vertical stack and
+by the way if he is watching live stream
+we can now all say happy birthday
+because his birthday are today yeah so
+so we have we've been working on that
+together for quite a while and hopeful
+like fortunately we made it and like
+what was the buzz all about so to
+compose universal modules and user
+interfaces together you need a universal
+bundler like web pack and we know that
+web pack is a powerful and extensible
+library that has a lot of features
+including first-class support for some
+links and so the entire idea of bundling
+system like web pack is to take your
+application code starting from an entry
+point and serve a bundle so if you are
+working with rig natives this is exactly
+what the react native package Ares
+the only difference is that we wanted to
+use a single build pipeline for all the
+targets so that we can make it Universal
+and reuse our conflicts and so thanks to
+whole react native can now benefit from
+that and we can use webpack quite easily
+with react native to deliver pretty much
+everything that we can with web and the
+last part and the last part of our setup
+which is very important this bubble as I
+mentioned before javascript is a wildly
+adapt language now that's only because
+it's been around for a while the problem
+is that with every browser out there you
+never know what's the target versions of
+supported and for example iOS 10 and iOS
+9 and iOS 8 shipped with Safari that has
+a different subset of features and that
+the like they ship with JavaScript core
+which is running your react native
+engine or a native code and that Safari
+supports a different subset of features
+for example in iOS than it suffers the
+full es2015 spec whereas on iOS 9 it
+only supports a sub spec and so bubble
+is a grateful for that because it allows
+us to transpile our code to support any
+target that we that we that we want to
+that we want to use it and run our
+application on and so the translation is
+the process of taking our J's code
+applying set of transforms and returning
+something that can run on a react native
+and so there are a bunch of
+optimizations that we can do thanks to
+bubble and thanks to using it here and
+we have another targets we can reuse our
+extensions there are two very
+interesting concepts that you can that
+you can do for example with react native
+one of the performance improvements is
+that you can inline all the platform
+calls you probably have been using
+platform module for selectively
+rendering some stuff in react native so
+these codes are inline and during the
+compile time so now that we have a
+foundation for showing our code that's
+setup let's take a look at common
+techniques for doing so so the most
+important and the
+basic approach is to use platform
+extensions such as such as the ones that
+are allowed by RIT native packager this
+is crucial for creating cross-platform
+experience it allows people to override
+default implementations by creating
+platform specific files the idea is that
+having an arbitrary file like in this
+case index dot JSP SJS that will be
+specifically loaded on iOS - for example
+override the default tab bar this works
+out of the box in react native and with
+web 5 you can make it with resolve that
+extensions which again brings us to the
+point at web bug is a perfect solution
+for universally bundling our
+applications and as far as as far as
+presentation layer goes I mentioned that
+it's it's kind of complex and it
+requires us to think deeper before we
+start sharing things one of the things
+that is important is to understand the
+different levels of sharing there are
+two of them and one is the local level
+the local level is when you for example
+sure your clients eyes react on server
+side or when you share your iOS we've
+Android you stick to the single
+environment you're just sharing code
+between different different devices
+right and this is easy this is easy
+because for iOS and Android you can
+reuse the entire UI I'm not talking
+about user experience now like
+performance wise no differences here you
+can just use it however at platform
+level things we have quite complicated
+because you have to understand that not
+necessarily everything that you know
+from web or react native or mobile can
+be run at the same time on different
+platforms so the answer to that problem
+is that we should use primitives over
+press on specific controls and so the
+problem is that if you want to really
+share your user interface component you
+don't want to implement it enzymes for
+end platform for everyone's to created
+one for all the platforms and that's
+what primitives are for to better
+illustrate us consider this example
+where I'm creating a component
+that's essentially just a wrapper right
+this component what is doing is wrapping
+my children with a div tag and applying
+some sort of styling ABC problem is I'm
+using a host component I'm using Dom DS
+component which is entirely breaking the
+idea of code sharing right there is no
+Dom related thing here it's just that I
+used the attack it's no longer going to
+run on a mobile and so the idea is to
+use a generic wrapper kind of like a
+view that can adapt its behavior based
+on the platform and make it easy to
+build generic environment agnostic unit
+of interface and there are various
+implementations and takes at this
+problem including recently open source 3
+XP by Microsoft that I encourage you to
+check and react native web which is the
+parallel implementation of react native
+meant to run on web and react primitives
+that I'm using in this example so
+sometimes when we all we need is just a
+simple wrapper like in this case using
+the entire library it's probably not
+efficient and you can what you can do is
+you can use the file extensions solution
+that we seen before so that's all about
+presentation layer and as far as sharing
+of layers goes there is also business
+layer and middle layer is quite easy to
+share because we can take advantage of
+javascript javascript is running on
+mobile in our web with no differences so
+we can quite easily share the code and
+to better illustrate the approaches let
+me let me tell you two examples that I
+highlighted here behind below the
+heading one of them is the async storage
+module that we made at call stack which
+takes the async storage from react
+native and local search from web e and
+integrates both implementations into a
+single library it abstracts away the
+differences for you errors and all the
+other api's which means that you can use
+it regardless of the platform and the
+second round is react navigation where
+all you have to do is where is
+recognition well what we do is we take a
+single codebase and we ship the web
+version that contains the logic and we
+ship the mobile version
+that contains also tabview drawer and
+stack which are mobile specific user
+interfaces as far as sharing your
+business logic goes you don't have to
+use red X but I'm mentioning it here
+because I like to think of red acts as a
+protocol for sharing business logic it
+externalizes your state it moves your
+state away from react which makes it
+easy to switch the Dom layer to
+something entirely different not only
+you can switch from web to mobile but
+also you can switch from react to view
+GIS or
+entirely different frame or given
+vanilla J as in electron up depending on
+what you are targeting and another thing
+that I like about radix is its
+simplicity and extensibility because it
+has the concept of middle worst and so
+if I have if I have an async action as
+in this case and what to send user
+details I want to use a fetch library on
+web and mobile but for example from
+terminal I want to use the command line
+to fetch a certain resource for me so
+having the ability to inject context to
+your actions like in this case allows
+you to change the dependencies on per
+environment basis and even if you don't
+need it now all you have to do it also
+helps you with testing so the takeaway
+for today is that code mobility is
+important not only you should be able to
+read off any part of your code and
+replace it with another one in today's
+world you should also be able to target
+new environments and platforms without
+rewriting things from scratch all over
+again there is no universal pattern or
+paradigm to that problem
+our cure bases are different clients
+have different ideas and most
+importantly technologies change so I
+encourage you to innovate and keep
+looking for that optimal solution thank
+you
+[Applause]
+you
+[Applause]

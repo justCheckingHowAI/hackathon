@@ -1,0 +1,178 @@
+this is the day I've been looking
+forward since last December when our
+Edition when our previous Edition
+finished and I really give you just
+happy to see you all here there are many
+new faces which is great that means our
+community is growing we are going to
+have a great time over the next two days
+and I hope the experience you will get
+out of this conference will influence
+the way you create products on a regular
+basis so before we get started let me go
+through some important informations
+about the conference so maybe just an
+interaction - to me some Mike and I'll
+be your MC for the next two days I'm
+also see do at call stack company that
+organizes this conference for you and
+I'm also doing react native on the core
+team in particular are responsible for
+releases and some CI stuff so we as a
+company quickly jumped on the bandwagon
+of react native back in a day and have
+been excited by its opportunities since
+then I think we were one of the very
+first deaf shops to focus on the react
+native and to sort of go cross-platform
+all in and so we felt like we need to
+give back to the community we felt like
+we were given this beautiful opportunity
+to actually create an even for you so
+that you can all meet together that you
+can all interact with each other and
+learn from each other so for the next
+two days hundreds of great developers
+from the react native community will be
+hanging out here in broad swath and if
+someone has suggested this to me a few
+years ago I would probably call him
+crazy like how is this even possible
+that people from all around the world
+will be sitting in one place in broad
+swath and I will not have to travel
+hours to meet my friends so it's the
+opportunity that I wish I had myself
+when I was starting react and I hope it
+will have a positive impact as I said on
+you as developers so I wouldn't be
+standing here in front of you if it
+wasn't for all the awesome companies and
+people that believed in our mission and
+decided to contribute to the event they
+didn't just do it for
+recruitment and marketing they did it
+because they believe in our community
+and they want to make it even better so
+please give them a huge round of
+applause
+all right so react native Europe is a
+two-day single track conference it's the
+fact that you probably are already aware
+of with more than 20 speakers from all
+around the world and since react native
+can be using variety of ways from
+Greenfield to brownfield apps we try to
+select lineup in a way that everyone
+fund finds satisfied satisfying no
+matter the background and what you are
+looking in as far as using react native
+so we ask that there are no questions
+during it or right after the talk best
+to reach out the speakers during either
+coffee break or after-party if you have
+troubles locating them just let
+me know or anyone from coastal security
+will help you out and you can also
+submit a question to our Q&A panel which
+I'll tell you we're about in a second
+and every once in a while we'll have
+coffee breaks as well we know that only
+fully hydrated and fed attendees can
+enjoy the conference experience at a
+hundred percent so we try our best to
+prepare a wide range of tasty foods and
+drinks just for you so once you grab a
+snag and drink coffee it's time to break
+the ice right to make things easier we
+have prepared special stickers where you
+can list topics that the others can ask
+you about so it's a great way to lower
+the barrier to entry when starting a new
+conversation and if you don't have a
+sticker yet there are plenty of them at
+the registration desk and by the way you
+shout out to folks from anything thread
+for organizing change we hug and bring
+it up this idea I really enjoy it out
+and we were more than happy to have it
+here as well
+[Applause]
+it's just a couple of things about the
+venue it's kind of bigger than last year
+and on the right side is where we are
+it's the conference on the opposite side
+we'll have the lunch and evening party
+chill-out zone and coffee break if you
+are tired - feel free to go there and
+have some rest and don't worry it has
+live streaming inside so we will not
+miss any talks unless you really intend
+there is you know we all know that there
+is no better way to get answers to most
+compelling questions than having Q&A and
+being able to actually interact with
+developers there are building stuff that
+you're interested in so we tried our
+best to make s comprehensive panel as
+possible with representatives from
+companies such as Expo Facebook
+Playstation and McKinsey & Company it's
+going to be perfect opportunity for you
+to us anything related to react native
+from its performance at a scale and
+supporting multiple platforms till its
+performance with existing native code
+bases and any good comparisons against
+other technologies unfortunately
+sometimes it can be pretty hard to ask
+the question that you really want either
+there is a really long queue you are
+unsure about your language skills or you
+feel like the question was already asked
+and remember there are no bad questions
+just bad asses so to make it easier for
+you we prepared the form in our
+conference up where we can submit your
+questions to be asked during the panel
+it is open till tomorrow mid days so we
+got plenty of time to submit whatever
+you want based on today and a half of
+tomorrow and we will select as many as
+possible obviously to fill in the 45
+minutes time span we have but if you are
+interested about about that topic more
+make sure you have our official
+conference up on your phone and there
+you can find the form to fill it in and
+last but not least who doesn't love cool
+free stuff right so we have some goodies
+waiting for you at a ComStat booth so if
+you got some free time during one of the
+coffee breaks I just feel free to drop
+by and you know we'll sell you all the
+details and there is one more thing but
+it's the most important thing
+as I said this conference purpose is to
+create opportunities for people from all
+different backgrounds to get various
+developers and meet the community in
+real life let's keep that in mind and
+behave in a way that is respectful to
+all members of our conference we will
+not tolerate discrimination or
+harassment of participants in any form
+if you notice any violations of our code
+of conduct please report them directly
+to either me call stager security staff
+will examine them all and action will be
+taken immediately full version of our
+official conference of full version of
+our code of conduct can be found on the
+website Conference Code of Conduct calm
+you can see the link it's it's it's
+colored red on the slide alright that's
+about everything you need to know to get
+started so who's ready for reactive
+Europe
+[Applause]

@@ -1,0 +1,891 @@
+hello everyone
+uh i'm sort of surprised because from
+the backstage i only saw those you know
+tables so i was really sort of surprised
+to see it's already prepared
+anyway it's nice to see you again this
+year enjoy portland beautiful weather
+and u.s in general
+this stuff that i'm making today is sort
+of special because for most of my time
+all the talks that i was making
+they were all about javascript react
+native tools you know releases and the
+general experience working with native
+modules
+today i'm here to talk a bit about
+reasonable our experience building that
+and basically to tell you what we've
+been after for the past year
+so before we begin just a quick
+introduction
+i'm mike and surprisingly i'm a software
+developer using react in particular
+um i'm on a react native team
+doing releases work around that helping
+with general might enhance and some work
+around common line tools as well so
+three years ago i founded callstack
+which is a consultancy with a mission to
+help developers like you
+launch their products on every platform
+at the same time
+that's three of us at chain react right
+now with anna and adam we have a move
+upstairs you can hit us up for some nice
+t-shirts if there are any left stickers
+and just generally chat about react
+native and if you got any questions
+about reasonable
+about my talk feel free to hit us up
+there
+so before we start let me ask you a
+question how many of you have ever heard
+or used reasonable
+before
+okay so there is quite a few
+those who didn't raise your hands don't
+worry we got a few introduction slides
+to go through reasonable basics so that
+we all know uh what that's all gonna be
+more or less about
+so reasonable is a statically typed
+language that is based on
+more or less 25 years of occamol
+experience you know
+and research around multi-platform
+development
+it has a very powerful type system built
+in with type inference and so that means
+that you don't have to write types
+everywhere you're writing your code
+sometimes the compiler will just infer
+the types for you
+and the other key design point of reason
+that i'm really excited about
+is that reasonable is familiar to
+javascript developers
+and
+i was sort of i sort of experienced that
+myself because i used to
+like be i used to learn a camel at my
+university and i almost failed the
+subject because of like being unable to
+write algorithms in a comment it was
+just too hard for me so when i first
+experienced reasonable i was really
+excited because many things that i
+couldn't understand otherwise became
+easy to understand straight away
+and obviously it has a very very
+powerful build system that makes build
+times very fast especially the
+incremental builds are so fast that
+sometimes you even you know you you
+can't even notice the that it rebuild in
+the meantime
+and so um just a quick uh introduction
+to the syntax itself this is how you can
+define a type declaration for something
+that you would call an object in
+javascript this is a record in
+reasonable and in this case it's a
+person that has a name and a surname of
+type string
+then you define
+create an instance of that record
+in this case it's me with my name and my
+last name
+and for example here's how you can
+create an arrow function that accepts
+this person as a first argument and what
+it does is it basically console logs the
+name
+and this is something very similar to
+spread operator in javascript which is
+basically creating another instance of
+that person as you can see type is
+missing here it's automatically inferred
+for you and it's obviously person
+so more or less this is very similar to
+javascript i picked those examples on
+purpose just to show it's not a whole
+new experience for you obviously there
+are different things because it's a
+different language all in all but in
+many cases you will find yourself
+already at home
+so let's talk about ffi in reason ml
+which is a foreign function interface
+so ffi is a mechanism by which one
+program written in this case in
+reasonable can call routines or make use
+of services that were made in other
+language
+so in case of reason this is about
+accessing javascript code
+for something that we call a binding and
+bindings are just type definitions made
+around javascript code to allow you
+access
+through types and guarantee sort of
+types of safety when you are dealing
+with a java world
+and the following example will
+demonstrate how you can actually create
+a type definition for a math security
+function in javascript so what you do
+at the beginning is that you create
+external
+function of name sqrt and this is how
+you will be calling that function from
+reasonable and then you basically call
+it as a next line
+next what you do is you have to define
+type definitions so you have to actually
+think about the api declaration of the
+javascript function in this case mafia
+security and think what would be the
+most appropriate type definition in this
+case it's a float and it returns float
+because that's essentially how it works
+and as a last step you use some bucket
+script magic in this case you annotate
+this function
+letting the compiler know that you just
+want to call a global function map.sqrt
+with the values that were given from the
+reasonable world
+now i'm not going to be diving into
+details how ffi works itself if you'd
+like to learn more about that i strongly
+recommend you to listen to jared
+podcast from reason town
+when i first started writing reasonable
+i didn't understand ffa at all it was
+like a magic for me
+and after listening to this podcast i
+immediately got a full understanding of
+how it all works so it's the best
+resource right now where you can learn
+how ffi works
+so the reason i brought ffi
+was to actually um
+was to actually think about what writing
+bindings
+for javascript libraries gives us
+so writing bindings to existing
+javascript libraries is great because it
+gives us
+an ability to take a step back and think
+about api decisions that we made in the
+past
+and so you can think of it
+how
+would your library look like if there
+was no previous experience no user base
+and no legacy code to support
+and that's great because that opens up
+your mind and allows you to think big
+like how the future api and future
+versions of your library could look like
+and so a great example of that is reason
+react which is a bindings to react in
+reason ml
+they are just bindings
+but if you look at it closely you will
+realize it has a different philosophy in
+a few places
+including for example built in state
+management
+different lifecycle methods and as you
+can see from this snippet functional
+render
+if you actually go ahead and check the
+future of react that repository that has
+proposals about future versions of react
+you'll see that some of the features are
+already available in reason are actually
+pending proposal to be discussed
+so
+i'll try to mention some of those
+differences as we go along
+so all these things mentioned previously
+all together bring a lot of exciting
+improvements to the react native
+ecosystem
+so let me ask you this question what
+would your ideal react native workflow
+be like if there were no constraints and
+no prior art to support just think about
+it for a second
+i'm sure that there are you know
+there are things that you thought about
+that are fundamentally different
+from what we currently have in react
+native
+or what we say is the best practice in
+react native
+thinking about them without all the
+javascript context
+makes you come up with observations
+you'd never had otherwise
+if you are a full-time conference
+attendant and if you go to many
+conferences a year it's probably not the
+first time someone like me stands in
+front of you and is about to say that
+reasonable is great and you should use
+it right
+like i myself can remember for example
+ken wheeler from many talks around
+reasonable pretty exciting
+yet somehow native development with
+reason
+is still behind
+when i was chatting with people around
+the community
+with maintainers of bs react native in
+particular
+they told me that there's maybe just a
+bunch of people using react native in
+reason
+and that got me thinking
+why is that what's so hard or what is
+the problem that makes reason not that
+popular in react native
+so first i asked myself and i started re
+i started thinking about my journey when
+i first started using reason i didn't
+finish it
+i stopped somewhere in the middle you
+know
+figured there was just too many tools to
+set up too many different things that i
+didn't know about to get up and running
+to build a very simple mobile experience
+so a few months later i was encouraged
+by my friend mateos that works with me
+and he sort of encouraged me to give it
+another go and by the way if you don't
+know mateusz it's that guy who said on
+twitter that we all be writing reason
+that was obviously
+overestimated but i think it's gonna
+happen eventually
+and so
+the next time i passed through all the
+steps
+i did some reverse engineering i look at
+the source code i dealt with missing
+documentation and all that stuff i've
+been there and once i started writing
+apps with reason and react native i got
+so excited that i decided to do
+everything i can to make it exciting
+experience for everyone else
+and so just to give you an idea how the
+getting started with react native and
+reason looks like right now
+it's the first step from github and by
+the way sorry for a bunch of white
+slides now but it's a copy paste from
+github
+you have to install some dependencies
+you know chances are you already have
+few of them so you go to next step you
+create some files you configure them you
+don't really know what they are doing
+then you add some scripts to your
+package json and more and more and more
+and more and you're sort of done at the
+end you know and chances are that after
+two slides or three slides that i showed
+you you sort of had no idea what you
+were already doing and
+just started copying pasting stuff all
+over you know
+and and don't get me wrong because all
+those steps that i showed you are like
+100 legit they are like reasonable you
+should do them eventually problem is
+when you are just starting
+you really have no idea what they are so
+it just feels weird to set them up
+and unfortunately as soon as i got
+started another problem that i had was
+missing documentation
+so
+in other words
+like
+it's luck
+in my particular case what i was doing i
+was trying to investigate animated api
+and how to use it
+and so
+animated api is very tricky i mean it's
+very hard to understand at the very
+beginning at least it was for me
+and trying to understand that reason was
+even harder
+so one may say that reason are just like
+react native and reason these are just
+bindings so eventually the api is the
+same so why don't i why couldn't i just
+go straight to react native
+documentation learn animate it and just
+do the same steps
+problem is
+it's not the same and that's the biggest
+problem because you don't know where the
+difference is and that makes you stuck
+all over the place because you don't
+really know which api is different
+so ended up reverse engineering files
+like this which is an interface file in
+reason and it's like a public
+declaration of your api so if you have a
+file that has hundreds of functions the
+interface file is what defines what is
+visible outside so what i had to do is i
+had to reverse engineer every animated
+function like this analyze the type
+declaration and see how it's used how it
+can how it can be called and then i
+think myself how i can make the
+animation happen
+and it's very great approach again it's
+very good that we have this stuff but we
+are yet to build the documentation and
+tools around that to make it more easy
+to consume by beginners like me back in
+a day
+so that was certainly a big problem
+but luckily enough in a recent community
+is
+is very special like i don't remember
+being in a community that will answer
+every single question that i had on
+discord under like a minute
+that's that's like if you have ever
+asked questions on discord there you
+will know what i'm what i'm talking
+about and that helped me a lot
+because you probably know this feeling
+when you're trying out a new technology
+you get stuck every
+half an hour and you wait for an answer
+for five hours it's like it's impossible
+to code like this you get frustrated you
+stop it you throw it away and and that's
+what happened with me
+when i first started using greezum
+so this is very special about this
+community very encouraging
+it helps you a lot
+problem is
+there wasn't you know enough for me to
+feel confident about reason like i can't
+build my entire professional
+experience at my work based on asking
+people all over because once if they
+don't answer i'll be just stuck
+so i decided to change that
+as i said at the beginning
+at call stack we have this mission of
+helping developers building bar apps on
+many platforms and so
+right now we are using react native
+because we believe this is the best
+technology for running our apps on many
+platforms at the same time
+and as a leading consultancy in that
+space we keep challenging ourselves
+every day what can we do better
+to make our experience of cross-platform
+development even better you know
+so we see reason as a great opportunity
+to improve
+in few key areas where react native
+might be struggling right now and at the
+same time we have few ideas that we have
+observed throughout past three years
+building react native in production that
+we believe could be very useful when
+connected with reason
+and as a last benefit since we are
+working with clients that are actually
+running react native we have this great
+opportunity to promote reason we can
+just encourage our clients to do it and
+by that we can contribute to the overall
+ecosystem and growth and adoption of
+reasonable
+and so we decided to change that and we
+decided to come up
+with an uber project
+and we call it a rebuild
+so rebuild is an umbrella for many
+different projects around react native
+and reason
+once they are connected all together we
+hope they will contribute to even better
+development in those technologies it's a
+result of
+different ideas that we had and we
+experimented with over the past few
+months
+so rebuild from the very beginning has a
+very modular architecture
+when we break it into pieces
+revolt contains bindings to react native
+so that code that makes it possible to
+actually use react native apis
+we have powerful and ready to use
+navigation
+we have a very easy project generator
+that makes it easy to start and we have
+a whole new cli system
+and we already started adapting rebuild
+at call stack
+so that whatever we are open source to
+you is all is tested and doesn't contain
+a lot of issues
+so that you don't get frustrated like we
+did back in a day
+so in principle
+we wanted rebel to be as easy to get
+started as possible
+so let's take a look at the project
+generator
+so in fact the process of creating a new
+app with rebuild is as easy as creating
+any other react native app
+just show you a bunch of like
+screenshots from github showing many
+steps
+but this is no longer true
+we decided to stick to the current flow
+which is about running react native in
+it
+but by default when you run react native
+in it what you get is a react native app
+with flow
+so we decided to use a hidden feature of
+init that is called
+a template generator
+and we can use it to tell react native
+in it to create a different react native
+app than by default
+so how many of you have heard of this
+feature before
+okay quite a few i know i know i know
+i know probably why
+but um
+that's what i'm saying if you haven't
+heard about it don't freak out
+uh
+in fact there are many hidden other
+features in react native that you can
+just find out by reverse engineering a
+bunch of different
+code paths anyway template generator is
+there to allow this particular use case
+so to start using it
+we can set a template flag at the end of
+our command
+to tell it to use
+that template
+so what happens when you run a react
+native in it
+is to scaffold the new up it goes
+through the existing uh predefined
+boilerplate in this case by default we
+have two of them we have the navigation
+template and the hello world template
+so the hello world template is the one
+that you get by default when you edit
+your app you get a blue background some
+some welcome to react native experience
+this is where it's defined and so it
+works by just copying and pasting those
+files to your source code and installing
+dependencies
+so that way you get an out of the box
+experience automatically
+and you know in order to use rival on
+the other hand
+you again have to run react native init
+with the hello chain react for example
+name but you have to pass template flag
+and rebuild as the name of the template
+and the generator will attempt to
+install the react native template
+rebuild which is again just a template
+that contains the the the hello world
+application with the steps that we did
+for you automatically so you don't have
+to think about all the different
+configurations to set up you got
+everything in place
+the only step that you have to do
+manually is that you have to go to your
+package json and you have to modify
+the scripts so that the running
+experience is even easier for you
+we are working on making that automated
+as well
+partially the reason react native init
+didn't do all the things that we wanted
+is that it's not popular and the reason
+why it's not popular and you don't know
+about it is that its scope of features
+is very small
+you can just copy and paste files so our
+idea is to make it a first class feature
+in react native
+propose an rfc so that you can also use
+it maybe even internally to scaffold
+applications
+and just to help you in general react
+native development
+so let's talk about bindings
+rebuild is based on bs react native as i
+said and it's all about exposing
+bindings to react native in other words
+it's just a wrapper around the
+javascript apis
+unfortunately that means that for now
+running rebuild requires you to cr to
+spawn actually two bundlers at the same
+time one is the metro bundler that you
+already know from react native and the
+other one is the buccal script build
+system that will basically convert
+reasonable to javascript and make it
+possible to be accessed
+and the focus of the first iteration was
+to make sure that all the apis and
+components are exposed in as most
+accurate fashion as possible
+and so to make it possible we
+implemented the missing parts and we
+also ship documentation so that you can
+get started very easily
+and the documentation itself shows usage
+of almost all components and apis in
+reason so you don't have to get stuck
+and think like how you can use them you
+can just glance the examples that we did
+for you and you will be pretty much set
+up
+and so the principle that we have we had
+for rebuild version one was to
+sort of we aim for revolution instead of
+evolution instead of revolution
+and so if you've been already using vs
+react native or any other um
+wrapper with uh written reason ml you
+should be able to just migrate
+automatically without any issues
+but let's start with a why
+i mean when asked about reason for
+reason or in other words why would you
+even care about what i'm talking to you
+about today
+and why would you like to introduce yet
+another abstraction to make react native
+development even more complicated
+i'd like to
+sort of do it by an example because code
+is worth more than 1000 words
+so how many of you haven't used animated
+at all before please raise your hand
+okay
+that's that's good because i have a one
+slide
+that does a very short introduction
+it's a very very verbose introduction so
+chances are you may disagree with it to
+some extent if you've been already using
+animated
+but animated module allows you to
+express your animations in a declarative
+way and it all starts with creating an
+animated value which is a holder for
+values that you're going to use for
+animation and so as the first thing you
+give it a numeric value in this case
+it's a zero
+then you define an animation
+that is a function that will be changing
+the animation value so that we know how
+to change it for how long and what the
+end value will be like
+and at the end you start it
+so now that we know where we are more or
+less
+don't worry the examples are not even
+gonna be using a lot of specific
+animated things
+let's do a small exercise
+i will show you a few snippets and your
+task will be to guess whether it's a
+correct code
+or incorrect operation
+so let's assume that all the examples
+that i'll show you are like valid
+javascript as far as syntax and that
+there are no flow errors at all
+so in the first example we are dealing
+with two animated values
+that we want to combine together okay so
+we got a full animated value and bar
+animated value and we want to add them
+up together
+do you know what's the output going to
+be like what's the value gonna be like
+of those two animated values added
+together
+yeah it's gonna be one right this is
+simplified but eventually this is one
+so another example
+we got two vectors okay one is a vector
+with one and one coordinates the other
+one has zero and zero coordinates
+do you know what the result of this
+operation will be
+will it be an object with one and one
+when we summarize each property
+could be right that sounds that sounds
+sort of reasonable
+problem is it's a string
+essentially it's an object object object
+object string
+so turns out vectors are not supported
+by animated operations like
+interpolation
+addition multiplication
+and it's a really interesting
+undocumented implementation detail that
+you will find out just when you get this
+bug in production
+and so with revolt
+this operation is not possible
+as you can see we got type error saying
+that the value xy cannot be an argument
+to the add operation
+so that's how we can prevent those
+issues from happening
+at an example of reason and its typing
+system
+another example also from animated mo
+animated module is about having one
+animated value and interpolating it to
+create another animated value so
+interpolation creates a new animated
+value by mapping input values from one
+animated volume to some other animated
+values so long story short if we have
+animated value that can have values
+between 0 and 300 we are mapping that to
+0 and 1.
+and so we got this function we are
+calling it
+and does anyone know what the the output
+will be
+i'll give you a quick
+tip
+yep
+it's going to be red screen
+we have really handy information by stop
+tracking function missing which probably
+is not going to tell you anything as
+long as you basically try doing divide
+and conquer technique and you end up
+just removing that snippet from your
+code base
+and so we probably already know this you
+probably already get this
+interpolated values cannot be animated
+i mean it's obvious once you start doing
+that but i guess the first time you were
+doing animated will be like
+what's going on like what's wrong here
+and so if you look at rebuild this again
+is a type error so your code will not
+even compile this is a legal operation
+and you got an error message saying that
+you basically cannot interpolate
+uh canon animate interpolated values and
+this looks very damp when it's like line
+below another but if you have a function
+that receives animated value you don't
+control what you're going to receive so
+having a correct typing makes it sort of
+easier to operate across module
+boundaries and make sure issues like
+that do not exist in production
+so this is by far my most favorite
+feature of reason and what really gets
+me excited about it and what makes it
+different from typescript flow and all
+other typing systems available within
+the javascript community is that when
+you create a bindings to a module
+you have this ability to think about the
+api and maybe change it in some places
+you can add some sugar you can add some
+wrappers and you can make sure that
+certain issues do not happen and that's
+why we were able to get rid of those
+animated typing issues by adding few
+different kinds of animated values and
+making sure certain operations are not
+possible in between them
+another important part of rebuild is its
+default navigation system
+it started a while ago as bindings to
+react navigation but we soon observed
+that there is way more than we can do to
+make a performant navigation for
+reasonable and for react native in
+javascript as well
+and so it has a couple of differences
+from what you would normally expect from
+a regular javascript navigation system
+one is that it has a native performance
+thanks to react native gesture handler
+all the gestures that you're gonna use
+within your app are running on a native
+fret meaning that
+none of your logic will ever make your
+gesture
+struggle anytime
+another big feature is that it has a
+fully declarative interface and so if
+you look at the code snippet you don't
+have any static configuration everything
+is part of your render method so if you
+ever had issues with changing the state
+of your navigation based on life cycle
+of your component say header button
+changes when you press it like edit mode
+this is no longer hard you just need to
+use your state and in this example you
+just have to return a appropriate icon
+based on the state of your component
+and it's also super easy to implement
+or change or provide custom animations
+they are also part of your render method
+so it's as easy as defining for example
+fade vertical as a part of a render
+method to have a model-like experience
+without any hacks
+animation itself is an object that has
+this beautiful type declaration that
+looks a bit strange at first but what it
+says it says that it contains a function
+for cart and for header interpolators
+looking at the example reveals that
+function is just a function to use for
+animating in this case we want to use
+spring animation which mimics the ios
+mechanics so that the animation looks
+almost real
+and then we got the interpolators like
+in this case we want the slide from left
+to right animation so we can use
+the translatex property
+and so the navigation itself is still
+pretty much in progress
+the features we implemented are working
+for us but we are looking forward to
+collaborating with you on that to make
+it even more production ready so that it
+works for your use cases as well
+and so i got the last part which is i
+guess the most exciting but i'm running
+short of time so
+i'm really sorry that i will have to you
+know speed it up
+but um yesterday or two days ago at
+speaker's dinner gant said that if i'm
+gonna need some time when something goes
+wrong
+i could tell him to buy me five minutes
+so i'm gonna ask him you can sell me
+actually five minutes you know
+the other way i'm not sure if that's
+possible
+anyway
+the last part of rebuild is the whole
+new cli system and if you've been
+following react native you know that i'm
+always excited about command line tools
+like this is the first react amsterdam
+conference where me and alexia announced
+rmpm which later became a react native
+link
+and we used react native link to avoid
+this experience of linking all the stuff
+everywhere
+so that it's just as easy as running a
+single command
+and you can forget about all the native
+stuff
+but link was just the first step what we
+wanted to achieve was a completely
+standalone system for managing your
+react native apps without touching
+native code and so
+we never actually finished that because
+we got busy with other react native
+stuff but we'd like to use reasonable as
+an opportunity to do this approach once
+again all over
+and additionally we'd like to abstract
+away native code
+so that working with react native feels
+like working with expo or create react
+native app you still got all the code in
+place but you don't have to deal with
+any native code
+and you know just to summarize it
+this may all sound really crazy or
+really weird and you may be wondering
+why we are trying to divide community or
+something
+truth is we are not
+we have this compatibility principle and
+regardless of you loving reason or not
+believing in it or not all the
+ingredients all the four ingredients
+maybe except for the bindings are gonna
+be available for react native anyway so
+even if you're not planning on using
+reason you will still be able to benefit
+from those features
+and so all the bits and pieces that we
+are working on are mit licensed and are
+available on our github so we are more
+than welcome to join us on that journey
+and help us make this development a
+better experience
+this is our discord channel where we
+offer free support to all our open
+source libraries and
+where we actually keep discussing the
+future of react native and reason and we
+would love to have you on board we'd
+love to hear your experience working
+with react working with native modules
+in production and essentially everything
+that you ever done in react native is of
+our interest so please join this channel
+or just let me know in the most
+convenient way for you how we can help
+you and how we can make together reason
+and react development even better
+experience thank you very much
+you
