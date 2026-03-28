@@ -1,0 +1,21 @@
+2026-03-28 18:03:13,408 INFO Starting upload project=custom-helix-491611-k3 location=europe-west2 corpus=gemelius source_dir=/home/janusz/Desktop/code/hackathon/hackathon/data/mike-data chunk_size=512 chunk_overlap=100
+2026-03-28 18:03:13,422 INFO Discovered source files count=61
+2026-03-28 18:03:22,207 INFO ADC unavailable, falling back to gcloud access token
+2026-03-28 18:03:22,207 INFO Requesting access token from gcloud
+2026-03-28 18:03:23,998 INFO Received access token from gcloud
+2026-03-28 18:03:23,998 INFO Initialized Vertex AI with gcloud access token fallback
+2026-03-28 18:03:24,662 INFO Using existing corpus display_name=gemelius name=projects/custom-helix-491611-k3/locations/europe-west2/ragCorpora/5764607523034234880
+2026-03-28 18:03:25,357 INFO Fetched existing corpus files corpus=projects/custom-helix-491611-k3/locations/europe-west2/ragCorpora/5764607523034234880 count=5
+2026-03-28 18:03:25,358 INFO Skip existing file=processed/data-report.md
+2026-03-28 18:03:25,358 INFO Skip existing file=processed/full-context.md
+2026-03-28 18:03:25,359 INFO Skip existing file=raw/docs/ai-readme.md
+2026-03-28 18:03:25,363 INFO Prepared stage file source=raw/docs/callstack-os.md staged=/tmp/vertex_rag_stage_q93i0yoh/raw/docs/callstack-os.md.txt
+2026-03-28 18:03:25,363 INFO Uploading file display_name=raw/docs/callstack-os.md attempt=1/4
+2026-03-28 18:03:58,060 INFO Uploaded file=raw/docs/callstack-os.md operation=projects/custom-helix-491611-k3/locations/europe-west2/ragCorpora/5764607523034234880/ragFiles/5664036844220700642
+2026-03-28 18:03:58,062 INFO Prepared stage file source=raw/docs/cli-autolinking.md staged=/tmp/vertex_rag_stage_q93i0yoh/raw/docs/cli-autolinking.md.txt
+2026-03-28 18:03:58,062 INFO Uploading file display_name=raw/docs/cli-autolinking.md attempt=1/4
+2026-03-28 18:04:20,078 WARNING Quota hit for raw/docs/cli-autolinking.md; retry 1/4 after 75s
+2026-03-28 18:05:35,086 INFO Uploading file display_name=raw/docs/cli-autolinking.md attempt=2/4
+2026-03-28 18:05:59,670 INFO Uploaded file=raw/docs/cli-autolinking.md operation=projects/custom-helix-491611-k3/locations/europe-west2/ragCorpora/5764607523034234880/ragFiles/5664037815953295510
+2026-03-28 18:05:59,682 INFO Prepared stage file source=raw/docs/cli-configuration.md staged=/tmp/vertex_rag_stage_q93i0yoh/raw/docs/cli-configuration.md.txt
+2026-03-28 18:05:59,683 INFO Uploading file display_name=raw/docs/cli-configuration.md attempt=1/4
