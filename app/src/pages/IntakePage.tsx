@@ -1,4 +1,4 @@
-import { useState, useRef, type DragEvent, type ChangeEvent } from "react";
+import { useState, useRef, useEffect, useCallback, type DragEvent, type ChangeEvent } from "react";
 import {
   Card,
   CardContent,
@@ -52,6 +52,8 @@ interface UploadedFile {
   type: string;
   status: "uploading" | "done" | "error";
   progress: number;
+  errorMessage?: string;
+  ragFileId?: string;
 }
 
 interface GithubRepo {
@@ -62,6 +64,9 @@ interface GithubRepo {
   status: "pending" | "scraping" | "done" | "error";
   progress: number;
 }
+
+const API_URL = "http://localhost:8000";
+const PERSON_ID = "mike";
 
 function formatFileSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -117,6 +122,36 @@ export function IntakePage({ onAnalysisComplete }: IntakePageProps) {
   const [repoInput, setRepoInput] = useState("");
   const [repoInputError, setRepoInputError] = useState("");
 
+  // Fetch already-vectorized files on mount
+  const fetchVectorizedFiles = useCallback(async () => {
+    try {
+      const res = await fetch(`${API_URL}/vectorize/${PERSON_ID}/files`);
+      if (!res.ok) return;
+      const files: { name: string | null; display_name: string | null; state: string | null; size_bytes: string | null }[] = await res.json();
+      const existing: UploadedFile[] = files.map((f, i) => ({
+        id: `existing-${i}-${f.name ?? ""}`,
+        name: f.display_name ?? f.name ?? "Unknown",
+        size: f.size_bytes ? parseInt(f.size_bytes, 10) : 0,
+        type: "application/octet-stream",
+        status: "done" as const,
+        progress: 100,
+        ragFileId: f.name ?? undefined,
+      }));
+      setUploadedFiles((prev) => {
+        // Merge: keep any currently-uploading files, add existing ones that aren't already present
+        const existingIds = new Set(prev.map((p) => p.ragFileId).filter(Boolean));
+        const newExisting = existing.filter((e) => !existingIds.has(e.ragFileId));
+        return [...prev, ...newExisting];
+      });
+    } catch {
+      // Silently ignore — API may not be running
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchVectorizedFiles();
+  }, [fetchVectorizedFiles]);
+
   const toggleArtifact = (id: string) => {
     setSelectedArtifacts((prev) => {
       const next = new Set(prev);
@@ -127,7 +162,7 @@ export function IntakePage({ onAnalysisComplete }: IntakePageProps) {
   };
 
   // --- File upload handlers ---
-  const simulateFileUpload = (file: File) => {
+  const uploadFileToApi = async (file: File) => {
     const id = `file-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
     const newFile: UploadedFile = {
       id,
@@ -139,30 +174,66 @@ export function IntakePage({ onAnalysisComplete }: IntakePageProps) {
     };
     setUploadedFiles((prev) => [...prev, newFile]);
 
-    // Simulate upload progress
+    // Simulate progress while uploading (real XHR progress would require XMLHttpRequest)
     let prog = 0;
-    const interval = setInterval(() => {
-      prog += Math.random() * 30 + 10;
-      if (prog >= 100) {
-        prog = 100;
-        clearInterval(interval);
-        setUploadedFiles((prev) =>
-          prev.map((f) =>
-            f.id === id ? { ...f, status: "done", progress: 100 } : f
-          )
-        );
-      } else {
-        setUploadedFiles((prev) =>
-          prev.map((f) =>
-            f.id === id ? { ...f, progress: Math.min(prog, 99) } : f
-          )
-        );
+    const progressInterval = setInterval(() => {
+      prog += Math.random() * 15 + 5;
+      if (prog >= 90) {
+        prog = 90;
+        clearInterval(progressInterval);
       }
-    }, 300);
+      setUploadedFiles((prev) =>
+        prev.map((f) =>
+          f.id === id ? { ...f, progress: Math.min(prog, 90) } : f
+        )
+      );
+    }, 400);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch(
+        `${API_URL}/vectorize/${PERSON_ID}/upload`,
+        { method: "POST", body: formData }
+      );
+
+      clearInterval(progressInterval);
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ detail: "Upload failed" }));
+        setUploadedFiles((prev) =>
+          prev.map((f) =>
+            f.id === id
+              ? { ...f, status: "error", progress: 0, errorMessage: errorData.detail || "Upload failed" }
+              : f
+          )
+        );
+        return;
+      }
+
+      const result = await res.json();
+      setUploadedFiles((prev) =>
+        prev.map((f) =>
+          f.id === id
+            ? { ...f, status: "done", progress: 100, ragFileId: result.rag_file_id }
+            : f
+        )
+      );
+    } catch {
+      clearInterval(progressInterval);
+      setUploadedFiles((prev) =>
+        prev.map((f) =>
+          f.id === id
+            ? { ...f, status: "error", progress: 0, errorMessage: "Network error — is the API running?" }
+            : f
+        )
+      );
+    }
   };
 
   const handleFiles = (files: FileList | File[]) => {
-    Array.from(files).forEach(simulateFileUpload);
+    Array.from(files).forEach(uploadFileToApi);
   };
 
   const handleDragOver = (e: DragEvent) => {

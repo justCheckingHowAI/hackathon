@@ -10,6 +10,7 @@ from routes_health import router as health_router
 from routes_scrapers import router as scrapers_router
 from routes_ui import router as ui_router
 from routes_vapi import router as vapi_router
+from routes_vectorize import router as vectorize_router
 from schemas_vapi import PhoneNumbersResponse, Settings
 from service_vapi import VapiClient, get_settings, get_vapi_client
 from taskiq_broker import broker
@@ -42,3 +43,4 @@ app.include_router(data_router)
 app.include_router(scrapers_router)
 app.include_router(ui_router)
 app.include_router(vapi_router)
+app.include_router(vectorize_router)

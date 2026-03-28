@@ -9,7 +9,11 @@ services:
       context: ./api
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       GCP_PROJECT_ID: ${GCP_PROJECT_ID}
       GCP_LOCATION: ${GCP_LOCATION:-us-east4}
       VERTEX_RAG_EMBEDDING_MODEL: ${VERTEX_RAG_EMBEDDING_MODEL:-publishers/google/models/text-embedding-005}
@@ -26,7 +30,11 @@ services:
     restart: unless-stopped
     command: ["/api/start-worker.sh"]
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       GCP_PROJECT_ID: ${GCP_PROJECT_ID}
       GCP_LOCATION: ${GCP_LOCATION:-us-east4}
       VERTEX_RAG_EMBEDDING_MODEL: ${VERTEX_RAG_EMBEDDING_MODEL:-publishers/google/models/text-embedding-005}

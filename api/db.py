@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 from contextlib import contextmanager
 from dataclasses import dataclass
+from urllib.parse import quote_plus
 from typing import Any, Iterator
 
 import psycopg
@@ -21,8 +22,28 @@ class DatabaseSettings:
     def from_env(cls) -> "DatabaseSettings":
         database_url = os.getenv("DATABASE_URL")
         if not database_url:
-            raise DatabaseConfigError("Missing DATABASE_URL environment variable.")
+            database_url = build_database_url_from_parts()
         return cls(database_url=database_url)
+
+
+def build_database_url_from_parts() -> str:
+    user = os.getenv('POSTGRES_USER')
+    password = os.getenv('POSTGRES_PASSWORD')
+    database = os.getenv('POSTGRES_DB')
+
+    if not user or not password or not database:
+        raise DatabaseConfigError(
+            'Missing database configuration. Set DATABASE_URL or POSTGRES_USER, POSTGRES_PASSWORD, and POSTGRES_DB.'
+        )
+
+    host = os.getenv('POSTGRES_HOST', 'localhost')
+    port = os.getenv('POSTGRES_PORT', '5432')
+
+    quoted_user = quote_plus(user)
+    quoted_password = quote_plus(password)
+    quoted_database = quote_plus(database)
+
+    return f'postgresql://{quoted_user}:{quoted_password}@{host}:{port}/{quoted_database}'
 
 
 class Database:
