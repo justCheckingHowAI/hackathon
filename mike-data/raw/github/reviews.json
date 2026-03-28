@@ -1,0 +1,266 @@
+[
+  {
+    "repo": "facebook/react-native",
+    "pr_number": 31027,
+    "pr_title": "fix: React Native CodeGen integration for 0.64-stable",
+    "pr_author": "grabbou",
+    "review_comments": [
+      {
+        "body": "Note: On 0.64-stable branch, React Native will always use CodeGen from `npm`, even when running from RNTester. \r\n\r\nI wish we had Yarn Workspaces set up right, that way, I could point here to use local version of CodeGen when running from this repository.\r\n\r\nSomething we will have to improve in order to merge this to master.\r\n\r\nCC: @hramos ",
+        "path": "package.json"
+      },
+      {
+        "body": "One thing that I just realised is that you won't be able to set this unless the Script Phase is part of a user project. Right now, it's inside `FBReactNativeSpec` target.\r\n\r\nSo, I will most likely drop it.",
+        "path": "scripts/generate-specs.sh"
+      },
+      {
+        "body": "In this particular case, this is more than fine. Right now, on 0.64-stable, in `packages`, we have CodeGen at 0.0.6 which doesn't work with this release. We would need to cherry-pick ALL commits related to CodeGen to bump it to 0.0.7.\r\n\r\nBy using an npm version instead, we can test RNTester and others. This isn't ideal setup, but works.",
+        "path": "package.json"
+      }
+    ]
+  },
+  {
+    "repo": "facebook/react-native",
+    "pr_number": 30592,
+    "pr_title": "Exclude `i386` from valid architectures when building with Hermes on iOS",
+    "pr_author": "grabbou",
+    "review_comments": [
+      {
+        "body": "FWIW, I could detect when `flipper_post_install` is placed in a user `Podfile` and print a warning that this is deprecated and one should place `react_native_post_install` instead.\r\n\r\nIs it worth it?",
+        "path": "template/ios/Podfile"
+      },
+      {
+        "body": "(just thinking about potential users that might forget to update the `Podfile`)",
+        "path": "template/ios/Podfile"
+      },
+      {
+        "body": "The technique would be this:\r\n1. Make `flipper_post_install` accept a second optional argument\r\n2. Pass second argument  from within `react_native_pods.rb`, e.g. `flipper_post_install(installer, true)`\r\n3. When second argument is not defined, print a warning that users should replace it with `react_native_post_install` (second argument will not be present unless it is being run by \"us\")\r\n\r\nNot sure if hacky/worth it, but figured I'll just leave it here.",
+        "path": "template/ios/Podfile"
+      },
+      {
+        "body": "I think we can do this in a follow-up PR, if at all. ",
+        "path": "template/ios/Podfile"
+      }
+    ]
+  },
+  {
+    "repo": "facebook/react-native",
+    "pr_number": 30543,
+    "pr_title": "fix: building in release mode for simulator",
+    "pr_author": "grabbou",
+    "review_comments": [
+      {
+        "body": "Oh, true!",
+        "path": "scripts/react_native_pods.rb"
+      }
+    ]
+  },
+  {
+    "repo": "facebook/react-native",
+    "pr_number": 30470,
+    "pr_title": "fix: android artifacts in a release package",
+    "pr_author": "grabbou",
+    "review_comments": [
+      {
+        "body": "Good idea!",
+        "path": "scripts/publish-npm.js"
+      },
+      {
+        "body": "Regarding checking other files, I am not sure about that one. In case their number changes, the script will fail. I would assume that if `libfbjni.so` is present, it's fine.",
+        "path": "scripts/publish-npm.js"
+      }
+    ]
+  },
+  {
+    "repo": "facebook/react-native",
+    "pr_number": 30469,
+    "pr_title": "fix(iOS): `pod install` fails outside `ios` folder",
+    "pr_author": "tido64",
+    "review_comments": [
+      {
+        "body": "To keep it the same with `use_react_native`, we should probably just stick to `options[:path]` and pass it like here:\r\n\r\nhttps://github.com/facebook/react-native/blob/355239b99125ffc7d17009a1c71e2fc42f7c104a/template/ios/Podfile#L7-L9",
+        "path": "scripts/react_native_pods.rb"
+      },
+      {
+        "body": "`reactNativePath` can be programatically set in the `react-native.config.js` and might be not what this resolves to in `use_react_native!`.\r\n\r\nExample: https://github.com/facebook/react-native/blob/master/react-native.config.js#L32\r\n\r\nSet to `.` for React Native root, this will not work inside React Native repository as there's no module to `require.resolve` to.\r\n\r\nThis can lead to some unexpected issues.",
+        "path": "scripts/react_native_pods.rb"
+      },
+      {
+        "body": "Looks like `codegen_pre_install(:path => config[:reactNativePath])` present in a default template would resolve all issues without any further code changes.\r\n\r\nThe reason is: when we tell `codegen_pre_install` to use `config[:reactNativePath]` as I said above, which is an absolute path to React Native location, then, path to codegen would always be correct, since it's going to be absolute too.\r\n\r\n(`\"#{prefix}/../react-native-codegen\"` out of `prefix` which is `absolute`)",
+        "path": "scripts/react_native_pods.rb"
+      },
+      {
+        "body": "@Titozzz we always pass `options.path` by default in the template, which is absolute location of React Native as resolved by the CLI.",
+        "path": "scripts/react_native_pods.rb"
+      },
+      {
+        "body": "Technically, the assumption of `react-native-codegen` living side by side `react-native` can be false in the following scenario:\r\n```\r\nnode_modules/react-native-codegen (0.0.7)\r\npackageA/node_modules/react-native (0.64.0-rc.0)\r\npackageB/node_modules/react-native (0.64.0-rc.1)\r\n```\r\nIn other words, two React Native packages sharing same React Native codegen version. \r\n\r\nIn that case, it may be worth to leave `resolve_module` just for `react-native-codegen` or... we make sure that `react-native-co",
+        "path": "scripts/react_native_pods.rb"
+      }
+    ]
+  },
+  {
+    "repo": "facebook/react-native",
+    "pr_number": 29914,
+    "pr_title": "feat: Enable Hermes to work on iOS",
+    "pr_author": "grabbou",
+    "review_comments": [
+      {
+        "body": "I think since `hermes` dependency is always pulled from the local `npm` package, I don't think it makes sense to a) keep version requirement in two places and b) read a version from `package.json` here. The main reason against doing the latter is that CocoaPods has slightly different (and incompatible with npm) syntax for specifying the minimum supported version.\r\n\r\nSince this package is part of React Native where we do have control over the Hermes version (and set a requirement on it inside `pa",
+        "path": "React-Core.podspec"
+      },
+      {
+        "body": "CC: @alloy",
+        "path": "React-Core.podspec"
+      },
+      {
+        "body": "Not sure what's the latest versioning pattern, but I followed what we do for `hermes-engine` already. Note that `hermes-engine` could potentially be renamed to `hermes-engine-android`.",
+        "path": "package.json"
+      },
+      {
+        "body": "These were required to make `RNTester` work, I was adding one after another until all errors were gone.",
+        "path": "third-party-podspecs/RCT-Folly.podspec"
+      },
+      {
+        "body": "Could be. I will figure out what's wrong with it tomorrow, don't want it to be part of the commit.",
+        "path": "packages/react-native-codegen/android/gradlew.bat"
+      }
+    ]
+  },
+  {
+    "repo": "facebook/react-native",
+    "pr_number": 28625,
+    "pr_title": "fix: do not throw on missing `cliPath`, use the default value",
+    "pr_author": "grabbou",
+    "review_comments": [
+      {
+        "body": "Yeah, probably, we need a bit more work here. @Esemesek ",
+        "path": "react.gradle"
+      },
+      {
+        "body": "I have rewrote the logic a bit to support both cases",
+        "path": "react.gradle"
+      },
+      {
+        "body": "Nope,  we're running this from `projectDir` context, which is a directory inside your project. Will resolve to local `node_moduls`.",
+        "path": "react.gradle"
+      },
+      {
+        "body": "Can we connect somewhere in a bit more \"direct\" way to quickly resolve this? If you're on Twitter or Discord, we can exchange DMs, put few console.logs here and there and see what's going on.\r\n\r\nI'm @grabbou or grabbou@gmail.com - will be online for next two hours. Let's try tackling that!",
+        "path": "react.gradle"
+      }
+    ]
+  },
+  {
+    "repo": "facebook/react-native",
+    "pr_number": 28572,
+    "pr_title": "Update default Podfile to not depend on a path",
+    "pr_author": "grabbou",
+    "review_comments": [
+      {
+        "body": "ah right! Copy paste XD",
+        "path": "template/ios/Podfile"
+      }
+    ]
+  },
+  {
+    "repo": "react-native-community/cli",
+    "pr_number": 1544,
+    "pr_title": "chore(breaking): remove `initCompat` a.k.a legacy \"init\"",
+    "pr_author": "grabbou",
+    "review_comments": [
+      {
+        "body": "Haha, again 🤦 ",
+        "path": "packages/platform-android/package.json"
+      }
+    ]
+  },
+  {
+    "repo": "react-native-community/cli",
+    "pr_number": 1540,
+    "pr_title": "chore: remove global-cli",
+    "pr_author": "grabbou",
+    "review_comments": [
+      {
+        "body": "lol mistake",
+        "path": "packages/platform-android/package.json"
+      }
+    ]
+  },
+  {
+    "repo": "react-native-community/cli",
+    "pr_number": 1537,
+    "pr_title": "refactor(breaking): remove deprecated `link`, `unlink` and associated code",
+    "pr_author": "grabbou",
+    "review_comments": [
+      {
+        "body": "That function actually looks for `xcworkspace` in first place and returns `isWorkspace: true`. I guess in scenario when there's no `xcworkspace` but multiple projects, we can print a warning in verbose mode, similarly to `findPodfile`, asking users to look at custom config?",
+        "path": "packages/platform-ios/src/config/index.ts"
+      },
+      {
+        "body": "I like this idea.",
+        "path": "packages/platform-ios/src/config/findPodfilePath.ts"
+      },
+      {
+        "body": "We will favour `iOS` anyway since this is `iOSConfig` used for `run-ios`. But I guess we can adapt it in a later PR to work for `Mac` too?\r\n\r\nCan you point me to a configuration/helpers that you use for `macos`?",
+        "path": "packages/platform-ios/src/config/findPodfilePath.ts"
+      },
+      {
+        "body": "BTW, do you want me to export you this helper so you can reduce some code overlap? Or prefer to keep it internal?",
+        "path": "packages/platform-ios/src/config/findPodfilePath.ts"
+      },
+      {
+        "body": "BTW, logging implemented via 64b4ef79",
+        "path": "packages/platform-ios/src/config/findPodfilePath.ts"
+      }
+    ]
+  },
+  {
+    "repo": "react-native-community/cli",
+    "pr_number": 1522,
+    "pr_title": "Bump ora to 6.x",
+    "pr_author": "stianjensen",
+    "review_comments": [
+      {
+        "body": "I don't think this change was required while bumping to 6.x, was it? I personally have no objections to either convention, but I was confused while reviewing the PR.\r\n\r\n@thymikee please lmk if you're okay with that change.",
+        "path": "packages/cli/src/commands/init/init.ts"
+      },
+      {
+        "body": "Thanks for pointing this out!",
+        "path": "packages/cli/src/commands/init/init.ts"
+      }
+    ]
+  },
+  {
+    "repo": "react-native-community/cli",
+    "pr_number": 1482,
+    "pr_title": "fix: template name replacement in package.json",
+    "pr_author": "Esemesek",
+    "review_comments": [
+      {
+        "body": "I think better would be to replace `fileContent` with `replacedFileContent`. That way, we maintain `lowerCase` behaviour, at the same time, we do not overwrite changes (that happened, if any) when working with `package.json` .",
+        "path": "packages/cli/src/commands/init/editTemplate.ts"
+      }
+    ]
+  },
+  {
+    "repo": "callstack/repack",
+    "pr_number": 751,
+    "pr_title": "chore: migrate from turbo to nx",
+    "pr_author": "jbroma",
+    "review_comments": [
+      {
+        "body": "nit: This is not really related to the PR, because it's been around for a while, but I personally use Prettier via ESLint, and use ESLint as a \"default formatter\". That way, I can also automatically fix all ESLint issues on save, which is handy!",
+        "path": ".vscode/settings.json"
+      },
+      {
+        "body": "Do we need to build a project before linting it? I thought we lint the source! I guess same goes for `typescript`.",
+        "path": "nx.json"
+      },
+      {
+        "body": "What I usually do for my projects is I set up one ESLint config at the top and I just run one process from the top. Works very good with VSCode as well (haven't tested monorepo setup, but I would imagine this one works too).\r\n\r\nI guess this may not make too much sense in this setup, where - as it seems - each package is supposed to be fully independent (own tsconfig, own eslint).\r\n\r\nHowever, just throwing it out here as a suggestion/for discussion.",
+        "path": "package.json"
+      }
+    ]
+  }
+]

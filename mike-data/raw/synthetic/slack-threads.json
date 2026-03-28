@@ -1,0 +1,146 @@
+[
+  {
+    "channel": "#react-native-core",
+    "date": "2025-01-20",
+    "thread": [
+      {
+        "author": "new-dev",
+        "message": "Hey team, I'm trying to understand how auto-linking works under the hood. The docs explain the API but not the internals. Where should I start?"
+      },
+      {
+        "author": "mike",
+        "message": "Start with `packages/cli-platform-ios/src/link` and `packages/cli-platform-android/src/link` in the CLI repo. The core logic is:\n1. CLI scans node_modules for packages with native code\n2. It reads `react-native.config.js` from each package (or infers from package.json)\n3. For iOS: generates Podfile entries and runs pod install\n4. For Android: generates settings.gradle includes and build.gradle dependencies\n\nThe 'magic' is in step 2 - the config resolution. It has to handle edge cases like: scoped packages, monorepo symlinks, and packages that have different native code for old vs new architecture.\n\nI wrote the original rnpm which did this manually. When we merged it into RN core and then into the Community CLI, the architecture got more complex but the core idea is the same: scan, resolve config, generate native build files."
+      },
+      {
+        "author": "new-dev",
+        "message": "That's super helpful! One question - why do we generate build files instead of using a runtime approach?"
+      },
+      {
+        "author": "mike",
+        "message": "Runtime linking would require shipping a custom module resolver with every app, and it would need to know about native build systems (Xcode, Gradle) at runtime - which doesn't make sense. Native code needs to be compiled and linked at build time. The closest thing to 'runtime linking' for RN is Module Federation in Re.Pack, where JS modules are loaded dynamically. But native modules always need build-time linking."
+      }
+    ]
+  },
+  {
+    "channel": "#repack-dev",
+    "date": "2025-02-05",
+    "thread": [
+      {
+        "author": "enterprise-client-dev",
+        "message": "We're seeing Module Federation containers fail to load on Android with Hermes enabled. Error: `Cannot find module '__webpack_require__.l'`. Works fine with JSC."
+      },
+      {
+        "author": "mike",
+        "message": "Known issue - Hermes doesn't support the standard webpack chunk loading mechanism (`__webpack_require__.l`) which relies on `<script>` tags (no DOM in RN). We're working on a fix in the Hermes compat layer.\n\nWorkaround for now: add this to your webpack config:\n```js\noutput: {\n  chunkLoading: 'async-node',\n  chunkFormat: 'module'\n}\n```\nAnd in your Re.Pack config, enable the experimental runtime plugin:\n```js\nnew Repack.plugins.ChunkLoadingPlugin({ experimental: true })\n```\nThis uses our custom chunk fetcher instead of the default webpack one. It's not production-ready yet but works for testing."
+      },
+      {
+        "author": "enterprise-client-dev",
+        "message": "That worked! When is the production-ready fix expected?"
+      },
+      {
+        "author": "mike",
+        "message": "Beta in March, stable by end of Q1. The main thing we need to nail is memory management - when you load 10 federated modules, each one fetches and evaluates a JS chunk. On low-end devices that can cause OOM. We're implementing lazy loading with a max concurrency limit."
+      }
+    ]
+  },
+  {
+    "channel": "#general",
+    "date": "2025-02-15",
+    "thread": [
+      {
+        "author": "junior-dev",
+        "message": "Dumb question maybe but... why does Callstack maintain Re.Pack when Metro exists? Isn't Metro the official bundler?"
+      },
+      {
+        "author": "mike",
+        "message": "Not a dumb question at all, I get it a lot :)\n\nMetro is great for most RN apps. It's fast, well-integrated, and maintained by Meta. For 80% of projects, Metro is the right choice.\n\nRe.Pack exists for the other 20% - apps that need things Metro can't do:\n1. Module Federation (Super Apps with independently deployed features)\n2. Code splitting with dynamic imports\n3. Custom webpack loaders (SASS, SVG as components, etc)\n4. Integration with existing webpack-based build pipelines\n5. Tree shaking (Metro doesn't do this)\n\nThink of it like: Metro is Create React App, Re.Pack is custom webpack config. Most people should use CRA, but enterprise teams often need the flexibility.\n\nHistorically, we first built Haul (our webpack bundler for RN in 2017), then learned from that and rebuilt as Re.Pack with Module Federation as the core feature. The key insight was: enterprise clients don't want to replace their entire build system - they want to extend it to mobile."
+      },
+      {
+        "author": "junior-dev",
+        "message": "Makes total sense. So if I'm starting a new personal project, Metro is fine?"
+      },
+      {
+        "author": "mike",
+        "message": "100%. Don't use Re.Pack unless you have a specific reason to. It adds complexity that personal projects don't need."
+      }
+    ]
+  },
+  {
+    "channel": "#react-native-releases",
+    "date": "2025-01-08",
+    "thread": [
+      {
+        "author": "release-coordinator",
+        "message": "Preparing 0.74 RC. @mike any blockers from CLI side?"
+      },
+      {
+        "author": "mike",
+        "message": "Two things:\n1. The new init template needs updating for Kotlin DSL in build.gradle. PR is ready, needs review.\n2. Auto-linking codegen needs a fix for the New Architecture pod installation order. I'll have the fix today.\n\nOther than that, CLI is ready for 0.74. We tested against the RC branch yesterday - all integration tests pass."
+      },
+      {
+        "author": "release-coordinator",
+        "message": "Great. Can you also update the upgrade helper with 0.73 -> 0.74 diff?"
+      },
+      {
+        "author": "mike",
+        "message": "On it. The diff is clean this time - no major config file changes, just the Kotlin DSL migration which is optional."
+      }
+    ]
+  },
+  {
+    "channel": "#hiring",
+    "date": "2025-02-20",
+    "thread": [
+      {
+        "author": "hr-lead",
+        "message": "Mike, we have 3 finalists for the Senior RN Tooling Engineer role. Can you define the technical interview format?"
+      },
+      {
+        "author": "mike",
+        "message": "Here's what I want to test:\n\n1. **Debugging task** (30 min): Give them a broken auto-linking scenario - a native library that doesn't link correctly on iOS. They need to find the root cause. This tests: understanding of RN build pipeline, ability to read unfamiliar code, debugging methodology.\n\n2. **Design discussion** (30 min): 'A client wants to share a React component library between their web app and RN app. How would you architect this?' Looking for: understanding of bundler differences, awareness of platform-specific code, practical trade-offs.\n\n3. **Open source scenarios** (15 min): 'An issue with 50 upvotes asks for a feature that would add complexity to the codebase. How do you handle it?' Looking for: communication skills, ability to say no constructively, understanding of maintenance burden.\n\nThe ideal candidate doesn't need to know Re.Pack specifically - they need to understand how bundlers work and how native build systems (Xcode, Gradle) integrate with JS tooling."
+      }
+    ]
+  },
+  {
+    "channel": "#repack-dev",
+    "date": "2025-03-05",
+    "thread": [
+      {
+        "author": "contributor-1",
+        "message": "I submitted a PR to add Rspack support to Re.Pack. Thoughts?"
+      },
+      {
+        "author": "mike",
+        "message": "I love the initiative! Rspack is interesting because it's webpack-API-compatible but written in Rust, so it's much faster.\n\nHowever, before we merge this, we need to think about:\n1. Does Module Federation work with Rspack? Last I checked their MF implementation was incomplete.\n2. Our custom runtime plugins assume webpack internals - do they work with Rspack's runtime?\n3. Maintenance burden - do we want to support two bundler backends?\n\nMy suggestion: let's keep this as an experimental flag for now. If Rspack's MF support matures and we see demand, we can promote it to first-class. Can you add an `experimental_rspack` option and make sure our test suite passes with it?"
+      }
+    ]
+  },
+  {
+    "channel": "#ai-incubator",
+    "date": "2025-03-12",
+    "thread": [
+      {
+        "author": "ai-dev",
+        "message": "First external PR merged for callstackincubator/ai! Someone added Android NNAPI support."
+      },
+      {
+        "author": "mike",
+        "message": "Awesome! This is exactly what I was hoping for. The Vercel AI SDK compatibility layer makes it easy for people to contribute backend implementations.\n\nNext priorities for this project:\n1. Model quantization support (INT4/INT8) - critical for making larger models run on device\n2. Streaming responses (right now it waits for full generation)\n3. Better error handling when model doesn't fit in device memory\n\nI think this could become a significant project. Every enterprise client I talk to asks about on-device AI for privacy compliance. If we nail the DX, this could be as impactful as Re.Pack."
+      }
+    ]
+  },
+  {
+    "channel": "#general",
+    "date": "2025-03-20",
+    "thread": [
+      {
+        "author": "team-member",
+        "message": "Mike, someone on Twitter is saying Re.Pack is dead because we haven't released in 2 months. Should we respond?"
+      },
+      {
+        "author": "mike",
+        "message": "Ha, classic open source drama. We've been heads down on the Hermes compat layer - the biggest feature since Module Federation support. When it ships next week, they'll see it's very much alive.\n\nGeneral rule: don't engage with 'is X dead' tweets. Ship the work, the code speaks for itself. If people are asking, it means they care about the project, which is a good sign.\n\nI'll post a thread about what we've been working on once the beta is out."
+      }
+    ]
+  }
+]

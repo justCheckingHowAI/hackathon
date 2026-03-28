@@ -1,0 +1,122 @@
+Hi folks, welcome back live stream
+Reacton 2025 day two. I'm here with Mike
+Robavski, CTO and founder of Call Stack.
+Hello.
+>> Hey Mike, how you doing?
+>> Great. Thanks for having me here.
+>> Yeah, thank you for being here and
+answering the questions from our live
+studio uh live studio from our live
+audience. Um and let's get started.
+Okay,
+>> let's go.
+>> Cool. How lightweight is React Native
+brownfield? Does it significantly
+increase bundle size? That's a very good
+question uh because you won't believe me
+but I have never actually profiled the
+actual u bundle size impact of the
+brownfield library itself but I wouldn't
+call it significant just because it is
+mostly a couple of native files that I
+would treat as helpers and utilities. So
+generally speaking considering the whole
+react native and all the native modules
+you're adding to your application that
+shouldn't feel like anything
+significant.
+>> Okay. Okay. Um, what kind of migration
+path do you hope teams take? Start
+small, one screen or feature islands? Do
+you have any recommendations?
+>> Typically, where we see most people uh
+success stories is around starting with
+uh a single screen and then uh gradually
+moving outside. I mean that really
+depends on your organization how you set
+yourself KPIs, but it's either a screen
+or feature island depending on that
+migration.
+>> Okay, cool. And speaking of migration
+and success stories, are there any
+brownfield success stories you can share
+with us?
+>> Yeah, there is a lot of I mean
+unfortunately there's quite a few NDAs
+I've signed over time. However, um you
+know, we've seen um we've seen during
+the keynote in the morning, we've seen
+Zando and HelloFresh being showcased for
+their brownfield stories and um React
+Native Brownfield is pretty much um well
+there is a picture of brownfield library
+in uh one of the articles. So that's
+what that one is easy to figure out. But
+one thing to keep in mind is that
+reactive brownfield itself is not a uh
+it's not just a library. It's more of an
+approach. You can really do it without
+using our library. It's more about how
+you package it. So I would say uh if you
+look at those two articles uh they
+pretty much uh capture reactive
+brownfield and I would think of these
+two as success story.
+>> Okay. Wonderful. And how does the final
+state of apps using brownfield look
+like? Is it more of a hybrid approach or
+do they fully transfer to React Native
+over time?
+>> Also very good question. I think often a
+um misconception is that you have to
+finish at a green field stage. So you
+have to finish the rewrite uh where we
+see a lot of companies being successful
+is starting the migration uh doing only
+the things that are necessary. Sometimes
+they end up being grafield for the
+foreseeable future. So I would say when
+you start using uh React Native inside
+your mobile app, do not aim necessarily
+for phasing out all of your native
+screens, if you end up staying somewhere
+in between, that's perfectly fine.
+>> Yeah. Cool. Well, thank you for sharing
+those insights on migration and uh two
+final questions for you. What's your
+favorite React feature of all times?
+>> Honestly, I love uh Hooks.
+>> Okay. Wow.
+>> I like Hooks. I I like how they u
+initially when I was switching from
+classes they made me change my mental
+model and I learned a lot while I was
+shifting from classes to function
+components.
+>> Okay. And what's uh what's a thing about
+you that doesn't come up in normal
+conversation.
+>> So see here's the thing every time I go
+to a conference I try to be uh very
+lowkey about everything I do outside. I
+mostly focus on code and I'm always
+fully locked in. Okay.
+>> But my passion is cars. I love driving.
+style of racing and um
+>> thing to know about me is that I have
+full sleeve tattoo here and it's my
+first car BMW. I have it tattooed all
+the pieces on my arm. I cannot show it
+right here but maybe when we meet the
+other day you'll see it right here.
+>> Part of the suspension is right here. So
+it's like this little passion of mine.
+>> Really passionate.
+>> Yeah.
+>> Cool. I never realized you had a full
+sleeve. That's really cool.
+>> Uh it was supposed to be a mystery so I
+didn't really answer the question. Yeah.
+There you go.
+>> Thank you so much, Mike, for joining us
+today. And uh folks, stay tuned.

@@ -1,0 +1,4076 @@
+[
+  {
+    "commit": {
+      "author": {
+        "date": "2020-12-15T11:13:12-08:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-12-15T11:16:46-08:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook GitHub Bot"
+      },
+      "message": "Exclude `i386` from valid architectures when building with Hermes on iOS (#30592)\n\nSummary:\nWhen building React Native application in Release mode for an iPhone Simulator _and_ targeting `armv7`, Xcode will build all architectures (due to `ONLY_ACTIVE_ARCH` set to `false`, unlike in Debug mode). As a result, Xcode will try building for `i386` (32-bit iPhone Simulator), which fails as we don’t build Hermes binaries for `i386`.\n\nFix is to disable `i386`, since it is not supported by `Hermes` and certain `Folly` features.\n\n## Changelog\n\n[IOS] [BREAKING] - `i386` architecture will be automatically disabled when Hermes is being used. This might be potentially breaking for your workflow if you target `armv7` devices, as you will no longer be able to test on the simulator.\n[IOS] [FEATURE] - Replace `flipper_post_install` with `react_native_post_install` hook. Will automatically detect if Flipper is enabled.\n\nPull Request resolved: https://github.com/facebook/react-native/pull/30592\n\nTest Plan: Run React Native application with Hermes enabled (or Flipper) in Release mode and it should work just fine.\n\nReviewed By: appden\n\nDifferential Revision: D25564738\n\nPulled By: TheSavior\n\nfbshipit-source-id: e786ab73fb0a77de5869cf9e5999726c7d29f1d4",
+      "tree": {
+        "sha": "da566727be8dd765bde23f64c1c3760bdb9c9386"
+      }
+    },
+    "sha": "42dde12aac81208c4e69da991f4e08b9e62d18f6",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-12-14T17:25:47-08:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-12-14T17:27:55-08:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook GitHub Bot"
+      },
+      "message": "fix: default template on iOS (#30571)\n\nSummary:\nRecently introduced steps to run Hermes accidentally removed `!` from the `use_react_native`, causing `pod install` to fail with an error.\n\n## Changelog\n\n[INTERNAL] [iOS] - Fix Podfle in default template\n\nPull Request resolved: https://github.com/facebook/react-native/pull/30571\n\nTest Plan: Run `pod install` with this file and it should work.\n\nReviewed By: appden\n\nDifferential Revision: D25537263\n\nPulled By: TheSavior\n\nfbshipit-source-id: da7f21775cbe641e34aded87a92c696539f4d5c3",
+      "tree": {
+        "sha": "06167e4e8000b8ca6187b8c7958d49a959938638"
+      }
+    },
+    "sha": "e54ead6556f813fc622fd5e1f27ab2b41fa4f213",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-12-14T14:06:07-08:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-12-14T14:08:33-08:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook GitHub Bot"
+      },
+      "message": "fix: building in release mode for simulator (#30543)\n\nSummary:\nFixes https://github.com/facebook/react-native/issues/29984\n\nRight now, running a React Native application with Xcode 12 in Release mode on an iPhone Simulator will fail with something like below:\n\n> [some file path], building for iOS Simulator, but linking in object file built for iOS, file '[some file path]' for architecture arm64\n\nThe best explanation of this issue has been provided by alloy in https://github.com/facebook/react-native/issues/29984:\n\n> This issue has started coming up with Xcode 12 and support for the new ARM based Macs, as `arm64` now no longer can be assumed to _only_ be for iOS devices. This means Xcode 12 will now also build for `arm64` simulator SDKs and it has become ambiguous if an arch slice in a prebuilt binary is meant for a simulator or device.\n>\n> In any case, for now this means that you can configure your Xcode project to exclude `arm64` when building for any iOS simulator SDK.\n\nThis PR implements aforementioned workaround.\n\n## Changelog\n\n[FIX] [IOS] - Fix running React Native project with Xcode 12 in Release on iPhone Simulator\n\nPull Request resolved: https://github.com/facebook/react-native/pull/30543\n\nTest Plan: Switch your scheme to Release and run the app on simulator. Will complete w/o issues.\n\nReviewed By: appden\n\nDifferential Revision: D25537295\n\nPulled By: TheSavior\n\nfbshipit-source-id: 2dc05cb80e59f1d95d2a84ab55ed6a5b5446411c",
+      "tree": {
+        "sha": "47ccd9a355b0c3cc29cc671db997e3919c317f9a"
+      }
+    },
+    "sha": "fdcacd7f76ea8ca6dafda32ac431c8adc7bdad00",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-11-03T01:13:01-08:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-11-03T01:14:38-08:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook GitHub Bot"
+      },
+      "message": "feat: Enable Hermes to work on iOS (#29914)\n\nSummary:\nThis PR makes it possible to build iOS applications with Hermes. Note that it doesn't work with `use_frameworks!` just yet.\n\nFixes https://github.com/facebook/react-native/issues/27845 (by downgrading iOS deployment target for RCT-Folly to 9.0)\nFixes https://github.com/facebook/react-native/issues/28810 (as above)\n\nChecklist:\n- [x] Adjust release scripts to create Hermes bytecode bundle\n- [x] Release new Hermes npm package that includes iOS files (unreleased right now, if you want to try locally, you have to clone Hermes and `yarn link` its master to this project)\n- [x] Test on a new React Native application in both Debug and Release (Device)\n- [x] Test on an RNTester application in both Debug and Release (Device)\n- [x] Add missing `i386` to Hermes framework and enable Bitcode\n- [x] Inspect CI failures for possible regressions\n- [x] Resolve Folly issue as reported https://github.com/facebook/react-native/issues/27845 and https://github.com/facebook/react-native/issues/28810\n- [x] Release new Hermes and test against it that everything works\n\n## Changelog\n\n[IOS] [FEATURE] - Enable Hermes on iOS\n[INTERNAL] - Upgrade to CocoaPods 1.10.0 to resolve Xcode 12.0 issues\n[INTERNAL] - Upgrade to Xcode 12.0 on the CircleCI\n[INTERNAL] - Fix building RNTester in Release mode\n[INTERNAL] - Fix build-time errors of `libevent` with `use_frameworks!`\n[INTERNAL] - Introduce `USE_HERMES` variable and test all RNTester configurations on the CI\n[INTERNAL] - Do not fetch CocoaPods repository since we're using CDN anyway\n\nPull Request resolved: https://github.com/facebook/react-native/pull/29914\n\nTest Plan:\nTurn on `hermes_enabled` to true in your `Podfile`, install pods, and run the iOS application. Your app should be running Hermes now.\n\nPreview: (note \"Engine: Hermes\")\n\n<img width=\"395\" alt=\"Screenshot 2020-09-09 at 19 22 32\" src=\"https://user-images.githubusercontent.com/2464966/92631584-d7c01d80-f2d1-11ea-9b40-33d73db96a53.png\">\n\nReviewed By: hramos\n\nDifferential Revision: D24684845\n\nPulled By: cpojer\n\nfbshipit-source-id: 900cbe3bf9398a6fd4a773d552899a001bf5146b",
+      "tree": {
+        "sha": "de81b6b5404189ce7232c5a8df5599e3a2d14af3"
+      }
+    },
+    "sha": "c95ee5ac18e22a32b12bf707bd47b926f09d3d51",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-09-22T14:39:57-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "grabbou"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-09-22T14:42:23-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook GitHub Bot"
+      },
+      "message": "feat: enable bitcode (#365)\n\nSummary:\nBitcode is turned on by default in React Native and so, setting it here as well.\n\nChangelog: [iOS] [Changed] - Upgraded JSI with a new HERMES_ENABLE_BITCODE flag\n\nPull Request resolved: https://github.com/facebook/hermes/pull/365\n\nReviewed By: tmikov\n\nDifferential Revision: D23823228\n\nPulled By: Huxpro\n\nfbshipit-source-id: d43638818a733f6a87b2f4a1ecadad8ea9c7a419",
+      "tree": {
+        "sha": "40be8b60697ddef1a05294132c711960b22f88c5"
+      }
+    },
+    "sha": "311d4e9ef080aa429f840236cc23c013c0ae644c",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-05-04T14:38:39-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-05-04T14:41:04-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook GitHub Bot"
+      },
+      "message": "chore: remove Kotlin version from the default template (#28626)\n\nSummary:\nThe default application requires Kotlin version that is not supported by the Gradle plugin (should be at least `1.3.10`). However, instead of upgrading, we should remove it entirely. Here's why.\n\nThis commit https://github.com/facebook/react-native/commit/29d3dfbd196176af98c9727c82ff2668e697d78e introduced Detox for RNTester Android application.\n\nSince the commit doesn't mention Detox for the default application and there are no Detox tests present by default in the default application, I believe that this addition was performed by a mistake.\n\nThe best way is to remove Kotlin from the default template. This step is described in the Detox documentation and all users that are integrating Detox will be asked to perform it anyway. No need to do it for them.\n\n## Changelog\n\n[ANDROID] [INTERNAL] - remove Kotlin from the default template\nPull Request resolved: https://github.com/facebook/react-native/pull/28626\n\nTest Plan: Building a brand new project with `master` should work\n\nDifferential Revision: D21388961\n\nPulled By: shergin\n\nfbshipit-source-id: 92666aa67f92b29f4e7f9c036b332bd058cdd49e",
+      "tree": {
+        "sha": "3d9974cb2223d14936ff6575d7a3fb6a096fe052"
+      }
+    },
+    "sha": "ced959bb3d6abdab30c5e64af9bff6059b111cdd",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-04-28T14:40:25-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-04-28T14:45:18-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook GitHub Bot"
+      },
+      "message": "Update react.gradle (#28776)\n\nSummary:\nRunning `./gradlew assembleRelease` fails as the path to the CLI contains a new line at the end. We don't run this command in `debug` mode, hence it passed the testing. My bad.\n\nFixed, checked in both `debug` with `bundleInDebug: true` and `release`.\n\nFixes https://github.com/facebook/react-native/issues/28700\n\n## Changelog\n\n[INTERNAL] [ANDROID] - Fix `React.gradle` to build Android apps in production\nPull Request resolved: https://github.com/facebook/react-native/pull/28776\n\nTest Plan: Running `./gradlew assembleRelease` works\n\nReviewed By: hramos\n\nDifferential Revision: D21287789\n\nPulled By: TheSavior\n\nfbshipit-source-id: dc3ec8eef7a919b072b562d2bd455e2f704bc083",
+      "tree": {
+        "sha": "549205b464d8223847565299c7aed35d523f5d62"
+      }
+    },
+    "sha": "afdcdc760f560963fdb48e409470d4119763d10b",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-04-16T17:44:49-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-04-16T17:48:14-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook GitHub Bot"
+      },
+      "message": "chore: update `./scripts/test-manual-e2e.sh` (#28653)\n\nSummary:\nRecent changes broke the script - wrong path to open `RNTesterPods.xcworkspace` and other scripts - we change dir with `cd`.\n\nAnother change is incorrect use of `RNTesterProject.xcodeproj` instead of a `xcworkspace`.\n\nThis PR is a simple and short fix to make it run.\n\n## Changelog\n\n[INTERNAL] - chore: update `./scripts/test-manual-e2e.sh`\nPull Request resolved: https://github.com/facebook/react-native/pull/28653\n\nTest Plan: Run `./scripts/test-manual-e2e.sh`. Things work.\n\nDifferential Revision: D21079792\n\nPulled By: hramos\n\nfbshipit-source-id: 6bdb8be016f044852ed216ec53f80db40c84b5fd",
+      "tree": {
+        "sha": "5f9e2d43ac1b5e8f372dfd05e60cf68654b81d92"
+      }
+    },
+    "sha": "90f60a83e3671655360806b48e1604cdebebeb6b",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-04-16T02:54:06-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "grabbou"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-04-16T02:56:43-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook GitHub Bot"
+      },
+      "message": "chore: update CLI to the latest version (#28623)\n\nSummary:\nBumps CLI to the latest version, needed by https://github.com/facebook/react-native/pull/28572 to work.\n\n## Changelog\n\n[INTERNAL] - Bump CLI to latest\nPull Request resolved: https://github.com/facebook/react-native/pull/28623\n\nReviewed By: hramos\n\nDifferential Revision: D21017766\n\nPulled By: cpojer\n\nfbshipit-source-id: 62a873923c58f8752edb0394db7e6dfceed92485",
+      "tree": {
+        "sha": "948691fd0ca824ef4fd0d77eaf85c48820edf71a"
+      }
+    },
+    "sha": "ddc33007ad0b4a0a24966b833e797227b9c56cca",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-04-15T11:16:12-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "grabbou"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-04-15T11:19:45-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook GitHub Bot"
+      },
+      "message": "fix: do not throw on missing `cliPath`, use the default value (#28625)\n\nSummary:\nThe `cliPath` has always been optional value and in fact, even had its default value hardcoded in the React gradle file.\n\nIn this PR, I am just taking use of it and remove throwing an error, which is going to be a really annoying breaking change.\n\n## Changelog\n\n[ANDROID] [INTERNAL] - Don't require `cliPath`\nPull Request resolved: https://github.com/facebook/react-native/pull/28625\n\nTest Plan:\nRun Android project, everything works.\nProvide custom `cliPath`, it gets respected\n\nReviewed By: cpojer\n\nDifferential Revision: D21044222\n\nPulled By: TheSavior\n\nfbshipit-source-id: 8029f988d92abb9f64f30e05932c0d407d0c997e",
+      "tree": {
+        "sha": "75c976d89718d5556ef0008aa2d1d8caf0de52ad"
+      }
+    },
+    "sha": "992e0ce922cee91b079f8da7ce0e03ee2780b8c8",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-04-09T10:27:12-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-04-09T10:30:18-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook GitHub Bot"
+      },
+      "message": "Update default Podfile to not depend on a path (#28572)\n\nSummary:\nRecently, a default Podfile has been modified to not contain all the React Native pods, but use a helper method `use_react_native!`.\n\nWhile this is great, it assumes a hardcoded path of `../node_modules/react-native` to be always the correct location of the React Native.\n\nhttps://github.com/facebook/react-native/blob/d4d8887b5018782eeb3f26efa85125e6bbff73e4/scripts/autolink-ios.rb#L7-L9\n\nUnfortunately, due to the way Ruby works, this completely hides the path away from the users.\n\nBefore, they could have seen the wrong path explicitly in a Podfile and knew to update it to resolve path-related issues.\n\nWith the current version in `master`, I can see a lot of issues where developers wonder how to resolve the path issues and how to pass the path itself.\n\nhttps://github.com/facebook/react-native/blob/4118d798265341061105f3a53550db83c66a71cb/template/ios/Podfile#L5-L10\n\nThis PR uses React Native CLI configuration (that is already used to link 3rd party dependencies) to explicitly define the correct path to the React Native.\n\nAs a result, we don't have to change the paths here whether we're running monorepo or not.\n\n## Changelog\n\n[IOS] [INTERNAL] - Always provide an explicit path to React Native\nPull Request resolved: https://github.com/facebook/react-native/pull/28572\n\nDifferential Revision: D20945194\n\nPulled By: TheSavior\n\nfbshipit-source-id: 010f9754f2ed78ef62fd52f4d201f296f5af6d27",
+      "tree": {
+        "sha": "8b88ef61ef8e42800f3d1454bfa0c128546b47af"
+      }
+    },
+    "sha": "cd13c99d001d25296dcf991ea3cb32929d872102",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-03-20T11:33:09-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-03-20T11:36:46-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook GitHub Bot"
+      },
+      "message": "feat: improve monorepo support by removing redundant PROJECT_ROOT (#28354)\n\nSummary:\nHistorically, React Native didn't support a lot of custom project structures apart from the standard flat directory with `ios` and `android` folders. The CLI had to be explicitly started from the project root, otherwise Metro didn't work right.\n\nIn order to resolve the project root in the most accurate way, React Native assumed that project root is always `../../` from its location in `node_modules` - this is not true when the installation gets hoisted (e.g. in a monorepo).\n\nTo address that, janicduplessis brought support for custom [`PROJECT_ROOT`](https://github.com/facebook/react-native/commit/9ccde378b6e6379df61f9d968be6346ca6be7ead) that allowed overriding the `../../` in case it wasn't true.\n\nToday, CLI is able to automatically resolve the project root, no matter where it's started. It will traverse the tree of the directories upwards and stop as soon as it meets `package.json`.\n\nAs a result, it doesn't really matter from where we start the CLI anymore as a part of `react-native-xcode.sh`.\n\nBy replacing the default value of `$REACT_NATIVE_DIR/../../` with `$PWD, that is default for all Xcode scripts, we can make the setup for monorepo easier - nobody will need to set `$PROJECT_ROOT` in order to override the incorrect defaults.\n\nBy default, all scripts defined in Xcode run from `$PWD` directory, which is the location of the iOS project. In the future, we will be able to remove `cd` entirely.\n\nTo better understand this PR, let's look a few hypothetical structures as an example:\n\n#### Monorepo:\n\n> tl;dr works out of the box, no need to mess around with paths\n\n```\n- package.json\n- packages/\n  - my-app/\n     - index.js\n     - package.json\n     - ios/\n        - MyApp.xcodeproj\n```\n\n**Before this PR**, the `react-native-xcode.sh` will start the CLI like this:\n\n```bash\ncd $REACT_NATIVE_DIR/../../\nnode <absolute_path_to_cli.js> bundle --entry-point index.js\n```\n\n- Because we change the directory to the root of monorepo, CLI throws an error. All in all, there's no `react-native` dependency at the workspace root.\n\n- Some users turn `no hoist` in an act of troubleshooting the errors, which resolves the problem - `react-native` is moved under `my-app/node_modules` which makes this mechanism resolve properly.\n\n- Some users find out about `PROJECT_ROOT` and set it to overwrite the default value. For example, setting `export PROJECT_ROOT = \"$PWD/../` will set the directory to `my-app`, which has a dependency on `react-native` in a `package.json` and makes the CLI happy.\n\n**After this PR**, the `react-native-xcode.sh` will start the CLI like this:\n\n```bash\ncd $PWD\nnode <absolute_path_to_cli.js> bundle --entry-point index.js\n```\n\n- The `$PWD` is `packages/my-app/ios/` because that's where the Xcode project is located. CLI will automatically set the root to `../` because that's where it finds `package.json` with `react-native` dependency. It will pass that root to Metro, unless users have set a different one themselves. Thanks to that, all paths to JavaScript files remain working and unaffected.\n\n- No need to set `PROJECT_ROOT` anymore.\n\n- We don't rely on the location of `node_modules`, which is cleaner and future proof.\n\n#### Standard:\n\n> tl;dr no changes\n\n```\n- ios/\n   - MyApp.xcodeproj\n- index.js\n- package.json\n```\n\n**Before this PR**, the `react-native-xcode.sh` will start the CLI like this:\n\n```bash\ncd $REACT_NATIVE_DIR/../../\nnode <absolute_path_to_cli.js> bundle --entry-point index.js\n```\n\n- Everything works fine. Path from `react-native` inside `node_modules` is correct - the project root is set right to `/`\n\n**After this PR**, the `react-native-xcode.sh` will start the CLI like this:\n\n```bash\ncd $PWD\nnode <absolute_path_to_cli.js> bundle --entry-point index.js\n```\n\n- The root will be set to where Xcode project is located, which is `/ios`. This is the PWD for all Xcode scripts.\n\nCLI will look for the `package.json` going upwards from `ios` folder. Will stop at `/`, find out it has `react-native` dependency, load it and its commands and proceed further.\n\n## Changelog\n\n[iOS] [Feature] - Better monorepo support when building release apk\nPull Request resolved: https://github.com/facebook/react-native/pull/28354\n\nTest Plan:\n- All projects (standard/monorepo) run without issues.\n- PROJECT_ROOT is not needed.\n\nCC: Titozzz (who wrote monorepo guide), alloy, bartolkaruza\n\nReviewed By: cpojer\n\nDifferential Revision: D20558005\n\nPulled By: hramos\n\nfbshipit-source-id: 2551120beadcfd4c2f1393ce8a2c2fa6b93c9290",
+      "tree": {
+        "sha": "2b04136a5cca063f7d9f39f075528acdfb7e75f7"
+      }
+    },
+    "sha": "a8e85026cfa60056b1bcbcd39cde789e4d65f9cb",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-03-04T19:29:17-08:00",
+        "email": "grabbou@gmail.com",
+        "name": "grabbou"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-03-04T19:32:12-08:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "chore: Bump CLI to latest (#28227)\n\nSummary:\nBump CLI to the latest version.\n\nCC: alloy thymikee\n\nChangelog:\n[Internal] Bump CLI version\n\nPull Request resolved: https://github.com/facebook/react-native/pull/28227\n\nReviewed By: cpojer\n\nDifferential Revision: D20256386\n\nPulled By: hramos\n\nfbshipit-source-id: a3cc46536b1e9f2f7a6a947b11ee0aaed25a25d6",
+      "tree": {
+        "sha": "3eabe133921eca8b8a6c0de2a80ecb920154f8ea"
+      }
+    },
+    "sha": "e1de7a5e654f4cb1c08405f58c811a9f0074bb5c",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-10-30T10:47:03-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-10-30T11:04:53-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Update integration snapshots (#27059)\n\nSummary:\nThis commit https://github.com/facebook/react-native/commit/a397d330a4cf7e08095faa0e751e38d5106ed5c7 changes colors in the RNTester slightly and makes snapshots to fail.\n\nI have re-generated them and made sure it was just the background color (and few other minor gray shades) that were different.\n\nI haven't spotted any other visual changes.\nPull Request resolved: https://github.com/facebook/react-native/pull/27059\n\nDifferential Revision: D18223898\n\nPulled By: cpojer\n\nfbshipit-source-id: ccc269bba0023233bc27254bd1a6bc0fb09a390a",
+      "tree": {
+        "sha": "9667b6a9b09765999ed5674d776dd04cb81be210"
+      }
+    },
+    "sha": "2c7a907b08fabcd774e037c8f8e5a9d56c1c57e9",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-09-09T06:39:51-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-09-09T06:42:29-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Update CircleCI config as per support request (#26329)\n\nSummary:\nThis is a cherry-pick of the fix on 0.61-stable that fixes an issue with CircleCI.\nhttps://github.com/facebook/react-native/commit/fafc58b62dea4e124ec286af3e05bf8b5caf5450\nPull Request resolved: https://github.com/facebook/react-native/pull/26329\n\nDifferential Revision: D17258952\n\nPulled By: cpojer\n\nfbshipit-source-id: 5116a143b582ab4835d7a53f4037a7b7e749f3a8",
+      "tree": {
+        "sha": "b2c461af001de903cc0abb1694838aac4607b098"
+      }
+    },
+    "sha": "16d8802b22e24163c93b07e7c9968b5e687fe709",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-04-24T04:44:27-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-04-24T05:09:10-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Use latest React Native CLI (#24517)\n\nSummary:\nUpdates React Native to use latest CLI.\n\nChanges:\n- No more `--reactNativePath`, define it once in the configuration file. This reverts the previous PR that added this flag\n- Add `platforms` and `commands` - React Native now defines platform like any other package. There's no longer concept of \"out-of-tree\" platform. All are treated equally. If React Native works, any other platform will work too.\n- Updates `jest/hasteImpl.js` to use public CLI interface (`loadConfig`) instead of `findPlugins` and removes a weird conditional that checks for CI presence.\n\n[INTERNAL] - Update React Native CLI\nPull Request resolved: https://github.com/facebook/react-native/pull/24517\n\nDifferential Revision: D15044762\n\nPulled By: cpojer\n\nfbshipit-source-id: 379b61e842e619312c542173219a7d326663cf24",
+      "tree": {
+        "sha": "061a2211219c7bd0219acbfb3d58818e52092912"
+      }
+    },
+    "sha": "706f67a882310ea5f43b2e000e0ebd15ae168e25",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-03-18T06:11:15-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-03-18T06:22:53-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Update React Native to use latest CLI (#23940)\n\nSummary:\nLanding D14472633 again which failed because of a metro-buck issue.\n\nLatest CLI requires `reactNativePath` to be explicitly set when `react-native` is not present under `node_modules` (which is the case when running from source).\n\nFixes #23936\n\nThis PR also updates CLI to latest version and removes private calls to `findPlugins` (it's now exposed under public interface).\n\nWe also remove custom `rn-cli.config.js` options that are no longer needed that we have `--reactNativePath`. I added them a month ago as a temporary workaround.\n\n[GENERAL] [FIXED] - Internal - Update to the latest CLI\nPull Request resolved: https://github.com/facebook/react-native/pull/23940\n\nReviewed By: rickhanlonii\n\nDifferential Revision: D14501686\n\nPulled By: cpojer\n\nfbshipit-source-id: c8dac71b3806d81c9d18b6d4a7e92d82962791f9",
+      "tree": {
+        "sha": "97bf7e3663a9398e4921b3376c81e77803a3c1b8"
+      }
+    },
+    "sha": "5558333c60c75b1ac68f3e248d2d393ec09e8c8a",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-03-15T11:04:03-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-03-15T11:07:48-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Update React Native to use latest CLI (#23940)\n\nSummary:\nLatest CLI requires `reactNativePath` to be explicitly set when `react-native` is not present under `node_modules` (which is the case when running from source).\n\nFixes #23936\n\nThis PR also updates CLI to latest version and removes private calls to `findPlugins` (it's now exposed under public interface).\n\nWe also remove custom `rn-cli.config.js` options that are no longer needed that we have `--reactNativePath`. I added them a month ago as a temporary workaround.\n\n[GENERAL] [FIXED] - Internal - Update to the latest CLI\nPull Request resolved: https://github.com/facebook/react-native/pull/23940\n\nDifferential Revision: D14472633\n\nPulled By: cpojer\n\nfbshipit-source-id: b7ea92ee130da6730aa0093265958aa1b8c2ab97",
+      "tree": {
+        "sha": "9c23ded61d359ab8f0c261e3970190e6ff9ca482"
+      }
+    },
+    "sha": "1fe4799a880a07ad5df5db57b55d00adf97ff2b5",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-03-15T04:26:46-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-03-15T04:36:46-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Do not run packager in Release mode (#23938)\n\nSummary:\nWhen running your project in \"Release\" mode, Metro will start automatically. This is not desired. See https://github.com/react-native-community/react-native-cli/issues/31 for details\n\n[IOS] [FIXED] - Do not start Metro in Release mode\nPull Request resolved: https://github.com/facebook/react-native/pull/23938\n\nDifferential Revision: D14477595\n\nPulled By: cpojer\n\nfbshipit-source-id: 05166537500fa95a59ae87f27154c9665b7ccfe8",
+      "tree": {
+        "sha": "2a32a1dc79166adc85b80556f8dc3e953c118bf2"
+      }
+    },
+    "sha": "581711ca55e4727c73f09dc0fd279d5badd41bfe",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-03-12T18:30:31-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-03-12T18:35:02-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Fix DatePickerIOS e2e tests (#23861)\n\nSummary:\nDatePickerIOS tests stopped working after US changed their time zone on CircleCI. I decided to update the tests to be more reliable, by:\n- removing \"timezoneoffset\" from the examples - I don't think it's needed. We don't demonstrate other props and it was causing us some troubles when timezones actually changed\n- changing \"interval\" example from \"time-only\" to \"datetime\" because there's a known bug that prevented the previous example from working https://github.com/facebook/react-native/issues/9566\n- splitting the label to two: one for date and other one for time, so that we can match the date only when we test \"date\" mode only\n\n[IOS] [FIXED] - Improved reliability of DatePickerIOS e2e tests\nPull Request resolved: https://github.com/facebook/react-native/pull/23861\n\nDifferential Revision: D14434324\n\nPulled By: cpojer\n\nfbshipit-source-id: 0f82b7e94bb1cb6ce75b44badd0064d1754370b9",
+      "tree": {
+        "sha": "aa6a344ec0b1a0b08fcee79ef733eeeba5ca643e"
+      }
+    },
+    "sha": "8270de9c2cfad721b554201ab97d645ffbfdc84b",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-01-28T20:09:55-08:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-01-28T20:29:58-08:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Fix Detox tests after upgrading to latest CLI (#23191)\n\nSummary:\nLatest changes inside CLI now require that Metro configuration is provided when building RNTester app. This is to let CLI know that instead of looking for \"react-native\" under \"node_modules\" (that is obviously not present since we are running from source), it should check the paths provided.\n\nWhen running \"npm start\", it finds the configuration at the root. However, when building through Xcode (e.g. \"react-native bundle\" or \"xcodebuild\" in Release scheme), it runs \"react-native-xcode.sh\" that works in different folder and makes Metro not detect the configuration file.\n\nThis PR explicitly sets path to the configuration via `BUNDLE_CONFIG`.\n\nIt also removes `pwd` from being prepended to all `BUNDLE_CONFIG` values. In my case, `pwd` was `/Users/grabbou` and the RNTester files where inside `/Users/grabbou/Repositories/react-native`. I was unable to point the script to correct location without making it aware of the folder structure - which is not going to work on the CI.\nPull Request resolved: https://github.com/facebook/react-native/pull/23191\n\nDifferential Revision: D13851741\n\nPulled By: hramos\n\nfbshipit-source-id: d920353fd68d39468bd33bd1ad47e03b017a7727",
+      "tree": {
+        "sha": "9a5b0ca0773192067a289f2bf567f3afe6f567d7"
+      }
+    },
+    "sha": "9a9370481fb909a6e2f1066e98092b7dbd3237b9",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-01-21T09:08:36-08:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-01-21T09:13:08-08:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Update references to the CLI (#23052)\n\nSummary:\nThis updates React Native to use latest CLI. We also create Metro configuration, because CLI looks for React Native in \"node_modules\" by default. Since we are running React Native from source, it will fail to find required files.\n\nTo avoid hacky logic to detect if we are running from source backed into the CLI, I decided to leverage the Metro configuration instead.\nPull Request resolved: https://github.com/facebook/react-native/pull/23052\n\nReviewed By: rickhanlonii\n\nDifferential Revision: D13719938\n\nPulled By: cpojer\n\nfbshipit-source-id: 1f40a40b3cdbb07ccd42daf75feb457556d3e40f",
+      "tree": {
+        "sha": "2b547c3103df86bfd704360ebd70ed6531f20f43"
+      }
+    },
+    "sha": "1af390be19000b2756fc646e72f152dd383a0bb1",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2018-12-02T22:18:42-08:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2018-12-02T22:21:43-08:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Extract out CLI (#22337)\n\nSummary:\nContinuation of https://github.com/facebook/react-native/pull/22174 with an exception that `local-cli` folder is left in React Native repository to keep Facebook internal and React Native calls still working.\n\nSeparate strategy should be developed to remove all uses of `local-cli` in favor of dedicated utilities.\nPull Request resolved: https://github.com/facebook/react-native/pull/22337\n\nReviewed By: TheSavior\n\nDifferential Revision: D13172898\n\nPulled By: cpojer\n\nfbshipit-source-id: 0217867f9944648307475ebe629eb729da7bfaaf",
+      "tree": {
+        "sha": "e62b1708124022265b171f6e37ab68b7ecf3fe9a"
+      }
+    },
+    "sha": "cb6eb03776849d8ff2fe8bc66cb054dc6bcfa761",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2018-09-10T16:10:25-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2018-09-10T16:19:11-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Fix Metro preset version (#21034)\n\nSummary: This pull request removes the hard-coded version of the `metro-react-native-babel-preset` as defined in the `init` command. That way, the version always matches React Native version specified in its `package.json`, making it match Metro version.\n\nDifferential Revision: D9759540\n\nPulled By: hramos\n\nfbshipit-source-id: 90835442e2db1900851cbfb8c3c625229184d851",
+      "tree": {
+        "sha": "6aa10379b3de8a5a7b5dfcc821da102cfa3ac8ae"
+      }
+    },
+    "sha": "5d55f0368ee696fcd6c1b0d03e3948297215cc8b",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2018-04-06T14:10:12-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2018-04-06T14:34:04-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Fix `run-ios` not turning on Simulator app\n\nSummary:\nRight now, `run-ios` will \"boot\" Simulator in the headless mode in the background, as long as the Simulator.app is not running. It is exactly what \"detox\" does - it executes your test suite in the background.\n\nIt seems to me that the author of this change was testing it with `Simulator.app` open.\n\nIn order to fix this behavior, we have to make sure it runs before we attempt booting.\n\nThis passed through the release process since we don't use `run-ios` there (it recommends turning on XCode and testing manually which is what I have done recently too).\n\nDifferential Revision: D7535693\n\nPulled By: hramos\n\nfbshipit-source-id: 881db7740ace805ecefb98bfdb660e32aafd4664",
+      "tree": {
+        "sha": "b9d48d34537947af2c9cbd69fa15811aeb4077bd"
+      }
+    },
+    "sha": "9736ddc061e9c4291df8a3185c7f9d6f73e435c7",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2018-04-06T10:36:56-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2018-04-06T10:44:07-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Fix: \"Metro listenting on port undefined\"\n\nSummary:\nRegression introduced in https://github.com/facebook/react-native/commit/2ad34075f1d048bebb08ef30799ac0d081073150.\n\nFixes https://github.com/facebook/react-native/issues/18681\nCloses https://github.com/facebook/react-native/pull/18722\n\nDifferential Revision: D7535684\n\nPulled By: hramos\n\nfbshipit-source-id: 21bc79091148daba7b668965cd5becaa43117721",
+      "tree": {
+        "sha": "37b64aaa8f73ff9be7b3ff808af31e283eb6a7a3"
+      }
+    },
+    "sha": "159869d250c8d8a7a43c3cfcd114ad8bc674e23e",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2018-02-12T12:24:37-08:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2018-02-12T12:33:42-08:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Broken publish step on CI\n\nSummary:\nEvery `job` is run in a separate container and so, `checkout` step is required for the Git host to be added to `~/.ssh/known_hosts`. Without this step, it will timeout after 10 minutes waiting for you to add (yes) or reject (no) from known hosts (we get this prompt when we checkout from a host for the very first time).\nCloses https://github.com/facebook/react-native/pull/17956\n\nDifferential Revision: D6968130\n\nPulled By: hramos\n\nfbshipit-source-id: 6d62166fd375f8f408cf5f18b188f841d035d97f",
+      "tree": {
+        "sha": "07131c82e5558419f28512ce189ca2e00eb0cfde"
+      }
+    },
+    "sha": "f7729a5933fe34c0ca3b3ea5a3407ff1701c7d10",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-11-27T10:54:22-08:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-11-27T11:01:31-08:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Updates CircleCI config\n\nSummary:\nContains changes needed for the `publish` step to be fixed.\nCloses https://github.com/facebook/react-native/pull/16913\n\nDifferential Revision: D6415385\n\nPulled By: hramos\n\nfbshipit-source-id: 1837aaf06e866a727bf77024eb5dc29d423a90a4",
+      "tree": {
+        "sha": "e1e5a12d72b7e9aa4936d1c2f83b31503b2b37cf"
+      }
+    },
+    "sha": "088ff3a1714e5e547db3be0bd392e4a9a920473b",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-10-19T13:44:28-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-10-19T13:53:27-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Fix test suite when running on a feature branch\n\nSummary:\nTest suite for React Native version check relies on `ReactNativeVersion.js` file that is modified on a release branch (it contains values of a real version, not zeros).\n\nThat makes it impossible for the build to pass: https://circleci.com/gh/facebook/react-native/23494\n\nThis PR mocks it with zero values, just like we mock it in other suites. I am not sure if that is desired, but works for now.\n\nCC ide\nCloses https://github.com/facebook/react-native/pull/16464\n\nDifferential Revision: D6100285\n\nPulled By: hramos\n\nfbshipit-source-id: 784f7e14f5283403f3fa518940565e1ef19dd398",
+      "tree": {
+        "sha": "6a99221480d2200804bcea65508c843101e87595"
+      }
+    },
+    "sha": "4e1dfa48a25d00a3507fe5e02e0aeb268fc388cf",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-10-13T16:11:53-07:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-10-13T16:19:36-07:00",
+        "email": "facebook-github-bot@users.noreply.github.com",
+        "name": "Facebook Github Bot"
+      },
+      "message": "Migrate Travis over to Circle\n\nSummary:\nThis pull request migrates Travis to Circle and pre-starts iOS simulators / tvOS ones as advised in documentation to speed up builds. It also uses Xcode 9.0 to build and test apps.\n\nNote that podspec test is failing and it's been failing for a while on Travis as well (since podspec has been changed to use Cxx bridge by default). I've notified few folks here of that and we are looking to fix this test, but it's not related to the scope of this PR.\n\nAlso, previously, podspec tests were only runninng on master (disabled for PR builds) where I think it makes more sense to run them on PR builds as well (all in all, we want to prevent breakage before merging). That said, I've removed `if` check to make it run on all builds.\n\nOther small changes:\n- cache `node_modules` properly (previously defined as restore_cache and save_cache but not referenced in following jobs)\nCloses https://github.com/facebook/react-native/pull/16354\n\nDifferential Revision: D6054858\n\nPulled By: hramos\n\nfbshipit-source-id: 5165bef0985f4257febced14873be5bcb80b9f51",
+      "tree": {
+        "sha": "245cd6216017495275ecf4255928ab67263d3d57"
+      }
+    },
+    "sha": "c0e6d415ce5e1e0d72cac58e68539f9a24ac7f31",
+    "repo": "facebook/react-native"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2022-02-25T07:47:43+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2022-02-25T07:47:43+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "message": "v8.0.0-alpha.0",
+      "tree": {
+        "sha": "8dbe508b1bca4abc853109bdf2fa4321c7307166"
+      }
+    },
+    "sha": "8dc014aab8cc2a5434386f5fb41ba1fa2af1e331",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2022-02-25T07:04:58+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2022-02-25T07:04:58+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "breaking(run-android): remove deprecated run-android properties (#1557)\n\n* feat: remove deprecated run-android properties\r\n\r\n* chore: fix lint\r\n\r\n* chore: remove outdated tests\r\n\r\n* fix lint",
+      "tree": {
+        "sha": "b04b6cfe2854c69d4341122be6f2908ad89976d4"
+      }
+    },
+    "sha": "6d4d266cded77bdfe49d2a31d1ef6de012139554",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2022-02-25T07:04:33+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2022-02-25T07:04:33+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "chore: add tests for `getProjectConfig` on iOS (#1558)\n\n* chore: add test\r\n\r\n* chore: fix lint",
+      "tree": {
+        "sha": "f2f126e9fe4c2df68fd06af281403c64ae408cea"
+      }
+    },
+    "sha": "0adb1efe2061fe139525c0a4fe503f7132f4e911",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2022-02-07T12:34:43+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2022-02-07T12:34:43+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "refactor(breaking): remove deprecated `link`, `unlink` and associated code (#1537)\n\n* chore: initial commit - remove files\r\n\r\n* chore: further removal\r\n\r\n* chore: wip\r\n\r\n* continue work\r\n\r\n* chore: fix warnings and errors\r\n\r\n* chore: move findXcodeProj to config and upgrade run-ios\r\n\r\n* chore: add todo\r\n\r\n* chore: remove example\r\n\r\n* chore: update source dir and update dependnecy config for ios\r\n\r\n* chore: remove logger\r\n\r\n* chore: fix type issues\r\n\r\n* chore: remove tests for missing properties, prefer snapshots instead for broader coverage\r\n\r\n* chore: update snapshots for iOS config (removed properties)\r\n\r\n* chore: fix upgrade tests\r\n\r\n* chore: remove extra tests\r\n\r\n* chore: update config tests\r\n\r\n* chore: two tests tbd to support new resolution mechanism\r\n\r\n* chore: fix ios tests and bring back configurable sourceDir\r\n\r\n* feat: align findPodfilePath with old findProject heuristics\r\n\r\n* chore: fix lint\r\n\r\n* chore: update snapshot\r\n\r\n* fix: filter invalid deps\r\n\r\n* chore: update tests\r\n\r\n* chore: add missing properties to Joi schema\r\n\r\n* chore: another update\r\n\r\n* chore: fix Joi schema\r\n\r\n* chore: update schema\r\n\r\n* chore: fix snapshot\r\n\r\n* chore: note on the future development for this file\r\n\r\n* chore: update snapshot one more time - nitpick\r\n\r\n* one last time\r\n\r\n* feat: print when multiple podfiles are found\r\n\r\n* update docs\r\n\r\n* chore: fix\r\n\r\n* Update autolinking.md\r\n\r\n* chore: remove xmldoc dep\r\n\r\n* chore: remove xcode dep\r\n\r\n* chore: return type for dependencyConfig\r\n\r\n* Update index.ts\r\n\r\nCo-authored-by: Michał Pierzchała <thymikee@gmail.com>",
+      "tree": {
+        "sha": "c7f14d9097b5c535fa0494e3e93aa155ca144aff"
+      }
+    },
+    "sha": "25eec7c695f09aea0ace7c0b591844fe8828ccc5",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2022-02-02T22:45:48+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2022-02-02T22:45:48+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "chore(breaking): remove `initCompat` a.k.a legacy \"init\" (#1544)\n\n* chore: remove global-cli\r\n\r\n* feat: remove initCompat\r\n\r\n* fix",
+      "tree": {
+        "sha": "459473341bddaeceb4e768bb59c4be952d457265"
+      }
+    },
+    "sha": "2f819db3fbef675c024cc3bb5ae76775e0ad39ea",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2022-02-02T20:21:19+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2022-02-02T20:21:19+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "chore: remove global-cli (#1540)\n\n* chore: remove global-cli\r\n\r\n* Update package.json",
+      "tree": {
+        "sha": "d3e6ee5756221e3667db8c5dbe250cd6de2668b7"
+      }
+    },
+    "sha": "6578485326e8f6024241c203b5a722e361a032bd",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2022-02-01T13:04:19+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2022-02-01T13:04:19+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "v7.0.1",
+      "tree": {
+        "sha": "6f6ff92361dc221d7f8ec96a552fbc65eabb31f3"
+      }
+    },
+    "sha": "8fec9b60ed996a9c9158309f7692a173710cf2b3",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2022-02-01T12:21:55+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2022-02-01T12:21:55+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "chore: revert \"v7.0.0\"\n\nThis reverts commit fcb746c46e6dc05225a26ab132ab380c841c849f.",
+      "tree": {
+        "sha": "7007bb864d2a7a472cab67dee82494c8d8745fd7"
+      }
+    },
+    "sha": "29e8f343662a7c11fa78ecb0e09a313cfcb1ff27",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2022-02-01T12:18:52+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2022-02-01T12:18:52+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "v7.0.0",
+      "tree": {
+        "sha": "a6fddcb9465f04ea19bcfad89d4696da5bc0b7a8"
+      }
+    },
+    "sha": "fcb746c46e6dc05225a26ab132ab380c841c849f",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2022-02-01T00:28:32+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2022-02-01T00:28:32+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "chore: update yarn.lock",
+      "tree": {
+        "sha": "7007bb864d2a7a472cab67dee82494c8d8745fd7"
+      }
+    },
+    "sha": "39467d7e3d863efd58ae6af5d062fdd25051b373",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2022-01-27T12:14:56+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2022-01-27T12:14:56+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "refactor: move config command to config package (#1534)",
+      "tree": {
+        "sha": "851699171ef36ee1408047645589b712d383ffd2"
+      }
+    },
+    "sha": "41bb41c0e00670de8883195508f2f92c10066ac3",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2022-01-24T17:12:15+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2022-01-24T17:12:47+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "chore: bump eslint, remove core-js and few other deps",
+      "tree": {
+        "sha": "2a1286321cf9a251cb2776b77e2a1cac18c0c78e"
+      }
+    },
+    "sha": "c64bfcb8db9e1cb5e678b2f3dcbe57841856766f",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2021-10-04T13:53:00+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2021-10-04T13:53:00+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "v6.1.0",
+      "tree": {
+        "sha": "7c831c13da6473aca5b4f0049a0d6a9577b78e13"
+      }
+    },
+    "sha": "e1da64317a1178c2b262d82c2f14210cdfa3ebe1",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2021-07-19T09:04:41+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2021-07-19T09:04:41+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "fix(run-ios): fix lint issues",
+      "tree": {
+        "sha": "ef289cea0d9393092dc267568ba8132a03a6b6e1"
+      }
+    },
+    "sha": "44f541332ee57e8a30feb3ca24479ab292149dd9",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2021-03-17T11:19:40+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2021-03-17T11:19:40+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "chore: update versions in readme (#1384)\n\nApart from updating 5.x, I also removed `next` - it looks like it's not up to date right now and definitely not tracking the upcoming 6.x.",
+      "tree": {
+        "sha": "0c3290c36009bdf91a7bd0d3b6805fd541642eee"
+      }
+    },
+    "sha": "684a1c0e42f4d93267114d713d9c6b22144e4d2b",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2021-03-17T09:43:16+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2021-03-17T09:43:16+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "v5.0.1-alpha.2",
+      "tree": {
+        "sha": "e46589eb12124290afc78889a999c947032fff47"
+      }
+    },
+    "sha": "050531afffd5df947cd610d4f919bd5001d793cb",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-12-07T15:49:10+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-12-07T15:49:10+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "fix: doctor command prints output twice (#1334)\n\nIt turns out that, by a mistake, `doctor` command is registered twice, both as project and detached command. It has been converted to `detached` few months ago. \r\n\r\nIt could be hidden `commander` feature that when multiple functions are registered under the same name, they run in order. Attaching some screenshots for reference:\r\n\r\nRemoving it from `projectCommands` fixes the problem.\r\n\r\nWe will address similar issue https://github.com/react-native-community/cli/issues/1261 soon where detached commands (such as `doctor` included) can receive and take advantage of `config` when present in the project.",
+      "tree": {
+        "sha": "f16aa101246b5f918ed09b7c6423588d1a07ee64"
+      }
+    },
+    "sha": "22a3c2558c2e03cc61f088807d2b09d1567c07ca",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-11-26T14:19:18+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-11-26T14:19:18+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "feat: better platform name detection (#1326)\n\n* feat: better platform name detection\r\n\r\n* chore: code\r\n\r\n* Update packages/platform-ios/src/commands/runIOS/index.ts\r\n\r\nCo-authored-by: Michał Pierzchała <thymikee@gmail.com>\r\n\r\n* fix: ci\r\n\r\n* chore: fix lint\r\n\r\nCo-authored-by: Michał Pierzchała <thymikee@gmail.com>",
+      "tree": {
+        "sha": "80e9d4f4db022f7ee0866a0db66df06132716a18"
+      }
+    },
+    "sha": "495d067650c19baf4c5605902a7737898fa00073",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-11-26T14:07:57+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-11-26T14:07:57+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "feat: respect required/optional option values (#1328)\n\n* validate options\r\n\r\n* Update index.ts",
+      "tree": {
+        "sha": "acc382a2145d95246ac0107973addf30c5880486"
+      }
+    },
+    "sha": "b52fc00b168786dabfbdebbe02c04215786adb47",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-11-25T15:27:50+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-11-25T15:27:50+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "feat: refactor template name logic (#1325)\n\n* feat: refactor template name lgoic\r\n\r\n* chore: remove console log\r\n\r\n* chore: update docs\r\n\r\n* chore: fix lint errors",
+      "tree": {
+        "sha": "e80500d56b10d8ab4765e2c7c4c3c555d8a3d304"
+      }
+    },
+    "sha": "ef98aeefa3a17261031a101ad1499f88cf49882e",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-06-21T09:31:03+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "grabbou"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-06-21T09:31:03+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "grabbou"
+      },
+      "message": "v4.10.1",
+      "tree": {
+        "sha": "e4422783bc23f316e3760480b0c42e368cbc468a"
+      }
+    },
+    "sha": "f76add94dcfb647dd55b59a5fad9a4d5363962fa",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-06-19T17:52:07+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-06-19T17:52:07+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "chore: improve desc of `--version` option in `init` command (#1205)\n\n* Update index.ts\r\n\r\n* Update commands.md",
+      "tree": {
+        "sha": "158cd76c571f8e337253cf07a5c5e2df9e6c9970"
+      }
+    },
+    "sha": "f68f848be2f5d9e4c3fcade04b3c90e40da9809b",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-06-19T13:40:27+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-06-19T13:40:27+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "fix: Podfile.lock paths are no longer absolute (#1203)\n\n* fix: cp paths\r\n\r\n* chore: fix tests\r\n\r\n* Update native_modules.test.ts\r\n\r\n* Add tests\r\n\r\n* chore: reuse constant",
+      "tree": {
+        "sha": "34bc336132b3d73a99c335fc4965c140f9a083c0"
+      }
+    },
+    "sha": "e949e234b03fb65f8e4ed2706dfaa745aa59a14f",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-04-09T17:15:57+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-04-09T17:15:57+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "feat: return config from the Ruby function (#1107)",
+      "tree": {
+        "sha": "a05c0e9735edbde7350b8abbfeae32dc578bda27"
+      }
+    },
+    "sha": "c8bfdc690d501c149a8c9f57a064069a28d19537",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-03-19T10:01:25+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-03-19T10:01:25+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "feat: run `pod repo update` when `pod install` failed (#1061)\n\n* feat: update repo\r\n\r\n* chore: update",
+      "tree": {
+        "sha": "05f98d181b66a4ba75a9407e040f1f4fec6471fd"
+      }
+    },
+    "sha": "4dbfc7751aee90c5e9c78286b3825796a4d332ab",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-03-18T16:48:49+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-03-18T16:48:49+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "fix: custom root or calling Gradle outside of project directory (#1057)\n\n* fix: custom root\r\n\r\n* chore: dont re-create file\r\n\r\n* chore: refactor Jest helpers to allow arbitrary scripts to run\r\n\r\n* chore: rename\r\n\r\n* chore: add e2e test\r\n\r\n* chore: no snapshot testing for Gradle output\r\n\r\n* chore: final tweaks and uncomment cleanup\r\n\r\n* fix: use proper env for e2e\r\n\r\n* chore: move everything to beforeAll\r\n\r\n* Update jest/helpers.ts\r\n\r\nCo-Authored-By: Michał Pierzchała <thymikee@gmail.com>\r\n\r\n* chore: naming updates\r\n\r\n* chore: address comments\r\n\r\nCo-authored-by: Michał Pierzchała <thymikee@gmail.com>",
+      "tree": {
+        "sha": "1e7f97ae37434e96a0877718b283261e4a0d84f5"
+      }
+    },
+    "sha": "21f1b03c013c3daf32c6b4dc548fb837356b824a",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-03-11T12:58:03+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-03-11T12:58:03+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "chore: remove REACT_NATIVE_APP_ROOT, use --watchFolders (#935)\n\n* chore: remove `watchFolders` from the CLI\r\n\r\n* Update CONTRIBUTING.md\r\n\r\n* remove findSymlinkedModules\r\n\r\nCo-authored-by: Michał Pierzchała <thymikee@gmail.com>",
+      "tree": {
+        "sha": "cec8f8d74064a15136dfa40ab6a089381a075565"
+      }
+    },
+    "sha": "01d855c626b1b25af874dfb38ecf8a99536bb89e",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-03-04T14:20:12+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "grabbou"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-03-04T14:20:12+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "grabbou"
+      },
+      "message": "v4.2.3",
+      "tree": {
+        "sha": "4b8b93904054d784b4ab16e352a621f3ca347fa0"
+      }
+    },
+    "sha": "9092319332e4a948ff57d9dd3c8481a139dc9d85",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-03-03T17:32:31+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "grabbou"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-03-03T17:32:31+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "grabbou"
+      },
+      "message": "Revert \"chore: remove extraneous properties from the run-android doc\"\n\nThis reverts commit ca4a0aeb788ad7e85b9ca5d54001004ddacf4b0b.",
+      "tree": {
+        "sha": "2df8e348f5d5064330ccb502152b5a896f3eea9d"
+      }
+    },
+    "sha": "a70064bfbe8837bbd114e4ea492b1a9df026af0b",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-02-13T23:50:08+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 1,
+      "committer": {
+        "date": "2020-02-13T23:50:08+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "fix: running Android builds on Windows (#966)\n\n* fix: machines where shebang doesnt work\r\n\r\n* fix: update\r\n\r\n* fix: revert that change",
+      "tree": {
+        "sha": "9a83567a6c35a5d566c7c18c682c02dd78b202d3"
+      }
+    },
+    "sha": "9ad9b679ee98ea17b4694b9467543472a7fb9d2e",
+    "repo": "react-native-community/cli"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2018-01-03T12:43:24+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2018-01-03T12:43:24+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.0.0-beta.12.",
+      "tree": {
+        "sha": "84f8e07ad5b1c71493b2ff11edd6e8b97b3ca87b"
+      }
+    },
+    "sha": "dbb1a3142b2fe38ca3394bda273d7ad4a8e2a8f1",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-12-05T12:17:55-08:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-12-05T12:17:55-08:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.0.0-beta.11.",
+      "tree": {
+        "sha": "8f1da930d374c04ca17bdffde6dd68cae0ffb55b"
+      }
+    },
+    "sha": "6712328fa57f8e48d0d30cc91215315ff6edaf06",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-11-09T13:35:33+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-11-09T13:35:33+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.0.0-beta.10.",
+      "tree": {
+        "sha": "7c6eb6fb1ddd2fbd633ee373d24d1d97a0c619b2"
+      }
+    },
+    "sha": "05879437294c2e805d0787137e4d16c7140d4d0e",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-11-09T13:34:17+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-11-09T13:34:17+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.0.0-beta.9.",
+      "tree": {
+        "sha": "9e479c1adc2fcc421a438a1392cfcc76beaccb52"
+      }
+    },
+    "sha": "1e402060679e0d2980de6079463f542a4ad7e6f6",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-10-25T12:42:22+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-10-25T12:42:22+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Beta 8",
+      "tree": {
+        "sha": "7cefc44142070ffc081e70f0bfa9f1b1cda30bb2"
+      }
+    },
+    "sha": "78c6e5f4fc42f2a6618c587481eacf33ff6e9ed7",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-10-25T12:36:22+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-10-25T16:06:22+05:30",
+        "email": "satyajit.happy@gmail.com",
+        "name": "Satyajit Sahoo"
+      },
+      "message": "Revert exclude (#263)\n\n* Revert exclude\r\n\r\nWe removed it by a mistake, it's now back.\r\n\r\n* Update snapshot",
+      "tree": {
+        "sha": "e5fd11a5f899563036c16615c4d4f346d8a50df9"
+      }
+    },
+    "sha": "18ec4180716cbcfa6c3441643b9614953d4ac3ad",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-10-19T11:44:22+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-10-19T11:44:22+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release new version",
+      "tree": {
+        "sha": "393bf0392cde80f51d3c4a4b01c471d1e627220c"
+      }
+    },
+    "sha": "747400d0b61df5c5e9814ad9e2e5ae90f6288d84",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-10-10T11:21:03+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-10-10T11:21:03+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release 1.0.0-beta.5",
+      "tree": {
+        "sha": "22e3293b728194c14fd69535b774b62a0bae7a50"
+      }
+    },
+    "sha": "fe555b78121d5540c7db38cf46cedd44fb1f7588",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-09-03T21:38:09+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-09-03T21:38:09+02:00",
+        "email": "satyajit.happy@gmail.com",
+        "name": "Satyajit Sahoo"
+      },
+      "message": "Fix `launchPackager` step from Xcode (#227)\n\nWhen packager is being launched by Xcode during run phase (by `launchPackager.command`), current working directory is set to `/`. This results in an awkward error saying \"Cannot find /node_modules/.bin/haul\" (note it looks in wrong folder - in this case, top level one).\r\n\r\nIn order for this to function properly, we need to use $THIS_DIR variable that is set by `launchPackager.command` before executing `packager.sh` script.",
+      "tree": {
+        "sha": "cd23f46cf4e111b42001eaaca979e1c0575a813a"
+      }
+    },
+    "sha": "5f756b508b80ddda3e3e5326d81a5f11cfabb8e6",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-08-22T16:38:36+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-08-22T16:38:36+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.0.0-beta.5.",
+      "tree": {
+        "sha": "8912a215beae4c9d67145d8845f37191f2382139"
+      }
+    },
+    "sha": "6f98437a0fc442e3feb002093265193716f106a6",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-08-02T14:33:28+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-08-02T14:33:28+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.0.0-beta.4.",
+      "tree": {
+        "sha": "649d63003290093d23de3d3846d71e6de8db0995"
+      }
+    },
+    "sha": "86fa10142f4169cf23ab20c159089bbbdb1ff2c3",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-08-01T15:35:24+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-08-01T15:35:24+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.0.0-beta.3.",
+      "tree": {
+        "sha": "ad319ee4bf0e9ca70e0589971adc5958a6befca5"
+      }
+    },
+    "sha": "e4de0ce5065f66a63bc13e05ffed6974c27b7a85",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-07-26T12:27:00+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-07-26T12:27:00+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Update polyfillEnvironment.js (#193)",
+      "tree": {
+        "sha": "36afde0cbac4072419d9a9b38c52cc8b5c032c7e"
+      }
+    },
+    "sha": "df8cc13075f1dfbb7d38bfe08ec9c69c52073c5a",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-06-23T15:11:16+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-06-23T15:11:54+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Bump version number",
+      "tree": {
+        "sha": "ff78d92fa6ff5c7478315257a1ccb70aefb1ec61"
+      }
+    },
+    "sha": "e2758311cce70928e2a1d5f733e1f50b93e2bfcf",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-06-14T16:20:10+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-06-14T16:20:10+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Bump version number",
+      "tree": {
+        "sha": "7718dfa3e0cd56e68122c8fec56e0aaa27462070"
+      }
+    },
+    "sha": "eda49d82a8df07ef7f69c8e65fa2b5ea46aac5d8",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-06-08T10:51:29+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-06-08T10:51:29+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.0.0-beta.0.",
+      "tree": {
+        "sha": "dc2aa4e82266c572bae6b69c84c2699bde60a798"
+      }
+    },
+    "sha": "28a14ffd92bbaffbb5563b8b91c1cab613dae0e8",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-06-08T10:02:50+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-06-08T10:02:50+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Check in all places for react-native (#163)",
+      "tree": {
+        "sha": "e31a746b538c42a9eb2552a0ab3667ee62d7eb5d"
+      }
+    },
+    "sha": "6180ccd15dad82bd92b16ea4b0b99bd32aef9aed",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-06-08T09:57:44+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-06-08T13:27:44+05:30",
+        "email": "satyajit.happy@gmail.com",
+        "name": "Satyajit Sahoo"
+      },
+      "message": "Use new name (#162)",
+      "tree": {
+        "sha": "8327512f57a41f50db7add352ad53f4a1915eb6e"
+      }
+    },
+    "sha": "48ff8cdaa5a9c76637898f057c9ff799e18d756e",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-06-08T09:38:24+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-06-08T09:38:24+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Fixes #159",
+      "tree": {
+        "sha": "90f71fa2f917e3d6a296293aa1518a26e7146f5f"
+      }
+    },
+    "sha": "58c17fffeb6f91639946ed0a8998f26a776e33a3",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-05-22T17:04:51+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-05-22T17:04:51+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v0.6.0.",
+      "tree": {
+        "sha": "f07ad2085a79d9cf35814fb0a306893944753a82"
+      }
+    },
+    "sha": "a4d29ab2e4b12c71c33ceca66e0d268c9a774dd4",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-04-13T11:15:21+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-04-13T11:15:21+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Add Slack badge",
+      "tree": {
+        "sha": "8b6020beaf92438ec1a283048e88fada44960feb"
+      }
+    },
+    "sha": "08e7d23b5369af7bcaa9401b44ac8ac59f0893f9",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-04-10T20:19:53+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-04-10T20:19:53+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v0.5.0.",
+      "tree": {
+        "sha": "d606296819a9b4fa07667446039a5b438e2f555a"
+      }
+    },
+    "sha": "db6550f3067189fd48b20c38b09e0d6abea193b6",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-04-10T16:34:37+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-04-10T20:04:37+05:30",
+        "email": "satyajit.happy@gmail.com",
+        "name": "Satyajit Sahoo"
+      },
+      "message": "dev is true by default in `start` (#116)\n\nWe forgot to define it after changing CLI interface. Results in `uglify` running for `npm start`.",
+      "tree": {
+        "sha": "14039f82a96d1844d8f84041ed3f7d815cefe6c6"
+      }
+    },
+    "sha": "74dd3cb6ca5f3cadd7bcae6dac85b68c02154616",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-04-07T13:19:48+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-04-07T13:19:48+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v0.4.1.",
+      "tree": {
+        "sha": "fa2db4c988a452966d8a64dc4cc37f1f4b16ac6e"
+      }
+    },
+    "sha": "497e0edf849b55d111c27d951a10c4d169d0804c",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-04-07T10:28:44+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-04-07T10:28:44+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v0.4.0.",
+      "tree": {
+        "sha": "d1bea9699f3ac47dfa92f9ec516ad1b4b53aea6a"
+      }
+    },
+    "sha": "3cdda9706be5a66cfc47cfc1123a0465e58598e8",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-04-07T08:42:59+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-04-07T12:12:59+05:30",
+        "email": "satyajit.happy@gmail.com",
+        "name": "Satyajit Sahoo"
+      },
+      "message": "Prompt for options (#107)\n\n* Init\r\n\r\n* Fix value and booleans\r\n\r\n* Refactor if\r\n\r\n* Fix\r\n\r\n* Make description mandatory\r\n\r\n* Fix logger and visual tweaks\r\n\r\n* Fix display name and use in error msg as well\r\n\r\n* Remove err\r\n\r\n* Fix npm start\r\n\r\n* Fix if check\r\n\r\n* Fix printing client\r\n\r\n* We dont print  anywhere",
+      "tree": {
+        "sha": "005210ae7de625f5d90d2b7ccefcde80bf1049b7"
+      }
+    },
+    "sha": "c683676c1a375ad64f05b7b786d8fe87c0d6b07e",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-04-06T11:46:12+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-04-06T11:46:12+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v0.3.1.",
+      "tree": {
+        "sha": "90528484b32f41e16c6c83ef93405bf5d3fcd7c9"
+      }
+    },
+    "sha": "f92d71d36be2ba63ece00796225d0e3091f21f70",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-04-05T16:20:07+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-04-05T16:20:07+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v0.3.0.",
+      "tree": {
+        "sha": "b1d5b71c45bba6a949bd5c73be9549f46cf4b8db"
+      }
+    },
+    "sha": "e3e1ef40e9c286b1af1158dda019f848fd157953",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-04-05T16:13:44+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-04-05T16:13:44+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Better error message (#103)\n\n* Better error message\r\n\r\n* Fix msg\r\n\r\n* Update\r\n\r\n* Fix signature\r\n\r\n* Simplify\r\n\r\n* Update missingBundleMiddleware.js",
+      "tree": {
+        "sha": "e947071a57be147a7bff901ee71e01bc444c077a"
+      }
+    },
+    "sha": "e451c11c18d5d4d0fd5f006e4928549b1a829fda",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2017-04-05T16:10:39+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2017-04-05T19:40:39+05:30",
+        "email": "satyajit.happy@gmail.com",
+        "name": "Satyajit Sahoo"
+      },
+      "message": "Adds systrace middleware and removes logger boilerplate (#102)",
+      "tree": {
+        "sha": "343c05831d585ada8b4011518f4b6836c3a29f55"
+      }
+    },
+    "sha": "922d7631a1b32f62c80c5480306706c3b47e5dfe",
+    "repo": "callstack/haul"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-06-30T00:18:03+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-06-30T00:18:03+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Support react-native plugins (#179)\n\n* Support react-native plugins\r\n\r\n* Remove misleading name",
+      "tree": {
+        "sha": "a3cd82ed9e2e970091064305edd8ef87a625773f"
+      }
+    },
+    "sha": "769b69264f035fe366132df777fab7f6fd3bf03f",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-06-11T15:09:29+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-06-11T15:09:29+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.9.0.",
+      "tree": {
+        "sha": "fe3c46c04bf600247831101954f586e78a4b0333"
+      }
+    },
+    "sha": "7acee5113d0d4ca52d0c4f16422faf2960447a34",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-06-11T15:09:05+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-06-11T15:09:05+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Bump link version",
+      "tree": {
+        "sha": "aab9808baed9a60eb2fa953df1b488a0eab67a45"
+      }
+    },
+    "sha": "54ba57dc37a455d69844dcb3a6af814d091ea91a",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-05-28T18:58:37+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-05-28T18:58:37+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Document `options` in the readme\n\ncc: @Kureev you are the docs master, make it :fire:",
+      "tree": {
+        "sha": "71641bb46dff3254fe90283230281444f29a1a89"
+      }
+    },
+    "sha": "7ef2ccb01032d07a42dc9c1959cedbc0667a319a",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-05-28T18:47:02+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-05-28T18:48:06+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.8.0.",
+      "tree": {
+        "sha": "9c886d9411ed6af8a0b9cf1082dfe7b72ab76cfc"
+      }
+    },
+    "sha": "d1a7fd0c28501b6e48e803a7644cd55025eef98a",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-05-28T18:00:46+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-05-28T18:00:46+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Support flags in rnpm (#171)",
+      "tree": {
+        "sha": "9cad29081b7b99f61cd2fd0ca92fb66c7d08281f"
+      }
+    },
+    "sha": "5924dc7b4732781b84ce0e912e236cd757353ce0",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-05-05T21:09:09+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-05-05T21:09:09+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Initial commit :fire:",
+      "tree": {
+        "sha": "3a0fede409e471e7d9874a78b38a70e5b81f1101"
+      }
+    },
+    "sha": "22aec4846a859e403d3c9331e2a72d64b2b87ec1",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-05-03T13:06:24+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-05-03T13:06:24+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.7.0.",
+      "tree": {
+        "sha": "4355c1aecdef93fb6b55b31b88894684caf3f86f"
+      }
+    },
+    "sha": "46ea4b1b71fbff90e64f3cfecadfc7696c51cc20",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-05-03T13:05:54+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-05-03T13:05:54+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Bump versions",
+      "tree": {
+        "sha": "70baca7ecdf48e32914f4c664cf494d1887b0fe5"
+      }
+    },
+    "sha": "71e90b626b1ce27f121e56ede2a928c5ca2602f4",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-30T15:50:50+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-30T15:50:50+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.6.4.",
+      "tree": {
+        "sha": "287097032eb7c60484f6d1a01cfc31bfdf85907c"
+      }
+    },
+    "sha": "750a68ca9604c8304b9c2a1e8fd4927a6c42c98d",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-30T15:49:57+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-30T15:49:57+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.6.3.",
+      "tree": {
+        "sha": "1bccdf1ab896bad043fd4c95d72e3501b72a4d08"
+      }
+    },
+    "sha": "ebdd21a82ad58fecc7bc0c8b169c7fd34fcc05d3",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-09T16:49:34+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-09T16:49:34+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.6.2.",
+      "tree": {
+        "sha": "adbec911877b9cc4092cdf09e750809cd738371d"
+      }
+    },
+    "sha": "4a23caa86f4033b3626eabb86d87afbdfd12f4b1",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-09T16:49:21+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-09T16:49:21+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Update package.json",
+      "tree": {
+        "sha": "6caea34ba24396eaaf62c2e537097d80fd131d93"
+      }
+    },
+    "sha": "bace181448554d0a261174033392ab8af1b28963",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-07T09:13:46+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-07T09:13:46+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.6.1.",
+      "tree": {
+        "sha": "05bb18e3911f13cfc44697383109b04caa2a33cd"
+      }
+    },
+    "sha": "ae7fc3061df469de899223c703487c07ba4fa76e",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-07T09:13:41+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-07T09:13:41+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Bump link to its latest",
+      "tree": {
+        "sha": "b9a0fa4144c6101739164d344eb9d9883579b120"
+      }
+    },
+    "sha": "745d6ecd7aa580ce4d82610a547feb85173479f1",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-07T09:13:05+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-07T09:13:05+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Merge branch 'master' of github.com:rnpm/rnpm",
+      "tree": {
+        "sha": "28e974736f04a937811e1822d7a0e2aeca2ceede"
+      }
+    },
+    "sha": "d1383cd0d4539c489fddfd69453593bcdceef897",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-07T09:12:51+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-07T09:12:51+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Fixes #138",
+      "tree": {
+        "sha": "5668054d16df912257a17525b0450e5910265635"
+      }
+    },
+    "sha": "c554f301a48ac41e70dc674cdbc79aa27e27779f",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-06T23:25:29+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-06T23:25:29+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Update `Sponsors` section",
+      "tree": {
+        "sha": "c45d8b275133b340092ebed7beaac938a8af2834"
+      }
+    },
+    "sha": "d21c440b83672620fce7c8157c499c6beaada61c",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-06T23:18:19+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-06T23:18:19+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Params readme update",
+      "tree": {
+        "sha": "80fe52246cc604162a4c5f2d829ba586b5ab1d57"
+      }
+    },
+    "sha": "4d04bb48080ce7e4532a5ca2a16d3678610fe933",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-06T23:13:50+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-06T23:13:50+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.6.0.",
+      "tree": {
+        "sha": "b9ed274e4efd2611c3b9ee00464bf4bb3e52314c"
+      }
+    },
+    "sha": "e888ee1c4af69180343260693bc1fa400efbf225",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-06T23:11:21+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-06T23:11:21+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Bump link, cc: @Kureev",
+      "tree": {
+        "sha": "7029d26674fede480419ae386b32f0355ffbd8d7"
+      }
+    },
+    "sha": "74a71a4f78e916e9925cde9e28061fb2d02723f7",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-06T22:04:22+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-06T22:04:22+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Support params in config",
+      "tree": {
+        "sha": "1a84cd931f5c2298420f0cd424bd56ffe900b87a"
+      }
+    },
+    "sha": "2cc3ea7d7e1839163cdd5b7c7fd8585ed3b1d3a4",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-05T12:04:34+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-05T12:04:34+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Add empty plist key\n\nTo be used for automatically adding various things to Info.plist, related to https://github.com/rnpm/rnpm/issues/132",
+      "tree": {
+        "sha": "289820494ae3ec321266212bd3361ac4f9840e63"
+      }
+    },
+    "sha": "96e346ef0cc0b62e4d91f4b7f7d4d1751275c6e8",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-05T08:23:39+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-05T08:23:39+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.5.5.",
+      "tree": {
+        "sha": "d99e52868c437427ec747bba0bdb29cb17b0bc42"
+      }
+    },
+    "sha": "a9175eff2ca542050048cb29e90024cd76081692",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-05T08:22:29+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-05T08:22:29+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Some minor tweaks to findProject",
+      "tree": {
+        "sha": "a269a5667c1d2eb89c1c71d73dff9152f3a3fe5a"
+      }
+    },
+    "sha": "1a573d1bf85f1684869df6b9e0cecd84363f9e60",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-03-31T11:30:38+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-03-31T11:30:38+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.5.4.",
+      "tree": {
+        "sha": "2c8ec3f9217c919cbf0a5140d7f4ac6f494fa06c"
+      }
+    },
+    "sha": "2bb57f6f25e31e2f61d9cdea25525bfdfea56994",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-03-31T08:06:51+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-03-31T08:06:51+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Bump link for the future",
+      "tree": {
+        "sha": "94ad5b5d2e9dee9066c08f89ec222d1e9934b422"
+      }
+    },
+    "sha": "81f9a67b7ea62e2b1682b89090884a36941e5085",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-03-28T21:30:12+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-03-28T21:30:12+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.5.3.",
+      "tree": {
+        "sha": "2ad3943f5ad2eec88bb3745bb222bacf28e89bfa"
+      }
+    },
+    "sha": "1d748b5709f4ae9f4a14439e5dbbff6514ae1d1a",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-03-28T21:30:08+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-03-28T21:30:08+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Bump link dependency",
+      "tree": {
+        "sha": "b910d4b53ff844992c452b63115b31a402444095"
+      }
+    },
+    "sha": "928d88e2ee6f407ba280f7e05b6de2db10801918",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-03-28T21:13:50+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-03-28T21:13:50+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Merge pull request #123 from appden/ios-regex-fix\n\nMake TEST_PROJECTS regex case insensitive",
+      "tree": {
+        "sha": "63b0765e6d5ce48abed0306730dfad7a26e12750"
+      }
+    },
+    "sha": "42e031e868b652d633b7547e5d9a11b0ae9b4473",
+    "repo": "rnpm/rnpm"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-06-11T15:08:02+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-06-11T15:08:02+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.8.0.",
+      "tree": {
+        "sha": "06e9d7fcf55088353ca7829e07784bb56977752d"
+      }
+    },
+    "sha": "40ce61b7d638b2f3336a45ecf76918ef6acd4554",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-06-11T14:56:12+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-06-11T15:06:14+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Merge branch 'appden-shared-libraries'",
+      "tree": {
+        "sha": "7db95fc114fc69f7f282ceea2cb0a725c52de15f"
+      }
+    },
+    "sha": "80038d9a353eb5962ad7eb3e2021d5d78db7c010",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-06-11T14:55:53+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-06-11T15:06:13+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Make sure it works when unlinking",
+      "tree": {
+        "sha": "7db95fc114fc69f7f282ceea2cb0a725c52de15f"
+      }
+    },
+    "sha": "b8693519eb012e1eb713ff05c560888f1b00fde1",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-05-16T18:53:50+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-05-16T18:53:50+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Final tweaks",
+      "tree": {
+        "sha": "9a65beb9b99cd5392383bda9198c797d733f4c74"
+      }
+    },
+    "sha": "f56a4d6c264ec51a678c6600b14dbfe1e63d4cf9",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-05-16T18:42:20+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-05-16T18:42:20+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Some tweaks",
+      "tree": {
+        "sha": "25f54508d8da5832d08ac68167244681be8aa0e1"
+      }
+    },
+    "sha": "2bc8837663940877089f5439b5a64563342ca5f7",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-05-16T18:41:21+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-05-16T18:41:21+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Fixes https://github.com/rnpm/rnpm/issues/143",
+      "tree": {
+        "sha": "eb80da1828cf2bfe7081133da2d148a57c20c803"
+      }
+    },
+    "sha": "255855e501f6db651416bb07a72e4139f2f7b082",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-05-03T13:02:38+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-05-03T13:02:38+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.7.4.",
+      "tree": {
+        "sha": "185d551218c81d4931e3b51f0426a19274025297"
+      }
+    },
+    "sha": "09e99afe251a6732a673091e443faaa8b4d8f380",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-05-03T12:59:18+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-05-03T12:59:18+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Update `unlink` interface (#79)\n\n* Initial commit\r\n\r\n* Fix errors\r\n\r\n* Resolve\r\n\r\n* Fixes",
+      "tree": {
+        "sha": "787ee7769529041e2f90f44d8504e3ed6824bbcb"
+      }
+    },
+    "sha": "fa1d6a7e2822f76f8a2f927ef30da4bdfb13e901",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-05-02T18:14:56+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-05-02T18:14:56+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Fix func (#80)",
+      "tree": {
+        "sha": "c034ff25b336df608100add5edf5460f6d366e2d"
+      }
+    },
+    "sha": "bd8edc10d987f53b2eff6778c63bb9b8eaf07895",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-05-02T14:41:08+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-05-02T14:41:08+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Update tests",
+      "tree": {
+        "sha": "049897794cfa24cf11d95b7ac2c4e3c49eab5ed1"
+      }
+    },
+    "sha": "7e8d3294336cb36910353c654ac5014d7e930006",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-05-02T14:37:58+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-05-02T14:37:58+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Preserve line breaks in settings.gradle\n\nFixes https://github.com/rnpm/rnpm/issues/153\r\n\r\nSince the pattern is `include ':app:'\\n`, we have to preserve the `\\n` when we are done with inserting.",
+      "tree": {
+        "sha": "c37154ed4b654fdcdb1711d3aabfdea156a351b0"
+      }
+    },
+    "sha": "35f48bc7c323817869498fe7f1b873fee627485f",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-30T15:53:53+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-30T15:53:53+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.7.3.",
+      "tree": {
+        "sha": "3d5b26a741d522b8cf5da94339c7970fa82e31d5"
+      }
+    },
+    "sha": "a54186a154d54259c17024d3382c559165bda9ee",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-10T21:18:29+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-10T21:18:29+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Test catch as well",
+      "tree": {
+        "sha": "2d22ef87b8dcf9f58200f9400a78f9b9dfe54fa3"
+      }
+    },
+    "sha": "bb1d52c3e92f4728ae42bd9e397d30ab83235075",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-10T21:14:55+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-10T21:14:55+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Initial commit",
+      "tree": {
+        "sha": "902fba411884e4d51d17620ca038ca9016ff58ee"
+      }
+    },
+    "sha": "ce17bda2656176a9fe8aede76d096d1a2f4bdf9e",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-10T19:57:43+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-10T19:57:43+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Improve params UX and fix broken unlink on Android (#63)\n\n* Some suggestions on how to make it async\r\n\r\n* Make promiseWaterfall resolve with an array of all values at the end, just like\r\n\r\n* Fix tests\r\n\r\n* Remove old files\r\n\r\n* Bring back command\r\n\r\n* Fix naming\r\n\r\n* Add tests\r\n\r\n* Further tweaks\r\n\r\n* Use  instead\r\n\r\n* Do not check inside registerNativeModule\r\n\r\n* Remove space\r\n\r\n* Fixes and remove , can be added in a sep. pr\r\n\r\n* Move error handler to the end\r\n\r\n* Make it nicer\r\n\r\n* Naming\r\n\r\n* Fix info msg on ios\r\n\r\n* Use the same isInstalled check - @Kureev note that these checks were different, you were once checking in settings.gradle, 2nd time in import\r\n\r\n* Fix unlink - settings.gradle patch\r\n\r\n* Fix unlink - do the same for build.gradle just in case\r\n\r\n* Unit test isInstalledIOS\r\n\r\n* Make it config.params back\r\n\r\n* Test missing library group as well\r\n\r\n* Revert \"Fix unlink - do the same for build.gradle just in case\"\r\n\r\nThis reverts commit 046336d7822ec3d778ed134cfd47c88ac1506e6f.\r\n\r\n* Revert \"Fix unlink - settings.gradle patch\"\r\n\r\nThis reverts commit ac9916920a5da4eb4692e8419abd6fdde2a16c89.\r\n\r\n* Make sure isInstalled is used properly\r\n\r\n* Unit test isInstalledAndroid & make sure it returns bool\r\n\r\n* Add iOS docs\r\n\r\n* Update to `params`",
+      "tree": {
+        "sha": "9ffc57ad30ee1b1061fd5af29362b3d3c35e1fae"
+      }
+    },
+    "sha": "9744d0c121d4e11ff15b864877ba2cbe1ea575c6",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-09T16:48:03+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-09T16:48:03+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.7.2.",
+      "tree": {
+        "sha": "fa6a3cce55bbdf499f29fe88719328ffa78dbe90"
+      }
+    },
+    "sha": "ac758de63641889ca35ec3a120b9bfd856e597c3",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-08T18:27:04+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-08T18:27:04+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Eslint please be green",
+      "tree": {
+        "sha": "161dfbdc23be3ee764a31cbba1cf425f5a4788a7"
+      }
+    },
+    "sha": "8e9d8614fa13fe08f96f972e3a8f182919d8d0e3",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-08T18:00:07+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-08T18:00:07+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Oh no else return",
+      "tree": {
+        "sha": "e547bc0afc6e34fe8288c7dd91f102398bd560ba"
+      }
+    },
+    "sha": "1ad861a2e1e64ab53b63195a3c177c887299e610",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-08T17:58:11+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-08T17:58:11+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "For some reason it no longer returns value which always prints `is already linked` :(",
+      "tree": {
+        "sha": "c716bc50e29bc09273fc51acad03e64b5e46c581"
+      }
+    },
+    "sha": "074cdbcc80a3f1c43ff03826063dd0a5f8ee50c9",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-07T09:13:25+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-07T09:13:25+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.7.1.",
+      "tree": {
+        "sha": "036b9da51db7540ef08521dfde3755deff7a73de"
+      }
+    },
+    "sha": "7e98d092f506584fb6cf28cdf3c865888d3aa823",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-07T09:11:54+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-07T09:11:54+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Fix wrong order of commands",
+      "tree": {
+        "sha": "602fac053a1d23cb8d0a3e9bd32446754096c417"
+      }
+    },
+    "sha": "30469fc537d84b9c49e7cc6efb868f1491deb5cc",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-06T23:10:51+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-06T23:10:51+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Release v1.7.0.",
+      "tree": {
+        "sha": "cad77067ddb6e72d19d8c2b19aa5622c599d531a"
+      }
+    },
+    "sha": "533bd7d53ee4c584ed5dc02c53c52a7704bcd8ce",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-06T22:16:03+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-06T22:16:03+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "One more time...",
+      "tree": {
+        "sha": "a6895b30ba54fefe58b2e6a961dae2b1f7eddc22"
+      }
+    },
+    "sha": "38c99c584e8803bc1d2b3fdb1b314b3c5f7acba9",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-06T22:13:38+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-06T22:13:38+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Go eslint :horse:",
+      "tree": {
+        "sha": "2f5e633e39f71aa92e7b38f22d9cfd42382b40df"
+      }
+    },
+    "sha": "23802bcc9e7320238874c4bae8fc87e0cf65fa9f",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-06T22:10:38+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-06T22:10:38+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Fix tests and add in note about future case",
+      "tree": {
+        "sha": "0622b5bd91c8f5d5c6c9ea6f544beae22e34ea34"
+      }
+    },
+    "sha": "6c188572de1e5e1d4f9f73836bb48e37a9e73364",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-06T21:59:36+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-06T21:59:36+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "No longer removes file - it was always about removing project",
+      "tree": {
+        "sha": "fc3badb26419832ac2a045bef738fecb863aec73"
+      }
+    },
+    "sha": "558e90cad08fdc8379efc3b738c774dd259d5272",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-06T21:55:15+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-06T21:55:15+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Some more docs",
+      "tree": {
+        "sha": "46a3342cfc73424c10efaf56ad85b200c6ede4e9"
+      }
+    },
+    "sha": "378f8676f80163ddef0cb622919bb9382f4d1c99",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-06T21:52:52+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-06T21:52:52+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Add docs",
+      "tree": {
+        "sha": "43c85ed0f1469083be309894456eb3e8c98018f4"
+      }
+    },
+    "sha": "656955e3ef01c36b99766ac3b50caaa26c784a9f",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-06T21:49:33+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-06T21:49:33+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "diff clean",
+      "tree": {
+        "sha": "21fb1bf612f1ee8b0a50229ddf6e0d3479b86280"
+      }
+    },
+    "sha": "11e436a12c15ffe1d4764d2318a1d936dab83b1e",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2016-04-05T22:47:08+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2016-04-05T22:47:08+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "Remove eslint ignore",
+      "tree": {
+        "sha": "f1d2b83bb193b7222a2e1f42616c401ac997132f"
+      }
+    },
+    "sha": "f2f8a29559b35053a3fedc7239c0b519ec853b88",
+    "repo": "rnpm/rnpm-plugin-link"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2020-07-22T12:31:53+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2020-07-22T12:31:53+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Add changelog for 0.63.2 (#204)\n\n* Update CHANGELOG.md\r\n\r\n* Update CHANGELOG.md",
+      "tree": {
+        "sha": "8129348bc3b1ac226122eb08f959e91e909cea1e"
+      }
+    },
+    "sha": "ca5a4eec1b4d1815a08f1c2e40e7605eecc6beae",
+    "repo": "react-native-community/releases"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-11-23T15:51:30+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-11-23T15:51:30+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Add changelog for 0.61.5",
+      "tree": {
+        "sha": "d694c5e8f91f42c1da903b8d25c810c2e036d15f"
+      }
+    },
+    "sha": "ee7332c6d9614971ca0dddbeeb3f406875af8036",
+    "repo": "react-native-community/releases"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-11-04T20:43:07+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-11-04T20:43:07+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Update with 0.61.4",
+      "tree": {
+        "sha": "5950e60b2da7db7204cfa397263320ff8e43cc79"
+      }
+    },
+    "sha": "f86c5080cbfe1dc84f8a85768400318e365ed675",
+    "repo": "react-native-community/releases"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-10-29T21:06:31+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-10-29T21:06:31+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Update changelog for 0.61.3",
+      "tree": {
+        "sha": "b778390b424dbdda2ce6be0cff15aec0dbd9a6f9"
+      }
+    },
+    "sha": "948fa714477c0996829ffe4470bd00a337727ad6",
+    "repo": "react-native-community/releases"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-10-02T21:54:11+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-10-02T21:54:11+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Add new changelog entries for 0.61.1 and 0.61.2\n\n* Add new changelog entries\r\n\r\n* Update CHANGELOG.md",
+      "tree": {
+        "sha": "dfc9901932788a1583f827d84e2a295434dd2d9a"
+      }
+    },
+    "sha": "ecf8715ebecd2b98ab5b8e3055d1c34f09ac4778",
+    "repo": "react-native-community/releases"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-05-08T19:54:56+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-05-08T10:54:56-07:00",
+        "email": "ryan@turnrye.com",
+        "name": "Ryan Turner"
+      },
+      "message": "Add changelog entry for 0.59.8 release",
+      "tree": {
+        "sha": "f8f9e17a78327eb36ac18880e8f6db01ed1066e5"
+      }
+    },
+    "sha": "95b2aa9d19618a12f0e55fb1c8abd48b3f1dec46",
+    "repo": "react-native-community/releases"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-04-17T23:56:44+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-04-17T23:56:44+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "0.59.5 changelog (#117)",
+      "tree": {
+        "sha": "f01ee01794622120a0da0954c4e89cfdbb69e39b"
+      }
+    },
+    "sha": "167d802685ac5d23ca664af5ebc11ec16cf6b7cb",
+    "repo": "react-native-community/releases"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-04-10T13:13:47+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-04-10T05:13:47-06:00",
+        "email": "ryan@turnrye.com",
+        "name": "Ryan Turner"
+      },
+      "message": "Add changelog for 0.59.4 (#112)\n\n* Add changelog for 0.59..4\r\n\r\n* Update CHANGELOG.md\r\n\r\nCo-Authored-By: grabbou <grabbou@gmail.com>\r\n\r\n* Update CHANGELOG.md\r\n\r\nCo-Authored-By: grabbou <grabbou@gmail.com>\r\n\r\n* Update CHANGELOG.md\r\n\r\nCo-Authored-By: grabbou <grabbou@gmail.com>\r\n\r\n* Update CHANGELOG.md\r\n\r\nCo-Authored-By: grabbou <grabbou@gmail.com>\r\n\r\n* Update CHANGELOG.md\r\n\r\nCo-Authored-By: grabbou <grabbou@gmail.com>\r\n\r\n* Update CHANGELOG.md\r\n\r\nCo-Authored-By: grabbou <grabbou@gmail.com>",
+      "tree": {
+        "sha": "4425f622ad9b301d14215b17b51d328418bfabb8"
+      }
+    },
+    "sha": "72dde0d270685f44d2f827544267502dcb0b6235",
+    "repo": "react-native-community/releases"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-02-11T09:38:48+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-02-11T09:38:48+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Merge pull request #87 from telmen/master\n\nfix(typo): iOS Unkown to Unknown",
+      "tree": {
+        "sha": "f6821b3ab215a2f20ab496966f58f25a9f3d610e"
+      }
+    },
+    "sha": "92be1f3c21b85bfe07e15cf02861e32e17d692fa",
+    "repo": "react-native-community/releases"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2019-01-24T22:55:28+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2019-01-24T22:55:28+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Merge pull request #69 from react-native-community/0.58-changelog\n\n0.58 changelog",
+      "tree": {
+        "sha": "ad31894c7a86b159c9d1047f2ea4e76f3e028927"
+      }
+    },
+    "sha": "b1c0bf0d342e2cc1ed6a8caaee9ae7c9ceed0326",
+    "repo": "react-native-community/releases"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2018-04-06T00:27:06+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2018-04-06T00:27:06+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Update CHANGELOG.md",
+      "tree": {
+        "sha": "8ebc68303c09f797bd58ef865886a31633bc9029"
+      }
+    },
+    "sha": "80e4a937eef7da0bb189d401e813596cad675cb5",
+    "repo": "react-native-community/releases"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2018-04-06T00:26:48+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2018-04-06T00:26:48+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Merge pull request #13 from react-native-community/0.55\n\n0.55",
+      "tree": {
+        "sha": "c0977f453aecd3a9184bfb4d988cdc73b9f7048e"
+      }
+    },
+    "sha": "780ac6a9485c5eaec07a2828bcd538edc9f67d43",
+    "repo": "react-native-community/releases"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2018-03-24T18:24:40+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2018-03-24T18:24:40+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Merge pull request #12 from react-native-community/backport-readme\n\nREADME verbiage for requesting backport/cherrypicking of changes",
+      "tree": {
+        "sha": "b5d500c53d9c6843a31b1268be8f27c0eb3d5679"
+      }
+    },
+    "sha": "8055b9be3f52233d886ee8238d5b53c2828fa2ff",
+    "repo": "react-native-community/releases"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2018-03-21T19:48:39+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2018-03-21T19:48:39+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "Merge pull request #9 from hramos/patch-1\n\nExplain how commits make it into a release",
+      "tree": {
+        "sha": "18b8ff0a5079f43afe2a7c43c24d8e39394afc38"
+      }
+    },
+    "sha": "298919e775f815af464cb2b146ac662acc8c3463",
+    "repo": "react-native-community/releases"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-03-24T23:27:35+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-03-24T23:27:35+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "feat(expo-example): add bielik 1.5b gguf preset (#195)",
+      "tree": {
+        "sha": "7afc92037cb57d65e1ce02f603a4e17f2e021483"
+      }
+    },
+    "sha": "502a1b75325c78ddc3fc74e640cedf9da65a7634",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-02-04T11:40:59+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-02-04T11:40:59+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "feat: new app (#188)\n\n* new app ui\n\n* refactor(expo-example): clean up SetupAdapter and chat settings\n\n- Remove ProviderType, use model.provider for grouping instead\n- Move display info (label, accentColor, icon) into SetupAdapter\n- Add builtIn flag to indicate if model can be deleted\n- Implement pending settings for new chats before first message\n- Refactor addMessage to addMessages for atomic batch updates\n- Replace Map.groupBy with manual implementation for compatibility\n\n* feat(expo-example): add maxSteps setting for tool call iterations\n\n- Add maxSteps to ChatSettings type and defaults\n- Add UI control in settings sheet (1-20 range)\n- Use maxSteps in streamText stopWhen condition\n\n* feat: persist chats/models, hide mic when unavailable, handle unavailable provider\n\n- Persist custom models and chats across reloads using atomWithStorage with AsyncStorage\n- Hide microphone button when transcription is not available (iOS < 26)\n- Add isAvailable() method to AppleTranscriptionModel\n- Handle unavailable provider in ChatScreen with friendly message and model picker\n- Grey out unavailable models in Choose Model sheet\n- Add systemYellow color for warning states\n\n* fix: restore provider name labels in Choose Model sheet\n\n* fix: apply code review fixes for PR #188\n\n## Summary of Fixes Applied\n\n| Issue | Description | Status |\n|-------|-------------|--------|\n| #1 | Stale messages in handleSend | Not a bug - code already includes user message |\n| #2 | ModelLifecycleManager cleanup | Fixed - added cleanup on unmount |\n| #3 | Missing abort for streaming | Fixed - added AbortController + SDK abortSignal |\n| #4 | Audio listener accumulation | Fixed - recreate recorder each session |\n| #5 | Unnecessary `!` assertion | Skipped (style) |\n| #6 | Silent error swallowing | Skipped (per request) |\n| #7 | stopRecording not awaited | Fixed - made handlePress async |\n| #8 | State update after delay | Skipped |\n| #9 | setCurrentChatId inside setChats | Fixed - separated state updates |\n| #10 | Incorrect date calculation | Fixed - use calendar days |\n| #11 | No URL validation | Fixed - added `.gguf` check |\n| #12 | Date serialization | Fixed - store as ISO strings |\n| #13 | No duplicate check | Skipped |\n| #14 | stopPropagation non-standard | Fixed - removed |\n\n* refactor(expo-example): remove unnecessary useMemo/useCallback for React Compiler\n\nReact Compiler will auto-memoize these patterns:\n- groupedChats derived state in CustomDrawerContent\n- scrollToBottom, handleDelete, renderRightActions callbacks\n- adaptersByProvider and enabledTools derived computations\n\n* up\n\n* docs: add PR screenshots\n\n* docs: add agents.md style guide (#189)\n\n* re-organize and clean-up\n\n* refactor: extract ChatScreen into smaller components\n\n- Split monolithic ChatScreen (~1300 lines) into focused components:\n  ChatHeader, ChatMessages, ChatInputBar, ModelPickerSheet, SettingsSheet\n- Add providerStore for centralized adapter/model management\n- Change isAvailable() from async to sync using expo-file-system\n- Add Suspense boundaries with fallback components for progressive loading\n- Move download progress tracking to providerStore\n\n* final ui fixes, god damn",
+      "tree": {
+        "sha": "6bf87b88381afb95942be510fb6e13636c14fef4"
+      }
+    },
+    "sha": "e3c83b4971d21f90c2a27bcb9a98a09025fe7a22",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-30T10:37:17+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-30T10:37:17+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "docs: add AI SDK version compatibility table (#187)\n\n* docs: add AI SDK version compatibility table\n\nClarify which versions of React Native AI are compatible with AI SDK v5\nvs v6 to help users choose the right version.\n\n* fix\n\n* fix",
+      "tree": {
+        "sha": "a001639b73035e1d0a9b7b6518063c5fc9e8d720"
+      }
+    },
+    "sha": "823cb083abe9f9e5c48656e3412ce07995cce2ad",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-28T20:18:44+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-28T20:18:44+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "chore: rename package",
+      "tree": {
+        "sha": "ab19226fb9fa024f1a804806ec8010ea4806cfc2"
+      }
+    },
+    "sha": "a47e00e9797c10ee8d6dec6f9095b5e29c6dd6d4",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-28T20:10:22+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-28T20:10:22+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "chore: release 0.12.0",
+      "tree": {
+        "sha": "69afe8dd7caf8b88ccc93139cbb7c1a6d74a7c05"
+      }
+    },
+    "sha": "f3e484f27ac7539b18a2ca9282aed20cd771fe36",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-28T20:09:50+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-28T20:09:50+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "chore: bump release-it",
+      "tree": {
+        "sha": "4fdc17d79a051dcd85325ace6c2296c38da24d0e"
+      }
+    },
+    "sha": "6ad7b676e9eb94e9d72584bb0b32d336bbe646b2",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-28T19:31:00+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-28T19:31:00+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "chore: fix dependencies in the plugin build process",
+      "tree": {
+        "sha": "ea242e965297c8f47170201990a162f064c32e27"
+      }
+    },
+    "sha": "cdc2c0596c28ea8855844288df575b3a2ac17d12",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-28T18:45:46+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-28T18:45:46+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "chore: reorder direction of images in readme",
+      "tree": {
+        "sha": "ea768dbc0304e3ef4c4f3d10ceda2e9c9922a8fe"
+      }
+    },
+    "sha": "e9b326f2ab1510745aefb8e36654acebced48733",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-28T18:39:30+01:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-28T18:39:30+01:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "feat: add Rozenite AI SDK profiler plugin (#186)\n\n* feat: add Rozenite AI SDK profiler plugin\n\nAdd the dev tools plugin package and update docs/readmes to cover\nRozenite setup and preview assets.\n\n* chore: remove semicolons\n\n* chore: apply review tweaks\n\n* chore: tweaks\n\n* fix lint",
+      "tree": {
+        "sha": "dcc50ffc5560173cabe40009612d226a841a4ff9"
+      }
+    },
+    "sha": "77572e5b7bae48a7f3c30b2f82a1db7fb31bc680",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-24T12:54:32+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-24T12:55:07+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "feat: add tool calling for streaming well (#184)\n\n* feat: add tool callign for streamign as well\n\n* Update apps/expo-example/src/components/ChatUI.tsx\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>\n\n* Update packages/llama/src/ai-sdk.ts\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>\n\n* typo\n\n---------\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>",
+      "tree": {
+        "sha": "55cccbd9d1fecabf80336545db48e42ea9a88239"
+      }
+    },
+    "sha": "a71ee9b2b383a5de8c03dc4d1f38e5bcd3dcce04",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-24T12:52:01+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-24T12:53:41+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "feat: support tool calling with llama (#183)\n\n* feat: initial tool calling support for non-streaming\n\n* remove logs\n\n* Update packages/llama/src/ai-sdk.ts\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>\n\n* feat: address feedback\n\n* add console\n\n---------\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>",
+      "tree": {
+        "sha": "51dae581e2ac31b3cb84ac88211c4d8b231a68f9"
+      }
+    },
+    "sha": "c53353648e8572d191a3e4152360420a051a3705",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-24T12:50:37+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-24T12:50:45+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "feat: unify AI providers with shared abstractions in expo-example (#179)\n\n* refactor(expo-example): unify AI providers with shared abstractions\n\n- Consolidated Llama and MLC providers under Apple screen with provider selector\n- Removed standalone Llama and MLC screens\n- Created shared configuration for models (LLAMA_MODELS, SPEECH_LLAMA_MODELS)\n- Implemented reusable components:\n  - ChatUI: Provider-agnostic chat interface\n  - ProviderSetup: Language model download and initialization\n  - SpeechProviderSetup: Speech model with vocoder setup\n  - ProviderSelector: Provider switching UI component\n- Upgraded to AI SDK v6 with LanguageModelV3 and SpeechModelV3\n- Removed unnecessary dynamic imports (Llama available on all platforms)\n- Added Llama speech support with OuteTTS model\n- Fixed code duplication and inconsistencies\n- Platform-specific implementations for iOS and Android\n\n* refactor: simplify SpeechModelOption to match ModelOption shape\n\n- Replace separate repo/filename fields with single modelId format\n- Replace nested vocoder object with vocoderId field\n- Remove redundant mmproj and vocoder.size fields\n- Update SpeechProviderSetup to use new interface with getFilename helper\n\n* chore: some other tweaks to get proper version\n\n* feat: updates to the playground app\n\n* chore: complete updates to the UI\n\n* tweaks\n\n* Update apps/expo-example/src/screens/apple/SpeechScreen/index.tsx\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>\n\n* Update apps/expo-example/src/components/adapters/llamaSpeechSetupAdapter.ts\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>\n\n* Update apps/expo-example/src/components/ProviderSetup.tsx\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>\n\n* chore: get rid\n\n---------\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>",
+      "tree": {
+        "sha": "4fe1a12bd0e70fe2442009f1cfa00bfcce0e331b"
+      }
+    },
+    "sha": "e30a83ef8c93726798789130f152c5fafddfa615",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-24T12:50:00+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-24T12:50:08+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "fix: emit text-start before completion to prevent first char being dropped (#178)\n\n* fix: emit text-start before completion to prevent first char being dropped\n\nWhen streaming text responses, the first character or word was being dropped\nbecause text-start and text-delta were emitted synchronously in the same\ncallback invocation. This caused the AI SDK to miss processing the first\ntext-delta event.\n\nThe fix emits text-start immediately after stream-start, before the completion\ncallback begins, ensuring there's always an async boundary between text-start\nand the first text-delta. This matches the behavior of the apple-llm provider.\n\nFixes #171\n\n* chore: remove comments",
+      "tree": {
+        "sha": "8c1c8d36101c9431da9127ba89594a26e5f8e0d5"
+      }
+    },
+    "sha": "97785c1886309e56b044d1cb0e8f52b1a0200818",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-24T12:49:25+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-24T12:49:33+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "feat: upgrade to AI SDK v3 specification (#177)\n\n* feat: upgrade to AI SDK v3 specification\n\n- Update @ai-sdk/provider to ^3.0.5 for Apple and MLC packages\n- Update @ai-sdk/provider-utils to ^4.0.1 for Apple and MLC packages\n- Migrate LanguageModel from v2 to v3 specification\n- Migrate EmbeddingModel from v2 to v3 specification\n- Migrate SpeechModel from v2 to v3 specification\n- Migrate TranscriptionModel from v2 to v3 specification\n- Update finishReason to object format with unified and raw fields\n- Update usage structure with nested inputTokens and outputTokens\n- Add text and reasoning properties to outputTokens\n- Add warnings array to embedding results\n\n* fix: pass original finish reason as raw value\n\n- Llama: Pass stopped_eos, stopped_word, or stopped_limit as raw finish reason\n- Apple: Pass 'stop' as raw finish reason\n- MLC: Already correctly passing raw finish reason from provider\n\n* update end reason\n\n* chore: remove undefined",
+      "tree": {
+        "sha": "0622802b1355fa5d2399bf1b8272fe40ed070bf7"
+      }
+    },
+    "sha": "06e539b85a644cc6b25e444c75289b8351210bff",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-24T12:47:04+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-24T12:48:56+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "feat: add re-rank for llama (#176)\n\n* init\n\n* chore: bump and update\n\n* up\n\n* Update website/src/docs/llama/reranking.md\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>\n\n* Update packages/llama/src/ai-sdk.ts\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>\n\n---------\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>",
+      "tree": {
+        "sha": "6c278a788382cf8e5aef96c4d203dfaffc32e64e"
+      }
+    },
+    "sha": "b49350c57a6b3186816831aaef05d4bd8bfde730",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-24T12:46:46+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-24T12:46:46+04:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "init (#175)",
+      "tree": {
+        "sha": "110ebde0347c17c0ed7b96701686dd438a1484b4"
+      }
+    },
+    "sha": "e16a45298a0966259bb6f061b79aaa59c8537cbc",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-22T21:21:48+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-22T21:21:48+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "docs: update documentation with config plugin",
+      "tree": {
+        "sha": "6393468777c0fdd76af715085fb9322a7d87a463"
+      }
+    },
+    "sha": "0f032a5ebebbc65a616103d1adf5191023584f6f",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-22T21:10:30+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-22T21:10:30+04:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "feat: extend llama.rn provider with embeddings, speech, and multimodal support (#174)\n\n* docs: update Llama documentation with new API features\n\n- Add embeddings documentation page with usage examples and RAG patterns\n- Document multimodal support (vision/audio) with projector configuration\n- Document reasoning models support (<think> tag handling)\n- Document JSON mode for structured output generation\n- Add missing generation options (presencePenalty, frequencyPenalty, stopSequences, seed)\n- Fix contextParams structure in configuration examples\n- Document speech model with vocoder support\n- Document createLlamaProvider() for custom storage paths\n- Add supported features table to README\n- Add Runtime column to providers table in README\n\n* updates\n\n* chore: fix\n\n* real commit made by human\n\n* docs: update website/src/docs/llama/model-management.md\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>\n\n* fix: type safety\n\n* chore: update\n\n---------\n\nCo-authored-by: Copilot <175728472+Copilot@users.noreply.github.com>",
+      "tree": {
+        "sha": "7cb284874eb85fce3918cb78f3625bc13e87612f"
+      }
+    },
+    "sha": "76f4833f542645becff6ba65089a42bcdd9c89e9",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-16T14:37:55+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-16T14:37:55+04:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "feat(llama): unify provider implementation with Apple/MLC patterns (#170)\n\n* feat(llama): unify provider implementation with Apple/MLC patterns\n\n- Add rawCall to doStream return value for consistency\n- Add providerMetadata to doGenerate response\n- Remove excessive console logging throughout streaming\n- Fix error handling consistency (polyfill message, error wrapping)\n- Remove unnecessary try-catch blocks to match Apple provider\n- Unify README documentation style with Apple provider\n- Add Mike Grabowski to contributors\n- Remove react-native-blob-util from expo-example (transitive dependency)\n- Update llama documentation to remove blob-util from installation\n- Update MLC README with download/prepare steps for completeness\n\n* simplify",
+      "tree": {
+        "sha": "047af7416764b0fa82eb1fa5ef0f0cb3423b9c99"
+      }
+    },
+    "sha": "9f13f21f465428857d8e7c9acc930911cdce7311",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-15T14:37:41+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-15T14:37:41+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "readme: update documentation with llama",
+      "tree": {
+        "sha": "4a4f70e0a9d11a1c0bb0e392229ffad032c6481b"
+      }
+    },
+    "sha": "4082591e3815426672dfa1fc6f0a7fa9f4094536",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2026-01-15T14:32:08+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2026-01-15T14:32:08+04:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "chore: update reference to MLC package (#169)\n\n* Add MLC-LLM Apache attribution\n\n* Rename third-party notices to ATTRIBUTIONS",
+      "tree": {
+        "sha": "d76564eaccc37a9ee437cb84c457b01183932641"
+      }
+    },
+    "sha": "8bc938e829bfa61208d74b0a96ca5d494238b080",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2025-10-14T19:26:15+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2025-10-14T19:26:15+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "chore: release 0.11.0",
+      "tree": {
+        "sha": "ddb29b9f3b34e8cee0a2cba60e0ec807995abcec"
+      }
+    },
+    "sha": "1fa503082174e04588bcc22950c7483140ae4e2c",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2025-10-14T18:54:27+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2025-10-14T18:54:27+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "chore: unify config across platforms",
+      "tree": {
+        "sha": "afa02991440f1362883d4860ea8743d1bf4c4a7c"
+      }
+    },
+    "sha": "256fb42047165a9b921caeae22d2bd347949002f",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2025-10-14T18:38:44+04:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2025-10-14T18:38:44+04:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "feat: MLC support for Android (#134)\n\n* initial commit\n\n* chore: move packages, clean-up implementation, drop gson and more\n\n* chore: refactor model downloader\n\n* chore: finish model management, preparing and downloading\n\n* tweaks\n\n* fixes\n\n* fixes on real device\n\n* update android\n\n* feat: ui tweak\n\n* fix\n\n* remove progress counter\n\n* chore: finish the work\n\n* modify on android\n\n* fix\n\n* chore: address feedback\n\n* fix\n\n* chore: update download progress\n\n* chore: update models configuration across both platforms",
+      "tree": {
+        "sha": "a3b786ab3861e3209cad8bc677f65e0cb6c752e8"
+      }
+    },
+    "sha": "f145812424a43854c1a536ab56fe979e2042305c",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2025-09-28T00:19:55+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2025-09-28T00:19:55+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "chore: release 0.10.0",
+      "tree": {
+        "sha": "e4cc7cf6e160cb3a267d8c40501328f99ff87f8a"
+      }
+    },
+    "sha": "718dd764f31295b99e2337b3855a8e4b871be619",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2025-09-28T01:06:23+03:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2025-09-28T00:06:23+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "feat: update to Expo SDK54 and drop beta from AI SDK (#132)\n\n* chore: expo sdk54, update peerDependencies\n\nupdates example app to use Expo SDK 54 and the core packages to require react 19.1.0 and react-native 0.81.4\n\nthis syncs the library with the latest stable state of RN/Expo, not requiring the `--legacy-peer-deps` for the initial npm install.\n\n* also the mlc package\n\n* ...and re-run bun install\n\n* chore: bump ai sdk\n\n* fix\n\n---------\n\nCo-authored-by: Artur Y <artur@artyorsh.me>",
+      "tree": {
+        "sha": "8ef2e182beb4804fd8791909d4f5fef15cc32b5f"
+      }
+    },
+    "sha": "ccda8afa24d7fdb599302a55c9e545aca749419b",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2025-09-28T00:06:53+03:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2025-09-27T23:06:53+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "feat: add support for Android in MLC script (#130)\n\n* feat: add support for Android in MLC script\n\n* fix",
+      "tree": {
+        "sha": "41ce4c9a058137b2f54f1f14611d15b60d1e6b1d"
+      }
+    },
+    "sha": "44b2137cf5617df8cc38e1051330b3fbaa3eb029",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2025-09-14T00:45:12+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2025-09-14T00:45:12+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "chore: release 0.9.0",
+      "tree": {
+        "sha": "21607fe9cb404a4d9917661105fba834968820cb"
+      }
+    },
+    "sha": "73aa83be10f1f6aef1c135b92cababa270618a40",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2025-09-14T00:35:33+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2025-09-14T00:35:45+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike Grabowski"
+      },
+      "message": "fix: streaming not working",
+      "tree": {
+        "sha": "b6dce982e2009cc791a22347f86b9053608ae22b"
+      }
+    },
+    "sha": "ee136edabe130ea4d77f5da6b6c5edbc1aa005e5",
+    "repo": "callstackincubator/ai"
+  },
+  {
+    "commit": {
+      "author": {
+        "date": "2025-09-14T00:23:18+02:00",
+        "email": "grabbou@gmail.com",
+        "name": "Mike"
+      },
+      "comment_count": 0,
+      "committer": {
+        "date": "2025-09-14T00:23:18+02:00",
+        "email": "noreply@github.com",
+        "name": "GitHub"
+      },
+      "message": "refactor: generateText/Stream to be more universal (#121)\n\n* chore: initial commit\n\n* chore: few stability tweaks - tool calling still does not work\n\n* chore: little tweaks\n\n* clean-up\n\n* update proper handling\n\n* feat: add support for tool calling (#120)\n\n* chore: initial commit\n\n* chore: few stability tweaks - tool calling still does not work\n\n* chore: little tweaks\n\n* clean-up\n\n* clean-up promises and add method to cancel stream",
+      "tree": {
+        "sha": "4770956e256428da86aad5713e5ff70ec3c04489"
+      }
+    },
+    "sha": "c90e6a63bdaeb0c9ec5cd6cf103ce595df7304b8",
+    "repo": "callstackincubator/ai"
+  }
+]

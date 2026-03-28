@@ -1,0 +1,671 @@
+[Music]
+so my co-founder and CTO it goes like
+that IO I'm also one of the core
+contributors to react natives
+if you are using react natives probably
+know me from announcing magnetic
+releases and publishing change looks and
+today I'm here to talk about bundlers
+how they work and how they relate to
+react native I feel like it's kind of a
+bit of you know hard topic is the first
+stock but I'm really hoping you guys
+will kind of enjoy it so let's start
+with the most fundamental question what
+a bundler really is how many of you have
+an idea what the bungalow is please
+raise your hand all right so like 60 50
+more or less so this might be the most
+educational presentation I've ever made
+so far so I really feel like I hope that
+you guys will enjoy those graphs I kind
+of put a lot of effort to make that look
+nice but I really kind of feel bad about
+them anyway but yeah it's like bundler
+is a tool that simply takes all your
+joyous source files and put them into
+one file right and that process is
+called bundling there are many of them
+these days with webpack or browserify
+the most popular so we are probably not
+wondering why do we need that right like
+why do we even need to merge all the
+files each one so to better understand
+us let's step back to early days of web
+and see how the things used to be so
+historically JavaScript hasn't had any
+standards for requiring dependencies
+from your code there was no import or
+required statements available so how did
+we make functions of our code visible to
+the outer world or how would how did we
+import first part Kovach code to to our
+applications the only way was through
+global variable right so for example if
+you wanted to jQuery which was pretty
+common those days you'll go ahead and
+add a strict stack that blows it from
+external resource as a result your
+global scope would get populated with
+its bin
+things in this case at the lower side so
+one can say that this is actually neat
+right all said with just a few lines of
+code however imagine this scenario your
+prototype works out your application
+grows and you end up looking into
+splitting your file to smaller reusable
+pieces so you would end up with
+something like this now the code will
+get executed and the script tag should
+have access to all the global variables
+as defining the proceeding file the
+problem here is the order
+what if you jes wanted to depend on
+barges go you'd have to change the order
+right and manipulating the other scale
+can lead you to weird issues and it's
+more like a it's kind of similar to call
+box health and I often call it a script
+code so how do we solve it
+turns out it was already solved in other
+environment like for example in ODS that
+implements its own module system using
+require functions any sport object
+amongst other things up top on top of
+the common J's
+module specs so what if we could do the
+same in our front end code that would be
+great right however there is one
+technical limitation here the require
+itself is synchronous in node.js
+environment it's fine right because when
+you want to load a file it's kind of
+physically available next to the file
+you're already in so that's easy
+however in context of web you need to
+make an HTTP request to load a file that
+has never been processed by the browser
+yet and the other request is aging so
+the solution is simple you can bundle
+all the files and so on so that we have
+them in memory at the time the required
+function being cold and that's the
+primary reason for you know the bundling
+explained in under five minutes
+so bundlers can be perceived as a
+natural evolution of task runners that
+we know like cows and grunt that
+happened over the course a few years
+there are lots of responsibilities in
+scope for them rather than just getting
+your code bundled into one chunk for the
+sake of organizing
+one of them for example in translation a
+typical bundler can or has support for
+transpiling your code that means for
+reading it but source in particular
+format for example in new at JS spec and
+outputting it in an older supported form
+of like es5 the most popular out there
+is bubble and most bundlers out here
+provide a first-class integration of it
+so we mentioned already that in order
+for required to work your entire
+application has to be loaded into memory
+that code is your bundle size to
+increase and ship with models and
+doesn't necessarily need to be loaded on
+the initial page run right so code
+splitting is a feature that allows you
+to split your curl into various bundles
+which can then be load it on demand or
+in parallel and in es2015 compatible
+environment for example you could resume
+for function to obtain an instance of a
+module the promise is resolved as soon
+as the loading process is finished and
+the instance of the module is available
+and the last feature that is worth
+mentioning is the code magnification for
+example web pack 2 has suffered a poor
+tree shaking that means it can determine
+what parts of your modules are not used
+for example you don't use one function
+of the full module and effectively
+remove those parts from the bundle
+combined with other minifiers
+like abilify it can contribute to
+smaller bundle sizes that gets delivered
+to users so that's the bit of that's a
+bit of fury now how does that all relate
+to react native we are at the remedy
+conference so the talk should be purely
+about where native stuff so we read
+natives we express our native mobile
+apps by writing JavaScript and layout by
+writing react component however both iOS
+language has no way to run JavaScript
+right they are distinct platforms
+they're all languages and occasion tools
+so there is no easy way to do it by
+default however those all platforms have
+one thing in common which is the ability
+to spin a J's VM that can process and
+execute your code and react need does
+that and then sets up a bi-directional
+data flow that is called the bridge
+which is a layer that can accept an
+arbitrary JavaScript call it can forward
+it to the native module and get back
+some results so the use of J's VM is
+what makes the constraints we just suck
+in context of web applicable here as
+well so just to give you a great example
+for example on iOS react native uses
+JavaScript code to execute your
+application bundle its features and
+performance change in persistent basis
+that means you'll get a different
+JavaScript expect supported on your Mac
+then on iOS 8 9 and 10 devices tsardom
+is like more or less for environments
+that your code can be running it so we
+definitely want to transpile that to the
+lowest subset supported on all those
+devices so sounds like react native is
+pretty similar to web right we have
+access to some of the same polyfills
+Global's api's language and spec are
+also the same we bundle killed the same
+ways there are even modules on NPM that
+work involving viruses however there is
+only one thing that's fundamentally
+different and it's the react native
+start command that we run every day at
+first glance all it does is it served
+your application bundle at the given URL
+that can be accessed on your local HUD
+pretty simple right so why don't we use
+for example web pack and configure it to
+do exactly the same alight experiment so
+I feel like why I'm not doing it so I
+like web packs for the fact that it has
+a nice declarative interface which is
+its web pack counting so what I did in
+first place is I created an empty comfy
+where I could just point to an entry
+file and define some other settings for
+react native to load the bundle then I
+thought of all related specific features
+as I knew about and I try to suffer them
+in order for my prototype to work so one
+of them was of course the death server
+creative works by loading your bundle
+from the URL in most cases is the name
+of your entry point plus that platform
+that bundle extension and it works by
+default on 4th
+8081 so you definitely want to do it the
+same way then I had to integrate bubble
+of course to transpile es6 and whatever
+I had to run on my iOS device and by
+default react native does that to your
+entire node module including even those
+that don't need it which gives it some
+weird issues like recently with the 0.46
+released so to make my experiment
+backwards-compatible I decided to
+conditionally why place all modules that
+start with free acts name so for example
+react native or anyway native plugins
+would get transposed on slides there is
+also expo because I was using some of
+their navigation solutions and last but
+not least to make my platform specific
+code to run I just reserve that
+extensions to define the order file
+should be the result when I'm calling
+require so in this case I wanted my
+implementation to long first from
+specific file the native file and then
+end up well loading just a giant file
+and finally the most entertaining part
+was supporting Facebook proprietary no
+haste system now if you don't know it
+it works by you inverse by annotating
+any file you want which provides module
+and then that file can be globally
+required across the entire project by
+its name that way you can have them
+spread across the entire repo without
+thinking where they are so that's what
+Facebook is or used to be using
+internally and that's the reason why
+it's kind of leaked to react native and
+its present dirt so of course web pack
+has no idea how to support it and what
+it will try to do is it will try to get
+those modules from your module but since
+we don't have them we'll end up with an
+error so we definitely want to somehow
+overcome this but has a great
+feature which is the result that is it
+is a map where keys are name of the
+modules that can be globally required
+and values are absolute paths where
+those files are located so my solution
+turns to be quite down but perfect in
+terms of performance I just decided to
+go for all J's files across the folder
+check the dog blog and even
+was provides module inside I was just
+assuming it's a no haze file so after of
+hacking use it for a few nights I
+finally got it running in less than
+seven seconds with Park created and
+served a bundle and for the URL that I
+want I said great nothing but
+declarative with accounting and I ruled
+the world but my excitement went away as
+soon as I realized that opening a mobile
+app actually results in the red screen
+I've noticed lots of our images were not
+showing app life reload wasn't working
+at all
+debugging from started producing red
+screens and by the time I didn't really
+know what run time is operating men more
+importantly red screen messages started
+looking weird the structure ace was
+unreadable it's even unreadable here
+anyway but it was kind of impossible to
+locate original file because it was
+saying index that bundle and you know
+some minified lines so kind of crazy to
+the back so I started to realize that in
+context of react natives there has to be
+more than just about dealer that is
+running turns out running great native
+start spins up entire set of tools that
+are focused on providing you with a
+better developer experience editor there
+is a source that bundler all the rest
+are just complementary features build on
+top of it and I call it a packager I
+know it might be confusing with react
+native packager but since it's recently
+changed the name to Metro I decided to
+sue it for the sake of this slide so
+packager is a tool that is used to
+develop debug and package an entire
+application it builds on top of an
+arbitrary bundler like web pack and
+ships with pre-configured set of
+transforms and settings required for
+your code to run in this environment so
+I decided to keep my experiment going
+and see if I can make web pack work with
+react native the plans to support all
+these features including some links that
+never were to create native before now
+there were there were many rig react
+native and web bug integrations before
+that would react native web box server
+being one of them if I remember but the
+problem in those words that there was
+still package or running in the
+background the way they were set up was
+that web bug was processing your killed
+first and then giving it to packager to
+process the final bundle what we wanted
+to do here is we wanted to get
+completely without packager or anything
+related to packager and just use webpack
+and whatever whatever there wasn't PMS
+whoa so in particular I was interested
+in the boundary whereas the words the
+boundary between react native did the
+bundler and the rest of the tools and I
+was wondering how many things I will
+have to write on top of web bug in order
+to make it fully working with react
+native so the fear the first thing I
+started looking into us the chrome
+debugger on standard react native app
+learning that mode opens a new tab in
+your browser however there is there is
+no there are no api's on iOS or on
+Android for openings chrome taps on
+other computer right so I quickly
+realized that it has to be a package
+error that is opening up Chrome not
+react native device and since the
+package there is a process running on a
+host machine it has access to all the
+native API that are required for this
+action to be done so the only thing that
+was left was to figure out how do those
+two pieces talk to each other and turns
+out packager is an HTTP server it is
+composed out of standalone middle words
+each having a different responsibility
+together they form a tool that provides
+the developer experience we know from
+react native it's really cool and
+powerful concept we enables the plugins
+play certain parts as middle words makes
+it very customizable as hackable as you
+can see the last this is actually the
+code that I just copied from
+latest react native like few days ago
+the last
+middleware here is the package or server
+which is the Metro bundler
+where native users and the rest are just
+the things added on top like status page
+manure or OpenStack frame in edit or
+middleware and other things like that
+and the communication is established by
+react native calling package or endpoint
+then the handler is executing procedure
+on the host machine and refers back to
+react native client of the status as you
+can see it's very similar to remote
+procedural coal that we know from
+distributed computing with a small
+difference that everything happens on
+your local health so in order to get my
+project rolling instead of spawning
+wetbacks from common blind and relying
+purely on its country I decided to use
+Express server and web bugs as we work
+for that that way I could still get an
+instance of an HTTP server and combine
+that with the powerful confident web
+pack hat so after I got it working that
+way I started to rewrite and add in the
+missing middle-earth
+so let's just go over for some of them
+that I had to reinstall and create or
+just copy one of them is the life reload
+middleware and as the name indicates
+this is the middle word that's
+responsible for life reloading your app
+right you have this feature in your
+mobile devices on your mobile devices
+you open dev tools and you see life
+eternal life is loading once you turn it
+on every time you change this file your
+app automatically reloads
+so the way it works is once it's
+activated react native sense a
+longer-lasting get request to the
+packager on such request the middleware
+stores the response object associated
+with particular requests as soon as
+changes happen to files in your file
+system for example in this case I can
+attach done event on compiler compiler
+is an instance of web pack all
+connections are going to be closed with
+changed through payload that indicates
+that the client in this case read native
+device should reload itself now that we
+have a better understanding of how the
+communication between package and react
+native is done we can look into solving
+those thread screens that we had
+previously one of them was the run
+technology and the second was the Battle
+of messages so I'm quite excited about
+that one because the ability to use an
+arbitrary browser to run and back the
+business logic of my mobile app was like
+pure
+when I first heard about it so what
+happens is as soon as you turn on chrome
+debugger from the Bessel's react native
+executed remote procedure to launch that
+salt inside chrome tab is necessary
+right after both device and debugger
+connect with each other by using
+WebSocket connection since there is no
+way for them to connect directly because
+we are dealing with a chrome tab with
+its own limitations and device they have
+to use packager which acts as a
+WebSocket proxy between them and if for
+some reason the connection can be
+established you end up with run tagging
+already exceptions that you can often
+see so once all well and good WebSocket
+executors on the device since the JSON
+message to the chrome tab it is a JSON
+object and it has to contain at least a
+missile property it tells the bugger
+which handler to execute the rest of the
+keys varies on the handle of bases in
+this case we are this is the first
+payload that's ever called for the
+WebSocket connection and it's to execute
+application script it's so-called a
+special handler because it's hard-coded
+in the debugger what it does is it takes
+everything that's inside injects it
+parses it and then it puts it on a
+global object so that you can access the
+global you later and the next thing it
+does is it uses web worker import
+scripts to load to synchronously load
+JavaScript at given URL into the scope
+of the web worker and then the execution
+proceeds normally but if given method is
+not a special case handler it's handled
+each handler will be looked up at the
+edge debug bridge and executed so the
+communication pattern that you just seen
+is pretty much the same when you are
+using javascript core on iOS device the
+difference is that instead of using web
+socket executors you are using JSP
+executors
+historically they're also used to be
+webview executors that was used for
+debugging of Safari once I got the
+bugger app running I started looking
+into those with error messages
+now I didn't include that in my initial
+prototype when I was working on that
+integration a Steve Kellogg from in
+kindred contributed it later thank you
+for that however I find it very
+interesting so I decided to describe it
+also in this in your slides so what
+happens is that as soon as there is an
+error reg native asks packager to sit
+colligate you're stuck trace if you ever
+had a red screen you probably noticed
+that after a millisecond the factory
+changes like certain changes are like
+there is like a change and that's why
+that because of that async request that
+happens in the background so what
+happens is as soon as we get that
+request with the payload the rules that
+we'll explore later we create the first
+thing we do is we create an instance of
+source map consumer we passed the roast
+or flop as for example res from the file
+system in this case I removed it for the
+sake of making it smaller however the
+code for that can be found on github and
+source Maps roasting was just taken out
+from the web web pack memory file system
+so source map consumer represents a
+power source of objects that we can use
+for looking at the original details
+about the file location and other things
+that we want to do we then map the
+reckless request body which is an array
+of all the frames for the error that we
+got on the device to the original source
+lines and column information that we get
+by squaring source map consumer in such
+a way is then sent back to react native
+and replace on the red screen and that's
+why you see the difference so the reason
+I'm telling you this is I believe that
+bundler implementation should be
+pluggable the package are enriched
+native does way more things than just
+compiling your code and those things are
+not treated right so they were carefully
+designed over the course of months and
+from my experience it took me like two
+weeks to implement wetbacks were quick
+native and I still got a lot of bugs to
+deal with if the entire platform is
+pluggable it would have been way easier
+but do we really need that like what's
+wrong with
+three amazing packager bender in the
+world let me answer this question by
+asking you another one do you want
+siblings lack of support fourth of them
+was prolong one of the most common
+issues with react native development
+especially for library output related
+promised us the workflow we know from
+web and no GES and brought it to the
+world of mobile development however
+breaking that expectation was painful
+for many people now it is because the
+default metro bundler uses Watchmen to
+listen profile changes and react
+accordingly now watch man is a facebook
+open source library constraint to
+provide maximum performance when it
+comes down to listening for changes in
+your file system
+one of its limitations for the sake of
+speed is that it doesn't change doesn't
+listen for changes in similar locations
+and it's not clear whether this feature
+will get implemented each other and it's
+perfectly fine because the Facebook
+scale lots of milliseconds that seem
+irrelevant to us not to reload and now
+I'm really like happy and glad that we
+get a lot of performance improvements
+for free like recently they contributed
+a lot of improvements to source map
+generation however at the same time I
+believe it should be like we should be
+able to opt in for a slightly lower
+slower solution of more feature-rich and
+kind of designed to solve our use cases
+that's why it's all time we made whole
+how is a drop-in replacement for
+existing packager it builds on top of
+open tools like web pack at its core we
+have the Express server with those
+pluggable Needlers it is a shockable dev
+server with predictable workflow most of
+the code snippet that you have seen
+today can be found on the repo so if you
+got any questions regarding to the
+things that I missed them slide please
+check it and here is how it feels you
+first select the platform that you want
+to prefer bundle for normally you do it
+by passing a slack but I guess many of
+you have often like mixed flags or
+forgot about them I do it all the time
+I never remember like how to run on a
+remote device always have to check help
+and see
+was the name of the option so we felt
+like instead of exiting with an arrow
+we're going to ask you to provide it and
+more importantly we're going to show you
+how to run it next time so you don't
+have to answer it over and over after
+the process finishes we just wait for it
+to bundle and you're ready to go and we
+design it carefully around best
+developer experience taking s much
+inspiration as possible from community
+leaders such as such as people that
+contributed to create react app in fact
+if you've been using it you can probably
+tell that it's very similar and looks
+all of the same and there are a couple
+of reasons why we might hold two of them
+we already mentioned today one of them
+was supper for siblings something that
+we wanted to die for especially in our
+monorail kind of setup and the second
+was to embrace potential of plug ability
+and make something that can be extended
+in a really easy way and the last one
+was that web pack is just awesome
+now I was I was thinking about this
+slide for awhile because I'm not gonna
+lie when I was riding home I ended up
+like almost killing myself trying to
+understand how to write plug-ins for
+website because of dogs the res is great
+I like the dog very much however it's
+like if you really want to understand
+web bug you have to write a plugin then
+it will go over all the repos check out
+the source code and then you will
+understand it man it's still awesome and
+people who made it are also awesome
+because they came up with those
+abstractions and what I like about it is
+that its extensive well-documented
+interface and it has a very broad
+ecosystem it opens a lot of exciting
+possibilities for us we can even like I
+don't know think of some crazy things
+like writing CSS to style your real gaps
+so rate native apps for example if you
+are not a fan of inline styles or I
+don't know like using side screens or
+some other weird loaders one of the
+common issues in the past was that
+people wanted to use JSX
+and that extension wasn't supported by
+radix packager web.config it's like one
+line of code and also if you are already
+using webpack in the web it gives you
+perfect opportunity to share your code
+things like oh yeah
+or I don't know like changing extensions
+of our platform basis those are just
+nice helpers that can help you to write
+a cross-platform universal app and there
+are lots of features missing that we are
+working on currently our top priority is
+to increase its adoption so that we get
+more bug report and we can make it
+faster and better if the idea of host
+sounds interesting to you or you wanted
+to use it please do it and let me know
+what your what's your opinion what's
+your what are your ideas whether it
+works for your now and we'll do our best
+to make it work for you and as I
+mentioned I'm really looking into making
+a whole a platform for other bundlers to
+run their faster or maybe different
+alternatives to web bug that can work
+for you I like used bus or metro bundler
+and I believe that one should be able to
+use whatever works for him to bundle the
+app and still get the first-class user
+experience and developer experience that
+whole gives you thank you
+[Applause]

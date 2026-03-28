@@ -1,0 +1,697 @@
+thank you hello everyone
+so Mike and I'm here today to talk about
+imperative development so I spent a lot
+of time writing native modules and
+extending react native and you know with
+languages that are sort of less found in
+JavaScript if you ask people on any meet
+up like Objective C and those languages
+are imperative and from the J's
+community I've learned that imperative
+is something bad something that I should
+avoid and the code that I should be
+writing some should be functional
+declarative and pure it's not really
+that true when we think in terms of
+react native specifics and so the
+purpose of this talk is to show you a
+few use cases that I had some examples
+and maybe the Mastiff itis fact that you
+know in product is bad because it might
+be actually a thing that you eventually
+gonna use a like so why orchid call
+stack which is company that I co-founded
+and our mission is to help developers
+and companies to run the wraps on all
+the platforms and so it just happens to
+the right now we are using react native
+and since we are open-source enthusiasts
+we are trying to contribute as much as
+possible to the framework itself and by
+going to conferences like this so if you
+or your company is in need of some react
+native help please reach out we'll be
+more than happy to talk during this
+conference so before we start let's do a
+quick background check please raise your
+hand if you have ever used react all
+right I'm just testing if you are you
+know gonna raise your head eventually
+anyway so the real question is how many
+of you know the difference between
+imperative development and declarative
+alright that's quite a few so let's do a
+quick introduction anyway so that it's
+easier to follow the slides long story
+short in practice programming focuses on
+how the change is going to happen right
+and so you have this container that you
+want to style so what you're gonna do is
+you're gonna basically set every style
+yourself line by line in this case
+background wave and
+so we give it a set of commands and you
+expect the end result in return with
+declarative approach on the other hand
+you want your container you describe how
+you want you your container to look like
+and you don't think of how it's gonna be
+painted on screen in our case that could
+be react for instance where we describe
+our render where we describe our kuraki
+in render method and we expect the
+framer to take care of that so the
+difference between these two is that
+instead of focusing on low level
+implementation details like whether this
+property is supported whether this is
+going to be styled in that way or the
+other we focus on the one we want to get
+so we shift the responsibility from us
+over to the framer girl library we trust
+the library that the library will do its
+job well and that gives you the
+performant code and puts the focus on
+the application development itself so
+back to the title from urban dictionary
+you know the new black is something cool
+and new trend to follow and it's coming
+from the fashion industry because black
+is always you know in fashion so if
+something is the new black it's
+naturally going to be the cool thing but
+interactive programming is not a new
+thing right it used to be around for a
+while the hardware implementation of
+almost all computers are imperative all
+hardware is designed to work that way
+because it it sort of executed matching
+code which is imperative and from the
+low-level perspective the state of your
+program is just memory and statements
+that you write are the instructions that
+imperatively tell the computer or the
+processing unit what to do as a response
+to what you want and if as a you know
+the higher we go the more abstractions
+are built on top like statements if if
+statements and stuff like that so if
+imperative programming is not a new
+thing what is the title of my talk gonna
+be about right so let's take a look a
+closer look at one trend
+that I've observed over the past few
+years within our community and you will
+hopefully have an answer one we once we
+are done with this JavaScript ecosystem
+compared to the others it's still
+relatively young you know if we think of
+reacting react native and the libraries
+that we have and so we don't settle on
+existing solutions we constantly keep
+innovating right every once in a while
+there is a new framework or a new
+library that is about to change
+something like we used to have Redux
+now people are you know discussing
+whether it's still the thing to go where
+you know context was bad now it's not
+that bad and stuff like that so it's
+changing all the time as our use cases
+change and so with our community hanging
+out on mediums like Twitter that's the
+place where we naturally share our
+findings right when we find out
+something really cool we post it on
+Twitter like oh my god this is cool
+library that I did please check it out
+and that's what everyone does like we
+check it out we install it we star it
+and then we fill in backs and that's the
+end of life cycle and then the other
+developers on board the framework they
+start following us and they see those
+messages and they treat them as best
+practices right so to give you a better
+idea let's take a look at an example so
+when I start when starting a reactor app
+the problem most of the people are
+having right now is what is the state
+management solution going to be right we
+are like oh should I use Redux should I
+use mob X how many of you have a count
+on a react Native community group on
+Facebook are on that group yeah quite
+not that many which is surprising
+you should probably join this group if
+you want to get first-hand announcements
+as far as the library but if you check
+this group many people are asking okay
+what are the technologies that I should
+use what are the frameworks that I
+should use and so that state which is
+built-in mechanism right to the react
+like no one thinks about it it it is
+sort of considered harmful right there
+is even a lint rule that is you know
+making such state like an error if you
+use it so you might be wondering how
+something such fundamental as stay
+react can be an anti-pattern like is the
+whole framework bad speaking in terms of
+those people so the thing is developer
+that is advertising his solution on
+Twitter medium or any other place has
+some project specific context in mind
+like when I'm gonna be telling you that
+like today those are the things that
+worked for me
+they might not work for you because I
+was doing some very specific things at
+job and those circumstances are really
+important the problem is on Twitter the
+context fades away especially you know
+given the limit of characters it's like
+when I write sad state is an
+anti-pattern and I use some nasty click
+bite strategies this is gonna be very
+popular and no one will be talking about
+the real thing that was at the end of my
+article for instance so how many of you
+are using sad state or state all right
+so that's that that's a lot of people
+and so then Abramoff said recently which
+was a year ago
+time flies or actually two it's okay and
+when people say said state is an
+anti-pattern
+they mean a five hundred line components
+with a complex says they supe scattered
+across even handlers right so how many
+of you would use state again after
+reading this okay still few people but
+less so that means you know by putting
+the context necessary you wouldn't
+probably use the state in such a big
+component right all of you that are
+using state we are probably talking of
+small components like maybe holding
+state of a button or a forum right but
+not doing state for like a whole app two
+thousand lines one file right because
+this is what said state is considered an
+anti-pattern this is where it shouldn't
+be used so that is the context necessary
+for this statement so there was a
+similar trend in the past unfortunately
+I couldn't find the original outdoor so
+I just put myself there basically said
+that imperative code is an anti-pattern
+when I was working back in as a on on
+Ashta which is a great library or
+fully-fledged software development kid
+Burma by my friend imperative code was
+like considered an anti-pattern was very
+popular and in that library we used to
+have a lot of issues that oh this is
+imperative this is not pure please
+change it you know and stuff like that
+and so if you are like me you are Greve
+of this statement right because react
+brought the clarity of approach it sort
+of took away dumb api's and all that
+you know stuff from us and gave us a
+nice API to build apps so essentially I
+would say this is right this is correct
+and before I started doing react native
+I was doing iOS development and so my
+iOS code was all the way down imperative
+like it was such a mess that I couldn't
+even you know handle it myself after a
+while especially the transitions and
+stuff like that it was beautiful but it
+was really messy so the purpose of this
+talk is to show you that in context of
+react imperative is not a bad thing but
+it's actually something we should be you
+know using cuz it powers a lot of
+reactor native abstractions and is what
+can take your react native development
+to the next level in fact we already
+talked about it you know native
+platforms are in project by their design
+right so react and react native have to
+ship with those abstractions to handle
+it just like on the web react is
+wrapping gum api's for us using virtual
+Dom and some clever algorithms to make
+it performant same thing happens on
+mobile when the react native is using
+bridge to basically render our render
+tree to objective-c and to Java controls
+other rendered on ios and android right
+and so it makes it very easy for regular
+developer like me that doesn't know
+Android to write Android app like the
+first day that I sort of started doing
+react native I felt like C or
+development because you know after
+struggling with iOS for like a month I
+was able to do the same like a week on
+both platforms and I was like Jesus
+Christ like
+that's that's the end of my career now
+and so all thanks to abstractions the
+other all thanks to you know modules
+like animated react native gesture
+handler the trap nest EAP ice and expose
+a very nice interface for you to use and
+over the course of past few years doing
+react native I've discovered this
+contract this relation between
+imperative and declarative that is
+within react and react native a
+beautiful abstraction that can really
+help you write really interesting
+libraries so imperative code is
+everywhere you know and there is no
+reason to run away from it all the
+declarative wouldn't be possible if
+there wasn't imperative layer below it
+so by learning how to use it you open
+the doors to write performant apps and
+api's and in this talk I want to show
+you a real-life example that uses
+imperative code to achieve something
+that is not supported by react native I
+mean it may sound crazy but it's it's
+not really that crazy and demonstrate a
+universal and flexible sort of approach
+to writing such abstractions in the
+future so react native ships with a lot
+of great API s-- by default and if you
+are using expo you even get more of them
+but this pirates ecosystem getting more
+and more stable and future reach it's
+still there is still that need for
+native modules and native code when you
+are shipping something you may need to
+wrap a proprietary API or maybe some
+module that is not currently supported
+well and so it's just good to have this
+native hatch and be familiar with how
+the native development works because
+that's the way to ensure the long-term
+stability of your app and what I also
+like about this about writing native
+code is that it broadens your horizons
+back in a day I was like wondering every
+every month because I've read somewhere
+in an article that every developer
+should learn at least one language per
+year in order to stay up to date
+something like this I'm not really sure
+if that was proved or not I just read it
+it sticks in my head for a while and so
+for some reason I just couldn't make it
+like I didn't have enough time and when
+I started doing react native I got
+really excited because I was sort of
+forced to write three languages at a
+time so that is really great because it
+helps you to become a better developer
+tool so you probably already guessed
+that from the intro to native modules I
+was challenged to write one that you can
+see on the screen we've been talking
+about this app quite a few times already
+every time from a slightly different
+perspective so if you will be interested
+in to hearing more about that please let
+me know it's a music app and on the
+screen you can see a component that
+renders full screen SVG with nodes and
+each node on the screen has its
+corresponding timestamp so that I know
+that for instance the the one that is
+already read should be highlighted at
+for instance ten-second right and as the
+music plays the SVG Scrolls and the
+nodes are highlighting so we can think
+of it as a nice timeline that is
+scrolling as you play and the irr kita
+architecture of this can be broken down
+into few components and as I already
+said we've been already talking about
+few of them but today we are going to
+focus on the playback service itself not
+talking about animations performance and
+all that stuff so first and foremost in
+order to play the music we need a media
+playback service right and a quick look
+at existing react native api's reviews
+there is nothing built-in right however
+that doesn't mean it's impossible as I
+said there is that escape hatch and it
+just happens that both iOS and Android
+have great libraries built-in by default
+for the purpose of this talk I decided
+to use streaming kit which is iOS
+wrapper just because it's it's more
+concise it has smaller syntax and will
+be just easier to fit in slides so once
+we know the libraries let's go ahead and
+create native module that we will be
+putting those methods inside and so I'm
+not going to go into the header file
+which is dot H because that's where the
+definition is gonna be I'm gonna be in
+the m file which is the place where I'll
+be implementing my methods so what are
+the most common actions the typical
+media player should perform it's most
+likely play right
+Sanga resumed it to stop it and to play
+next one right so free methods now to be
+honest there are way more things that we
+need to implement in order to make a
+production ready player like
+interruptions such as when someone is
+calling you or you are listening to an
+avocation directions or background modes
+in this talk the focus is on the
+framework itself if you are interested
+feel free to ask me later about other
+methods or generally what is the
+approach to implement them so now that
+we know them let's go ahead and start
+writing some stuff I jumped too much
+sorry if you are having latest mock you
+probably know that it's sometimes
+triggers double the the key press so
+when I press space it skips many slides
+very handy and so first thing is we have
+to export the module itself right so we
+got up with our city expert module
+nothing fancy and then we're gonna
+create an instance of the player that
+will live throughout the life style
+lifespan of this module now this is not
+something that you usually do in your
+yet another native module because this
+one is overriding the constructor
+basically what I'm doing is I'm just
+setting a property audio player because
+that's the most reasonable place where I
+can put it and finally we can directly
+expose play stop and and next on the
+instance of the player and as you can
+see I'm wrapping every midfield with our
+city expert me forth which will make it
+again available for the JavaScript to
+call so this is very very low low-level
+deep stuff on the native side which as
+you can see is going to be imperative
+because we are basically going play
+datasource and stuff like that so it's
+time to move one level up to the
+JavaScript interface and we are going to
+create a very simple JavaScript wrapper
+with free methods to control the
+playback and all the other methods that
+we have created and those api's are
+async and when cold will go over to the
+bridge to talk to the native code we
+just wrote right so to make it easier to
+visualize the react component we will be
+working on let's pretend that this is
+the screen of the shiny new design that
+is going to be the new Spotify and Apple
+Musical 2
+right and we would probably go ahead and
+scaffold something like this on screen
+that has the render me thought it's not
+really important for case of the stock
+so I'm just gonna make it empty with
+free with free with free me first are
+basically gonna call into the API that I
+just created right so at this point we
+have already created our module that is
+impressively calling some some stuff
+right when I press stop stop start stop
+it will be basically working fine the
+problem is as I started using this
+coding to print in production I started
+hitting a typical imperative issues that
+normally we hit like async mass you know
+like when I'm pressing stop stop stop
+resume many times like I have no control
+over the bridge how they're gonna be
+going like some issues like that and
+also the bigger problem was from the
+long-term perspective that the
+responsibility to implement the player
+was on my team right so when I make the
+library or whoever made the library I
+just made I just made some building
+blocks to compose the player but I
+didn't do the whole logic so things like
+interruptions background modes were
+still left up to people that were just
+interested in doing the playback service
+right so you're shifting the
+responsibility on them and they don't
+necessarily have to know how to write
+this so for instance the the basic
+challenges are as I said interruptions
+background mode maybe you want to
+crucified them buffer up front things
+like that an answers to the above
+questions are not easy because it
+doesn't really fit into react model
+imperative code itself doesn't really
+work with react because react is
+declarative and so I started digging
+around existing modules to understand
+how react native team handled that
+before which is actually an interesting
+take away and every time you are
+wondering how to implement something I
+encourage you to go to react native
+source code just look at something that
+they did and it's a great resource of
+learnings and interesting performance
+optimizations that are not necessarily
+documented in the documentation
+so on my way to answer that problem
+those problems I started you know
+digging around statusbar API now if
+you've been using react native before
+you know that statusbar api used to be
+imperative there used to be status bar
+dot set style that changed to a
+component so I felt like okay if the
+team changed this API from imperative to
+declarative there has to be a reason the
+reason that that is very important for
+my project as well so just to recap for
+those who haven't used alt status bar
+API this is how it used to be you were
+basically calling such status bar style
+you can technically still do it but it's
+not a not a preferred way let's say but
+now it's a component that you can embed
+in your render hierarchy that will
+basically adjust your status bar style
+so that transition got me thinking why
+it happened like what was wrong with the
+existing approach and so turns out that
+one of the most annoying go issues was
+glitches that were happening because of
+unpredicted calls because if you had
+many screens with those calls in
+component deep mild will update and
+stuff like that it was basically
+impossible for you to control how the
+status bar is going to look like and it
+started reminding me the issues that I
+was running in so if my player so I
+thought it's gonna be a good takeaway to
+dig into that deeper and rewrite
+component itself a bit and so I figure
+out that the source of all the issues
+and challenges as I said is the fact
+that I'm using imperative itself which
+is 50% off of the of the stuff it's not
+like by making my library with that
+imperative interface I only did half of
+it the other thing that was missing was
+the declarative facade like the
+declarative interface the entry point
+the public interface that will be for a
+user is not for developers so I started
+thinking in a declarative way what would
+be the contract what would be the props
+if my player was a component so
+basically I figured the most two
+important traps from my perspective are
+going to be is playing and a song so in
+order to get the music playing with the
+aforementioned API all you have to do is
+to place this
+and anywhere in your render me fault and
+going to the next song is also easy you
+don't have to think about anything you
+just basically to change the prop and
+you are done so now that we know how the
+declarative interface could potentially
+look like let's take a look at how to
+actually connect these two together so
+from here on it's really easy if we
+think of data source for this what is
+the what is the source of true
+those are the probes right and what is
+the place in the react lifecycle where
+we can listen for perhaps changing
+inside our component will receive
+perhaps or did update right in this case
+I decided to use the update because I
+will be calling bridge and so I don't
+want to call before the update just in
+case there's gonna be a precious
+animation going on on screen and so this
+is a very very damp copy-pasted function
+from my production code that basically
+shows how I'm reacting to those prop
+changes imperatively under the hood as
+you can see it may look dumb you may be
+laughing that this is very very you know
+stupid way of doing stuff but it really
+works and as you go deeper as you start
+adding features like crossfade buffering
+and stuff it's really performant but
+doesn't look like this at the beginning
+which is a real beauty and so one bonus
+point is that the current infrastructure
+consists of a native module a J's rapper
+and a react component so free files to
+provide a very simple function and that
+works for most of the time and most of
+the use cases that you might have but
+you can also create a native view
+component where you can put all those
+things together and so do you know
+what's the difference between an ad view
+component and a native module who knows
+hands up alright so native module is
+like a library right it's like a piece
+of code that exposes some api's from
+native to Jas so when you have a segment
+for instance kit API which is for
+tracking events you can export those
+methods directly to Jas for something
+that is called a native module and for
+instance an example of a native module
+from react native car would be alert iOS
+would be that's a good example
+an ad view component is something that
+you put into your render method as a JSX
+component and that's native code as well
+an example is status bar status bar is
+I'm not actually sure about but map view
+for instance is a good example or scroll
+view or actually any other one as well
+and so it is different from a native
+module that it defines this view method
+here so in this case I'm defining this
+view and basically this is gonna sell
+react that okay if this native module is
+rendered in react please get an instance
+of view from this view me fat and put it
+inside render method the rest of the
+property stays the same so we still have
+on progress song and playing props so
+sort of direct direct corresponding prop
+and then the implementation of this is
+really simple or maybe not
+don't get scared with the square
+brackets of Objective C but as you can
+see instead of component did update I'm
+using this deed set perhaps me thought
+which is exactly the same on iOS native
+side of things it receives an object
+that basically tells me what props did
+change so I'm changing the playback and
+a song based on the props up change and
+now you may be asking like what's the
+point of doing native view component if
+it's like all that crappy Objective C
+and you know it's hard to wrap our hands
+heads around it as always its
+performance so when you create a native
+module the only way to pass an event is
+through an even diameter right so if you
+are creating a media player scroll view
+whatever you basically gonna be emitting
+events for the bridge as you omit those
+events for the bridge you're you're
+going to cause some traffic over the
+bridge right and that combined with
+animations or all the other stuff you
+might be doing may cause your frames to
+drop and so by defining a non progress
+callback by using component instead of a
+module I have this precious ability to
+use animated that event and when I use
+animated that event what it will do is
+it will directly map
+these dot state that progress which is
+animated value with whatever value will
+be from the on progress event now the
+beauty is that if you set the use native
+driver to true it will skip the bridge
+so if you do sixty updates per second
+which is what I was doing for the own
+progress event because the music was
+playing right you set this to true and
+you can do whatever you want your app
+feels native and there is no issue at
+all so to sum up our work around the
+module in order to make a performant
+library that plays music or does any
+other thing you have to create a
+declarative interface that uses
+imperative car under the hood to get
+things done and also the benefit of this
+is that you can make it make it
+cross-platform right cuz on on web you
+can use video in my case in your case
+that could be a different API to get
+things done so does it mean that
+imperative is evil if we just created a
+declarative interface to it it's not
+really right it's a foundation that
+react native is built on top and it's
+what makes all the things possible that
+we are using without the imperative code
+it wouldn't be possible to do anything
+like throw an alert use clipboard on the
+react native launch any other apps and
+stuff like this so I believe the API
+design like that which is combining
+declarative with imperative is the holy
+grail of react native development
+because imperative code is powerful but
+it can be used very badly it can cause
+you a lot of troubles if you overuse it
+and react the react native are those
+guards that give you tools to handle the
+imperative code so I encourage you to
+think of this pattern next time you are
+about to write an API and who knows
+maybe it will help you write a bear up
+something more maintainable or basically
+more advanced thank you very much
+you
+[Applause]
+you

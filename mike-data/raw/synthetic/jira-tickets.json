@@ -1,0 +1,186 @@
+[
+  {
+    "key": "RPACK-401",
+    "type": "Epic",
+    "priority": "High",
+    "status": "In Progress",
+    "summary": "Module Federation v2 - Cross-platform Web + React Native support",
+    "assignee": "mike",
+    "sprint": "Q1-2025",
+    "description": "Implement full Module Federation v2 support enabling shared modules between web (React) and mobile (React Native) apps. This is the core of our Super App strategy. Key challenges: Hermes compatibility, async chunk loading on mobile, shared dependency resolution across platforms.",
+    "comments": [
+      {
+        "author": "mike",
+        "date": "2025-01-15",
+        "body": "After the React Summit talk, got a lot of interest from enterprise clients. We need to prioritize the Hermes compat layer - right now dynamic imports crash on Hermes because it doesn't support the standard chunk loading mechanism. I'm working on a custom runtime plugin."
+      },
+      {
+        "author": "pawel",
+        "date": "2025-01-18",
+        "body": "The webpack plugin is ready for testing. Mike, can you review the chunk loading implementation?"
+      },
+      {
+        "author": "mike",
+        "date": "2025-01-20",
+        "body": "Reviewed. Two concerns: 1) Memory pressure on low-end Android devices when loading multiple federated modules simultaneously. 2) We need a fallback for when network fetch of remote module fails. Added both to acceptance criteria."
+      }
+    ]
+  },
+  {
+    "key": "CLI-892",
+    "type": "Bug",
+    "priority": "Critical",
+    "status": "Done",
+    "summary": "Auto-linking breaks with New Architecture (TurboModules) on iOS",
+    "assignee": "mike",
+    "sprint": "v0.73-hotfix",
+    "description": "When New Architecture is enabled, auto-linking generates incorrect podspec entries for TurboModule-compatible libraries. The generated code references the old bridge API instead of the TurboModule registry.",
+    "comments": [
+      {
+        "author": "developer-x",
+        "date": "2025-02-01",
+        "body": "We're hitting this on our production app. Upgrading to 0.73 with New Arch enabled causes build failures for 12 of our 30 native dependencies."
+      },
+      {
+        "author": "mike",
+        "date": "2025-02-02",
+        "body": "Root cause: the autolinking codegen in cli/packages/cli-platform-ios doesn't check for the turbomodule flag in the library's package.json. It always generates Bridge-style registration. Fix is straightforward but we need to handle the backward compat case where a library supports both old and new arch. PR incoming."
+      },
+      {
+        "author": "mike",
+        "date": "2025-02-04",
+        "body": "Fix merged. The solution detects whether a library exports a TurboModule spec and generates the appropriate registration code. For libraries that support both architectures, we generate a conditional compilation block. Backported to 0.72.x as well."
+      }
+    ]
+  },
+  {
+    "key": "CORE-155",
+    "type": "Technical Decision",
+    "priority": "Medium",
+    "status": "Done",
+    "summary": "ADR: Metro vs Re.Pack for enterprise monorepo clients",
+    "assignee": "mike",
+    "description": "Decision record: When should we recommend Metro vs Re.Pack to enterprise clients? Context: Several large clients are asking about our bundler recommendation for monorepo setups with 10+ packages.",
+    "comments": [
+      {
+        "author": "mike",
+        "date": "2025-01-10",
+        "body": "After working with 5 enterprise clients on this, here's my recommendation:\n\nUse Metro when: single app, <5 packages in monorepo, no code sharing with web, team unfamiliar with webpack.\n\nUse Re.Pack when: Super App architecture needed, Module Federation required, code sharing between web and mobile, complex build pipeline with custom transforms, >10 packages in monorepo.\n\nThe key differentiator is not performance (both are fast enough) - it's the webpack ecosystem. Enterprise clients already have webpack plugins, custom loaders, and build tooling. Re.Pack lets them reuse all of that."
+      }
+    ]
+  },
+  {
+    "key": "RPACK-445",
+    "type": "Story",
+    "priority": "High",
+    "status": "In Review",
+    "summary": "Hermes compatibility layer for webpack dynamic imports",
+    "assignee": "mike",
+    "sprint": "Q1-2025",
+    "description": "Hermes engine doesn't support standard webpack chunk loading via script tags (there's no DOM in RN). We need a custom runtime plugin that intercepts chunk loading requests and uses React Native's bundle fetching mechanism instead.",
+    "comments": [
+      {
+        "author": "mike",
+        "date": "2025-02-10",
+        "body": "The approach: we replace webpack's default chunk loading runtime with a custom one that uses RN's nativeModules to fetch and evaluate JS chunks. This is similar to what we did in Haul years ago, but now it needs to work with Hermes bytecode precompilation. The tricky part is making sure the Hermes bytecode cache works correctly with dynamically loaded chunks."
+      }
+    ]
+  },
+  {
+    "key": "CS-2401",
+    "type": "Initiative",
+    "priority": "Medium",
+    "status": "In Progress",
+    "summary": "On-device LLM integration in React Native (callstackincubator/ai)",
+    "assignee": "mike",
+    "description": "Explore and ship production-ready on-device LLM execution for React Native apps. Use Vercel AI SDK compatibility layer. Target: enable RN developers to run small language models directly on device without server roundtrip.",
+    "comments": [
+      {
+        "author": "mike",
+        "date": "2025-03-01",
+        "body": "Initial prototype works with Llama 3.2 1B on iPhone 15 Pro. Inference speed is acceptable for chat-like interactions (~15 tokens/sec). Memory usage is the main constraint - we need to figure out model quantization and lazy loading. This could be huge for privacy-sensitive enterprise apps."
+      }
+    ]
+  },
+  {
+    "key": "PAPER-789",
+    "type": "Epic",
+    "priority": "Medium",
+    "status": "In Progress",
+    "summary": "Material You (Material Design 3) migration for React Native Paper",
+    "assignee": "mike",
+    "sprint": "Q2-2025",
+    "description": "Migrate React Native Paper from Material Design 2 to Material Design 3 (Material You). This involves dynamic color theming, updated component APIs, and new components.",
+    "comments": [
+      {
+        "author": "mike",
+        "date": "2025-02-20",
+        "body": "High-level strategy: incremental migration. We ship MD3 components alongside MD2 with a migration guide. No breaking changes in minor versions. The dynamic color extraction from wallpaper only works on Android 12+ - on iOS and older Android we fall back to manual theme configuration. Delegating component-level work to the Paper team, I'll focus on the theming engine architecture."
+      }
+    ]
+  },
+  {
+    "key": "CS-2500",
+    "type": "Story",
+    "priority": "High",
+    "status": "Done",
+    "summary": "Prepare React Summit 2025 talk: Cross-Platform Federated Modules",
+    "assignee": "mike",
+    "description": "Prepare and deliver conference talk about building cross-platform Super Apps with Module Federation, React, React Native and Re.Pack.",
+    "comments": [
+      {
+        "author": "mike",
+        "date": "2025-05-15",
+        "body": "Talk outline:\n1. Why Super Apps matter for enterprise (real client examples, anonymized)\n2. Module Federation primer - how it works on web\n3. The challenge: making it work on mobile (no script tags, no dynamic imports on Hermes)\n4. Our solution: Re.Pack runtime plugin + custom chunk loading\n5. Live demo: shared cart module between web and RN app\n6. Future: cross-platform design systems via federated UI components"
+      }
+    ]
+  },
+  {
+    "key": "CLI-950",
+    "type": "Story",
+    "priority": "Medium",
+    "status": "In Progress",
+    "summary": "Next-gen React Native CLI - successor to Community CLI",
+    "assignee": "mike",
+    "description": "Design and build the next generation React Native CLI that improves DX, startup time, and plugin architecture. Reference: dev.grabbou.xyz",
+    "comments": [
+      {
+        "author": "mike",
+        "date": "2025-03-10",
+        "body": "The current CLI has grown organically and has accumulated a lot of tech debt from the rnpm days. The new CLI should be: 1) Faster (no unnecessary Node.js module resolution on startup), 2) Plugin-based (first-class plugin API instead of the current hack), 3) Better error messages (inspired by Rust compiler errors), 4) Built-in doctor command that actually works. I'm prototyping at dev.grabbou.xyz."
+      }
+    ]
+  },
+  {
+    "key": "CS-2100",
+    "type": "Technical Decision",
+    "priority": "Low",
+    "status": "Done",
+    "summary": "ADR: Why we sunset Haul in favor of Re.Pack",
+    "assignee": "mike",
+    "description": "Document the decision to sunset callstack/haul and create Re.Pack as its successor.",
+    "comments": [
+      {
+        "author": "mike",
+        "date": "2024-06-01",
+        "body": "Haul was our first attempt at bringing webpack to React Native. It worked, but it was a monolithic architecture that was hard to extend. Re.Pack is a complete rewrite with these improvements:\n1. Modular architecture - each feature is a separate plugin\n2. Webpack 5 support (Haul was stuck on 4)\n3. Module Federation support (impossible with Haul's architecture)\n4. Better Dev Server with HMR that actually works on device\n5. First-class support for code splitting\n\nHaul served us well for 3 years but the codebase was too rigid for where we needed to go."
+      }
+    ]
+  },
+  {
+    "key": "HIRE-301",
+    "type": "Task",
+    "priority": "High",
+    "status": "Open",
+    "summary": "Define hiring criteria for Senior React Native Tooling Engineer",
+    "assignee": "mike",
+    "description": "We need to hire someone to take over CLI and Re.Pack maintenance. Define the role, required skills, and interview process.",
+    "comments": [
+      {
+        "author": "mike",
+        "date": "2025-03-15",
+        "body": "This role is critical. The person needs to understand:\n- Bundler internals (webpack or metro, ideally both)\n- React Native build pipeline (both iOS and Android)\n- Native module linking and auto-linking architecture\n- Module Federation concepts\n- Open source maintenance (triaging issues, release process, community management)\n\nNice to have: Hermes internals, CocoaPods/Gradle plugin development.\n\nThe interview should include a practical task: given a broken auto-linking scenario, debug and fix it. This tests both RN knowledge and debugging skills."
+      }
+    ]
+  }
+]

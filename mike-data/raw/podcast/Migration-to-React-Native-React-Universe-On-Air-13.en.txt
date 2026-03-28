@@ -1,0 +1,1204 @@
+[Music]
+hello and welcome to the react native
+show podcast i'm mook as your host and
+in this episode we'll dive deep into the
+migration to react native we'll talk
+about migration from native to react
+native expanding react web apps with
+cross platform availabilities
+and the two main approaches to use in
+migrating to react native greenfield and
+brownfield
+and what to remember and what to avoid
+during the migration process and much
+much more so stay with us let's get
+started and introduce my guest
+joining me today is mike hujak head of
+delivery department
+at call stack and great expert in
+brownfield development hello mike
+hey lukas thank you for the introduction
+it's great to see you
+oh yeah definitely
+so mike
+as we know as me and you know you are my
+boss so
+i'll let you start easy and i will ask
+you an easy question
+so your official title is head of
+delivery and i must admit when i joined
+call stack
+several months ago almost a year i
+didn't know what that really means so
+maybe you can explain to our listeners
+what are your daily responsibilities at
+call stack
+sure but before i do it i'd like to say
+that it is my second time on the react
+native show podcast but it's first time
+i will be talking with you
+and i'm super excited about it uh
+because
+we've been working together for a while
+but we rarely have a chance to dive deep
+into uh topics uh as technical as
+migration to react native
+so yeah thank you for the invitation
+again
+and getting back to your question uh at
+call stack i'm managing team of
+developers project managers and quality
+assurance engineers
+and on top of that i'm responsible for
+ensuring the highest quality of our
+service delivery
+hence the title uh which means setting
+quality standards best practices uh for
+both development and
+managing our projects
+and even it
+sounds a bit manager-ish i still have
+many opportunities to touch the
+technical stuff for example i provide
+technical consultancy for our
+key accounts and i do some open source
+oh yeah definitely and i know i know
+that you had a lot of opportunities to
+talk about this subject that we are in
+right now so migration to react native
+brownfield development in react native
+can you quickly summarize for me what
+are your credential in this area why we
+should listen to you
+because i love react native and i'm good
+at it
+but jokes aside um i'm the person who
+really believes in react native for me
+uh it's an amazing framework that brings
+a lot of business value and it's very
+pleasant to work with uh
+so um
+on
+the other hand uh it is just a framework
+to enhance mobile development and i was
+always very keen to understand what lies
+under the hood uh that's why i've been
+exploring native technologies from
+objective c to kotlin
+in order to understand how they solve
+certain problems so i participated in
+many web
+web and mobile projects both react
+native and native and i think i have a
+good grasp of both strong and weak
+points of these technologies
+and
+yeah based on that experience i created
+a library uh called react native
+brownfield which is a set of tools for
+facilitation of the integration of react
+native intonative apps uh and um yeah
+it's very uh useful in uh such
+migrations so i think that's that's all
+in terms of my credentials yeah let's
+put up in in the uh react native
+brownfield library we'll talk about it
+in the
+in the following part but maybe we can
+start in more structured way and sure
+we can discuss uh from your experience
+what are the main reasons our client
+come to call stack to migrate their apps
+sure so there are multiple reasons why
+uh i think we can split them into
+two main categories uh
+first is addressing existing
+uh and second is creating gains for the
+future
+so future proofing
+yes
+uh or basically creating
+benef business benefits for the
+future uh yes so in terms of first
+category the stimulus
+for such a decision is often
+a thing that's bad for your business for
+example the application has poor
+performance and you lose users or
+receive flow absolute ratings
+and in such cases we can either try to
+optimize the app or migrate it to the
+new one
+and while i'm a big fan of optimization
+sometimes it makes no sense to deal with
+existing code base and it's better to
+create a new one
+uh another example of the pain point
+might be an increasing technical depth
+that slowed down slows down the
+development process
+for for new features and makes
+maintenance of the existing code base uh
+a nightmare for developers
+uh yeah but dealing with the paints is
+not the only scenario uh to make such
+decision and regarding the other uh
+scenario which is uh
+so maybe maybe i can add one point to
+the pains that you mentioned and i feel
+like in some project in some companies
+there is this drive to deliver features
+and to kill bugs but
+the technical depth and like the quality
+of the code base is often overlooked so
+it
+like it it is it does make sense to at
+the same time migrate to some newer
+better technology and at the same time
+uh
+increasing the quality of your code base
+i think that is very important that we
+don't lose this uh quality mindset
+during the process
+yeah definitely and addressing pains
+doesn't exclude having gains so yeah
+yeah but uh speaking about the gains
+even if your app is working out well uh
+you might think of ways to to improve it
+from technical and business perspective
+and trust me react native is really good
+at it
+so it speeds up speeds up the
+development process
+without
+like introducing uh any additional
+charges as developers may might use
+same code based on ios on android and
+maybe other platforms as well
+so this minimizes development costs and
+you can build a up in a fraction of of
+time without affecting the quality and
+that's a
+key thing here
+and i can tell you that if you do it
+right every board will be happy with the
+final quote and
+yeah but yeah it's like
+you're cutting down from two different
+teams
+to
+one team with javascript developers with
+some native uh
+background instead of having two
+different themes
+uh
+specified in native development for ios
+and android so of course that that will
+cut costs
+yeah yeah definitely definitely and the
+velocity itself or velocity of
+programming itself might be
+faster even if you compare platform to
+specific platform to react native for
+example
+writing a feature in native aos might
+take more time than native than writing
+same feature in react native
+it's yeah yeah
+definitely
+so
+it's not a golden rule let's say but uh
+in many cases it is like that
+and yeah and another thing that i wanted
+to mention regarding uh positives of
+adopting react native is a possibility
+of adding uh new platforms gradually uh
+so i think one of the biggest selling
+points of react native is having an
+abstraction that is reusable between web
+mobile desktop and other platforms
+uh so
+yeah it opens
+uh another door because if you have a
+application
+let's say a purely web application
+written in react you can convert it uh
+to
+react native
+and
+yeah and
+it it doesn't take that much time so you
+can do it in fairly short amount of time
+and this way you can
+expand uh the
+expand to the market and operate uh on
+different markets like uh i said mobile
+desktop etc which opens up more
+opportunities for the future
+and when you mentioned desktop like a
+few years ago uh electron came out right
+and you could uh write react
+applications for desktop but right now
+we have react native windows and react
+native mac os which allows you to more
+or less use the same code base but your
+application is native as on android and
+us on ios so that brings you huge
+performance benefits and
+and other benefits as well
+yes yes definitely uh so i think
+electron is a good technology as well
+but you can compare it to the
+phonegap versus react native so you can
+achieve
+good results in both
+but i always prefer to do things
+natively
+so react native for desktop react native
+for mac os for windows
+can help you achieve that
+and yeah reusability that i mentioned is
+also a big selling point
+yeah so are there any other reasons why
+you would want to
+migrate your existing
+web application mobile application
+desktop publication maybe even
+to react native
+um yeah so i believe there are many but
+one that comes to my mind is a good
+developer experience as well i like
+coding in react native for example when
+i've been coding
+in
+native ios i had to rebuild
+the
+application each time i wanted to see
+some changes i know that now it has
+changed uh since
+they introduced swift ui and the
+developer experience is way better
+but for me uh seeing the
+changes uh live like with hot reload
+it's
+a nice thing to
+to to to have at work
+yeah definitely and you can streamline
+the process for all of your team not for
+just one for one platform you streamline
+the process for
+this one team that will create your
+monorepo for example right this uni
+application for all the platforms and i
+think it is a
+good
+moment to point out that
+with good developer experience comes
+better velocity because your developers
+are happy they're producing codes more
+uh their producing codes faster and also
+you can deploy your applications at the
+same time with the streamlined um
+release process using some like uh over
+the internet tools and not using the
+native uh upload to app store uh yes
+solutions
+definitely that's also a benefit and
+another thing that comes to my mind is
+open source community
+uh it's amazing in react native i
+totally love
+this community love these people uh i
+love how everyone contributes to the
+greater good
+and
+it's simply pleasant to work in such
+environment yeah this might be a good
+time to pluck some like call stack
+recruitment processes here if you want
+to join call stack you will be able to
+uh
+work in open source and work within our
+repositories and you you can also
+help us out with our repositories not
+joining call stack but just contributing
+to our repositories
+okay i think we have the um
+the benefits of migration wrapped up so
+where maybe we can move on to the other
+part and the other part
+i wanted you to ask
+is
+where do we even start with migration
+process and what should people be
+prepared for when preparing for
+migration
+uh
+that's a very good question
+so generally i suggest following a
+top-down approach uh where we start from
+what i call defining um the big blocks
+such big blocks are in fact elements of
+the migration process
+or migration phases
+so from my experience when i'm working
+with such migrations i defined four
+major components that every migration
+should contain and those are first of
+all business evaluation second of all
+development planning and preparation
+then implementation and then validation
+and rollout
+so basically this is how the process
+looks like from a high level perspective
+and
+what
+you need to do next is you need to break
+it down into some smaller pieces
+uh so also i
+strongly recommend to approach it in
+agile way
+so it means that some of these steps
+might be repeated multiple times on a
+smaller scale
+but answering your question precisely
+before doing anything else
+you need to know where you're at the
+moment
+so evaluate your starting point and um
+the route to the beach uh is different
+uh when you are in the
+fire exclusive five-star hotel
+with a beach view
+and
+it's different when you are in the
+middle of the swamp
+i really like this comparison
+yeah but in both cases you can achieve
+the same results
+and feel the ocean waves on your skin
+but
+there is a difference in the process in
+between
+so
+i have several supporting questions that
+can help you evaluate the starting point
+and
+those are first of all
+define what competencies
+do you need in order to perform the
+migration and then compare it to the
+competencies you have in the team
+because the gap will define
+the requirements for
+for the team
+then think of platforms
+so which platforms do you operate on at
+the moment which platform do you want to
+expand to
+and then
+consider
+questions specific to the
+let's say project itself so
+let me interrupt you here like you said
+before if you have a
+web application written in react then
+it's no brainer to re migrate to react
+native but more generally if you have
+your application written in something
+else and it's all
+up in the air
+then your um
+your
+selection of technologies you might be
+willing to work in is
+different yeah
+yeah yeah or maybe not the selection per
+se but uh how to prepare for such
+migration in terms of uh skills of the
+team for example if you have react
+developers you can train them to
+operate in react native and
+that's fairly easy process in comparison
+to if you have
+the native team and
+then you need to teach them a new
+paradigm which is also doable but then
+you might think of strengthening your
+team with some external resources to
+to help
+yeah
+yeah but getting back to my initial
+thought
+then some questions or things to
+tackle around the project so
+see if you have feature maps and good
+project documentation because it helps a
+lot
+do you have a complete design guidelines
+do you have user stories
+that describe the behavior of the app
+is your code itself well documented and
+last but not least do you have tests
+that are agnostic from the
+implementation
+yeah and i feel like the the whole
+selection you just mentioned the
+documentation for for user stories for
+your designs for your design language
+for tests for code itself
+some of those are nice to have let's say
+but some of those are a must if you if
+your project doesn't have some of those
+you're
+in big trouble
+yeah yeah uh definitely so having green
+lights in all of these areas uh will
+help you succeed uh in the migration
+will help you avoid the regression will
+fasten the overall process uh however i
+have to tell you that i rarely seen uh
+all i rarely see uh all positives uh in
+in all of the areas that that
+i mentioned
+but organize organizations still manage
+to succeed uh so you just have to accept
+that the process will be longer and more
+fragile uh yeah and i i guess the the
+process of migration itself can also
+help with documenting right because you
+are creating some of this from scratch
+some of this you are re-engineering you
+have to rethink this so this is a good
+point to use this opportunity to
+document at the same time
+so you don't uh
+yeah so you don't end up in the same
+place like two years from now
+yeah definitely
+so a lot of stuff uh can be reused later
+as you've mentioned and will help you
+increase the overall quality of the
+not only code ways but the projects
+itself
+so yeah at this point it's also good to
+define some kpis or ctqs that you want
+to maintain or improve in the final
+project
+can you can you
+uh explain what kpi in ctq is
+yes
+not for me of course i know that you're
+my boss i'm not saying that i don't know
+that but maybe some of our listeners
+uh sure sure apis are key performance
+indicators uh so basically some metrics
+that will help you uh track if you are
+on track
+and ctq's are
+critical to quality and and those are
+factors that
+are most important for your end users so
+usually you start with
+interviewing your customers
+defining uh what's important for them
+listening to their voice and then
+translating them to these factors
+and uh it helps you uh have a
+good uh overview or where on where you
+are at
+uh
+shall we move on to
+brownfield part so before we do that i
+want to share some uh insider knowledge
+that i got from wikipedia in the morning
+today
+um
+so we are in the software development
+environment we are talking about this
+greenfield brown field approach and i
+like until today i i i took it for
+granted
+because i didn't know really what that
+what that meant like i i knew what that
+meant but i didn't know uh where the
+terms came from so uh i read up about it
+and i know now and i can share this with
+you and all the listeners so the terms
+are coming from the property development
+market in like great britain or
+something
+so if you go and you buy a new land and
+this is a
+green field
+then it is easy to build upon it
+and if you go and you buy land in the
+inner city maybe this is some uh
+post-industrial or something like that
+with some buildings on it then it's
+brownfield and
+uh that entails that you have to clear
+it up before you start developing the
+land so this is the origin of greenfield
+and brownfield development and uh
+i guess uh
+this is
+like this is a good metaphor like it
+fits very well with with uh like
+application development as well
+yeah yeah definitely yeah i also
+was surprised back in the days when i
+googled it
+that it has its roots on civil
+engineering uh but yeah like
+long story short greenfield
+is about writing from the scratch
+and brownfield is about
+writing on top of something that already
+exists
+yeah
+so let's let's now focus specifically on
+brownfield in react native and
+we covered your credentials before and i
+know that you've done tens of different
+brownfield migrations and
+is there a template that you use what is
+your process if in
+going in getting your heads dirty and
+starting to do a migration to brownfield
+okay so um specifically speaking in case
+if you are
+migrating from native applications to
+react native like mobile applications
+yeah
+so
+if you have an existing
+native mobile app or actually apps
+because usually companies target
+at least ios and android
+you can start to benefit from react
+native without rewriting whole
+application so we can start either by
+adding some new features uh in react
+native on top of existing application or
+start replacing it to uh
+start replacing some existing technology
+with with react native and it's a fairly
+uh simple process but it has powerful
+implications as you can quickly cut down
+the costs of feature development
+you can write the feature once and use
+it on every supported platform and of
+course
+from time to time you need to do some
+platform specific adjustments but that's
+not often a case
+and speaking from
+short-term perspective
+you can start shipping your code way
+faster than you would normally do it and
+from the long-term perspective
+as react native
+code plays a bigger and bigger role in
+your code base
+your maintenance costs will be reduced
+and mostly it's caused by two
+to two facts first is that you will have
+a fresh uh code base with no technical
+depth and second uh that you will
+need only one team to maintain uh the
+coast yeah the the code base and develop
+new features
+um so
+ultimately uh it's not um
+only about the reduced development costs
+but um also
+if you don't need to get rid of existing
+app uh i mean you don't need to
+do it or you don't need to stop the
+development uh and to start the
+migration process so you can
+in other words you can continue
+generating revenue and keep developing
+new features in the process
+yeah and like the
+benefit from like deployment perspective
+is that this is the same application
+that lives in the app store in the
+uh
+in the google store
+so you don't have to do anything
+different than you are
+doing right now you can still use the
+same system and and build upon it that's
+great
+yeah definitely um
+also i i wanted to uh share with you a
+few uh
+words tips about how we as a coast tech
+and do it
+uh
+but uh
+before i do that uh i i wanted to tell
+you that uh at the beginning uh the
+process itself has a bit of entry
+barrier uh to
+to
+to overcome
+and what i mean by by that is that you
+need to have a good grasp
+of the javascript side of react native
+as well as
+its underlying native internals and in
+order to be fully effective
+you should have at least an average
+understanding of native development as
+you will work with the native code
+to some degree at least
+and what i'm trying to say is that it's
+good to know the environment for example
+um imagine if you would like to renovate
+a house
+so it's good to know
+which walls can be destroyed safely uh
+where electric installation is and how
+hydraulics looks like
+yeah yeah
+definitely and like i think that uh
+average understanding of native
+technologies might not be enough maybe
+average understanding of the android ios
+systems sure
+but then you have the whole inter native
+internals of react native that you want
+to use
+and that is not well documented right
+this is something that lives there you
+can look at it
+you can browse the repository
+but it's not like
+the lines itself uh
+tell you
+what is what that's supposed to do and
+if you can remove this part and your uh
+roof won't fall down
+yeah yeah
+but the
+positive thing is i think is that once
+you establish a good
+brownfield integration to deal with the
+uh
+native codes that much uh what i try to
+say is that you need to understand the
+code in order to reverse engineer the
+requirements uh or
+in case the requirements are not well
+documented of course uh but in general
+it's good to have just an average
+later but for the beginning uh the
+process of let's say establishing good
+brownfield setup uh might
+require uh a bit more advanced knowledge
+and might require a bit more uh let's
+say diving into react native code base
+uh itself
+yeah uh yeah and also i wanted to
+mention the other thing to consider uh
+while doing such migration which is uh
+the people perspective
+uh so
+maybe there is a team uh that is working
+on the legacy code base and in most
+cases there is
+uh and such migration is a long process
+and during that process uh you can focus
+on preparing
+the team to work on the new code base
+or or maybe you would like to reallocate
+them to some other project at some point
+but in in both cases
+they will have to operate within
+the existing app
+and text uh for some time
+so
+what i'm trying to say is that you don't
+want to introduce tooling that will
+decre decrease their productivity
+and i'm mentioning that because we've
+had such case in the past uh as when we
+started migration we observed that the
+native team uh the their performance
+fell
+and after searching to the root cause of
+that i observed that they had to first
+of all deal with the new tools like
+node.js yarn or metro bundler that are
+uh very common in uh js or react native
+uh environment but for them it was new
+yeah yeah
+those are common but when you encounter
+a new error from from metro bundler that
+i cannot find this one file in your node
+modules and like yeah it gives you like
+several different lines of how that file
+might be named and you're like
+what like
+i'm not the owner of this note modules
+folder i don't know what's going on
+there so yeah
+this can be a pain
+so uh
+at some point uh they for example they
+the team that's operated in the
+uh
+app that we added react native on top of
+uh they did not know that they have to
+install uh
+dependencies run npm install run yarn
+even though it was documented no
+not everyone
+has
+read it and
+it is a problem of course some trainings
+help but you have to consider it
+then the second factor is that they had
+to observed changes in the repo that
+they did not fully understand hence it
+was harder to perform quality code
+reviews
+and
+it's also important because they have
+all the product and technical context
+and uh
+new changes no code reviews that that is
+a problem at some point
+yeah and
+the
+last factor was that they had to deal
+with the increased build time as we had
+to
+build react native related stuff
+and
+each time they run the app
+they had to do it over and over again
+and the build time was increased hence
+the developer experience
+wasn't as good as as it was before yeah
+at least for them
+uh yeah so uh anyway we quickly realized
+that there is a lot of uh things to
+improve
+uh at least
+on on our side
+and we started uh thinking on how to
+overcome these issues and we came up
+with a great solution that we have been
+using in every project since then
+so we created an engine to encapsulate
+react native
+js bundle assets native classes
+and all of that into one file one native
+artifact so native teams had to build
+how to had to deal
+only with the final product which uh
+were either a aar file or xc framework
+file
+and they were able to uh interact with
+it as they would interact with any other
+native ui library yeah so
+yeah i was gonna say it's like adding
+manually library to your android project
+you just put yeah exactly there and it
+works
+yeah or use some package manager they
+could use maven or they could use
+cocoapods uh things that they are used
+to
+so they didn't have to deal with react
+native
+environment their build time was
+decreased to a number similar to what
+they had before because we pre-built
+everything that was related to react
+native and finally they had a full
+understanding of their code base
+yeah
+yeah yeah definitely
+yeah and if you're interested about
+these cases uh generally at callstack we
+did multiple integrations like that in
+the past so you can read about some of
+them uh in the project section in our
+website
+oh yeah we have some case studies and we
+have some articles and we have you on
+react native show podcast number six and
+we have you on the conference react
+native eu so we will link all of that
+materials
+uh below this episode
+sure
+yeah and regarding
+stuff from the podcast or stuff from the
+conference
+at some point we found that a lot of
+these steps
+are repetitive and we can
+and we recreate the same code over and
+over again
+so we thought that it would be good to
+extract it to an open source library and
+this is how react native brownfield was
+born
+yeah
+so
+react native brownfield was introduced
+in 2019 correct
+yes yes yeah 2019 and since then we are
+working on the new version
+uh so can you tell us
+who ordered it what was it you was it
+you would some other folks at kolstek
+yeah initially it was me with mike
+grabowski
+our cto
+and
+we initially thought of a set of
+helpers to facilitate
+integrating react native into existing
+native apps
+so you know it saves a lot of time as
+you can omit several initial steps as
+well as
+decrease entry barrier for developers
+who work on such project
+and
+at the beginning those steps usually are
+first of all you start with preparing
+some native classes that render react
+native components within their bounds
+then you load javascript
+bundle you store an instance of react
+native bridge into some singleton and
+reuse it between
+different
+different components
+and then you prepare javascript api to
+uh let's say compose native and
+javascript navigators because that's
+often a case that you have to embed the
+screen into
+a native
+navigation hierarchy and you do not want
+user to notice that at some point there
+are operating in react native yeah this
+was actually the hard part when i tried
+to visualize how brownfield works so
+you can imagine that if you have a
+mobile application written in native
+android
+you could do
+react native
+as like completely different set of
+screens and like just link the two words
+with just one intent one navigation
+change and uh you are in the native now
+uh you transfer to react native and you
+browse in react native the hard part for
+me is how do you
+mix and match
+the native with none
+with react native which is still native
+but with some bit of javascript on top
+of it
+and how do you maintain the whole system
+this is uh this is really mind-blowing
+for me i didn't do much of a brownfield
+as you can imagine
+sure uh yes so i will tell you about the
+maintenance uh in a second so i will be
+speaking about what's going on uh at the
+moment at the in in react native
+brownfield uh but before i do that i
+will answer the uh part regarding the
+integration itself which was covered in
+the initial release of react native
+brownfield nah so generally you don't
+need to create
+a separate intent you can embed react
+native into fragment or an instance of
+android
+view
+so uh basically you can embed a react
+native component into native kirk which
+helps a lot because then you have a
+native navigator for example uh you uh
+change you have navigations based on
+fragments which is
+i think the standard now for android
+applications
+and at some point you're under react
+native within that and so what you need
+to do basically is to toggle which
+navigator is active is it the js one or
+is it the native one
+so react native brownfield has some
+helpers to to do that
+okay
+uh yeah and i promised uh to talk about
+the
+maintenance part uh so let me tell you
+about the next release of react native
+brownfield which will include the
+encapsulation engine from the case study
+i mentioned before
+as well as
+many other killer features
+so first of all we'll provide you with a
+cli that lets you build
+build an artifact with one comment and
+plug it into your continuous delivery
+process
+and you will be able to publish the
+artifact to any place you like so github
+previous tab or things the native
+package managers that i mentioned
+cocoapods
+maven jetpack
+or
+any place you want
+so the cli itself and then another great
+feature that we are building right now
+is the generator of native components so
+think of a react native components with
+some annotation on top that is strongly
+typed using typescript for example a
+button
+and it accepts some styles like text and
+callback
+and our generator will be able to create
+a native button
+a class a native class that will extend
+ui button or android button
+and it will accept properties like text
+callback and styles in a constructor
+and render your react native button
+under the hood
+and
+thanks to
+this engine you will be able to easily
+create unified design systems that can
+be consumed that whole organization you
+know while keeping only one source of
+truth
+and
+that source of truth will be written in
+typescript plus react native
+awesome
+i like that idea
+yeah uh me too
+everyone's gonna love it i'm sure about
+that this is a true killer feature so
+where is it coming out
+uh
+yeah so about that i think that slowed
+us down a bit or actually slows us down
+but it is an important addition uh for
+me personally uh is the adoption of
+new react native architecture
+so we will support turbo modules and
+fabric renderer
+although it increases the complexity of
+the project and uh difficulty uh so
+now we believe that having this support
+is super important for the sake of
+top-notch performance and we do not want
+to release without that and that's why
+it's delayed a bit but uh it's coming
+this year
+so i think it's understandable so you
+will be
+maintaining two different
+implementations right the old renderer
+and the fabric the
+old native modules and then turbo
+modules
+yes for some time i think it's a
+requirement because
+we cannot resign from the old
+architecture even though we'd like to
+but until the community is ready for
+say complete adoption of
+a new architecture we will support both
+okay
+do you have anything to add to the
+brownfield
+migration to react native
+uh no i think that's all if you're
+interested in some more details um i
+strongly encourage you to uh watch the
+previous episode of react native podcast
+episode
+so
+i was talking about react native
+brownfield library per se
+and you can hear some more details on
+that
+before we end this episode i was
+thinking maybe we can take a detour uh
+to talk some more about
+the
+web migration to react native or is it a
+good idea and do you even call it a
+migration or is it a conversion
+and
+our terms
+brownfield greenfield even apply to this
+kind of process
+to some degree
+so in this situation i would consider
+two specific cases
+first case is when you have an existing
+web code base and you want to migrate it
+to react and add the support of react
+native and second is when you have
+existing react application and you want
+to expand to other platforms for example
+mobile
+and in terms of expanding to mobile
+platform or any other platform that
+supports react native
+i would call it a conversion because
+ultimately
+this is what it is about
+and i think this term is more suitable
+in this case in the other case i think
+it's rather a migration because you need
+to adapt a whole new technology
+um yeah okay
+uh
+is there anything else you would want to
+do yeah sure sure i can tell you uh a
+few words about the conversion from
+react to react native because
+that's the common case that we
+deal with
+at kostek
+and
+yeah specifically speaking of such
+conversion and
+maybe starting from
+the time that is required to convert the
+code base
+it really depends on several factors
+so you need to ask yourself again a few
+starting questions so
+see if your components are small and
+modularized
+see if your code is decoupled from
+platform specific implementation
+see if you use regular react dom
+components for for example you use react
+native web which would help a lot
+but it's not a prerequisite
+then how do you handle styling and how
+different weapon mobile layouts are
+yeah and answering these questions will
+help you estimate the level of effort
+required to
+perform the conversion so the good thing
+about that is that there are plenty of
+tools that can help you implementing the
+support to other platform
+for example react native web that i
+mentioned uh it exposes uh standard
+react native core ui components that are
+compatible with web and you can use them
+instead of uh regular dom components
+like d for p tags
+if
+i can give you uh
+let's say
+one tip about the the the whole
+migration process here it would be to
+divide and concur
+so create small leaf components compose
+them into larger ones
+you can follow
+the atomic design for example it will
+drastically
+help in the process itself
+yeah
+and
+so i i was going to mention that react
+native web is a huge library and there
+are huge companies use using react
+native web two i know are uber and
+twitter
+twitter uber web applications are built
+using react native web
+yes and not only that i can't call exact
+names uh but many of our clients uh nda
+this technology
+and they are really happy with it and so
+yeah i strongly recommend react native
+web it's major uh it's nice to work with
+and uh yeah it's cool but it doesn't
+cover one thing that it is a challenge
+to overcome in such a conversion
+which is styling
+so if you are using some css in js
+solutions or inlands in inline styles
+the amount of effort should be slight
+uh but to be completely honest with you
+i'm not a big fan of these solutions as
+they often come with the costs like
+performance overhead even though we have
+our own open source library for css in
+js code
+yes but that one doesn't because
+it
+it's
+used in the build time not in the
+runtime so
+if you use scenario it's great as well
+uh
+yeah but
+if you are a dinosaur like me and you
+like playing css or
+scss
+the amount of work will be significant
+uh so but thankfully uh we have uh
+some tools some open source tools that
+helps in the this process like css and
+react native uh we'll leave you a link
+in the description
+uh but generally it it helps a lot
+uh yeah
+yeah okay
+uh
+thank you mike i think that wraps it up
+uh we talked about migrating from
+uh native from native to react native we
+we were talking about migrating from web
+to react native from react native to web
+as well because this is uh
+like
+that's the same process i guess uh we
+talked about greenfield brownfield
+solution i must say i'm really impressed
+by your knowledge and by your expertise
+uh
+and now i know why you are the head of
+delivery department
+uh
+that
+covers like you say quality assurance
+and development and and all that thank
+you so much for joining me in this
+episode of the react native show podcast
+i was lukasz kludzinski
+thank you everyone for joining as well
+and see you in the next one
+thank you a lot
+no

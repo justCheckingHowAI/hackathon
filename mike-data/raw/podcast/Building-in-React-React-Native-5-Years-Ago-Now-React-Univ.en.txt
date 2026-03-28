@@ -1,0 +1,1449 @@
+[Music]
+welcome to the react native Show podcast
+brought to you by kak a total software
+engineering consultancy my name is Kuba
+Urban and I am your coffee talk host
+today uh I have two more guests but you
+know wait for it they're are special and
+I will introduce them for now I just
+wanted to say that we will talk about
+the state of react state of react native
+and all things around it uh we're going
+to talk about Journeys in the tech
+industry and how it can look like for
+you know everyone else basically maybe
+this will inspire your journey so my
+guests today um one of them is my fellow
+Co Stucker Ola Ola can you introduce
+yourself please yes hi so my name is Ola
+this short hand for Alexandra but I
+always go by Ola because it's confusing
+that these two names are one name yeah
+as I've been uh I've been working at
+Cola for the last oh my gosh over two
+and a half years and in the same project
+with Kuba for for like half a year or
+year or even a year maybe a very
+interesting project we work on TVs
+mobile phones web everything and it's
+challenging and it's
+fun yeah and thank you very much Ola and
+I'm glad to have you here to today and
+my second guest it's a special guest
+because she is not from Kack and she is
+from from far away uh because uh from UK
+Anisha uh can you please introduce
+yourself tell us something more about
+what you do on everyday basis sure uh hi
+guys I'm Anisha and I'm a developer
+Advocate at the Amazon app store um and
+usually when I introduce myself the
+first question that goes to everyone's
+mind is like what is a developer
+Advocate um so it's kind of my job to
+make it easier for all the Developers to
+develop for Amazon App Store so whatever
+shape or form that takes sometimes it's
+writing articles sometimes it's writing
+sample code sometimes it's coming on
+podcasts like these um but yeah it's
+it's my role just to make it easier for
+you to develop TV apps um tablet apps so
+anything that goes on Amazon app store
+and Fir OS um but my background is react
+native and my focus is on react native
+apps for
+firest lovely so basically whenever I
+cry over my project here I should just
+call you and be like hey Anisha please
+help yes and I will try my very best to
+help because usually one person's
+problem is similar to other people so if
+I can solve it for you I'm sure I'll
+help other people all right all right
+awesome uh so yes people as you can see
+and hear uh we have a lovely team today
+and uh ladies here will talk about their
+Journeys uh so you know sit back and uh
+have a good good listen good watch
+depending on the platform um
+so maybe we'll start with Anisha so
+Anisha how did you start your Tech
+Career like what sparked the idea what
+brought you to us yeah yeah so I did
+engineering um at University so I did
+biomedical engineering which is very not
+related to what I do now um when I was
+looking for jobs I knew that I wanted to
+stay in London which is probably not a
+good reason to be applying for jobs but
+it was it was my motivation
+and I started as a technical consultant
+at IBM and while I was there a lot of
+the projects were react and react native
+based so I would annoy the developers
+into teaching me because the project
+management side or the things that you
+have to do as a grad were not as
+interesting as what they seem to be
+doing um I did have a bit of background
+so I did C++ and a bit of machine
+learning in uni but I think it was just
+really seeing like the cool things that
+the developers were building so I
+learned JavaScript um taught myself
+while I was on the job and then begged
+someone to put me on a project that was
+react and that made me learn react um so
+I didn't react like front end
+development for about four years and
+while I was doing that a lot of things
+that I was learning I felt like would
+consolidate it by sharing it so I did a
+few talks and that's sort of how I ended
+up as Amazon as a developer Advocate um
+because sharing what I knew was like a
+way for me to learn more um and I didn't
+even realize it was a role that existed
+but here I am um and my final project at
+IBM was like working on a react native
+app for the last two years so that's
+sort of how I got into react native but
+it was definitely js's react and then
+react native awesome awesome and by the
+way that that role that you have right
+now the the developer Advocate was it
+like proposed to you because they saw
+that you're good at it or was it
+something that you opted for and be like
+hey I want to do this stuff I think it
+was a bit of both so it was like I was
+looking for a new job at that time and I
+think the person who hired me had seen
+that I'd done some talks and one of my
+talks that was like quite well that went
+I don't know I wouldn't say viral or
+anything but it was just like it got a
+couple of views and it was like called
+new kid on the blockchain and I was just
+talking about like how I learned
+blockchain and then I built like a react
+layer on top of a blockchain yeah and I
+think like he probably he saw like this
+coupling of like different Technologies
+and me explaining it and thought that's
+like what it takes for a developer
+Advocate is being able to like take
+these complex problems and sort of make
+it digestible but also find a way to
+talk about things that might not
+necessarily be being talked about so
+that's sort of how I ended up at Amazon
+are you are you a secret Bitcoin
+billionaire if you know I wish I
+wish oh I wouldn't have a radiator then
+I'd
+have it'll be
+golden well I me at least now uh I have
+a better background otherwise you would
+have some kind of freaking ocean with a
+beach behind
+you usually when I record videos people
+are like can you remove the radio I was
+like no I need to stay
+warm true true it's important all right
+Ola how about you how did you start what
+what brought you to Tech um me well I
+studied something completely different
+because I studed French philology and I
+actually wrote a book at the end of my
+studies that was like um literary
+analysis type of thing uh but there's
+that much work in translating French to
+polish so I always liked computers and
+HTML was just like the easiest thing to
+learn so I started by HTML the CSS JS
+then react and then react native in
+short there's like 10 years of my life
+in one sentence but yeah so how did you
+you how did you actually stumble up the
+react native like was it just random
+project that you jumped in or how did it
+no I was like I was like at the
+beginning where like smartphones were um
+were making their appearance I thought
+that apps were awesome and I just played
+around with anything that was possible
+to be done with uh with uh JavaScript so
+I start with ionic actually like I I
+worked with angler the first angular um
+the prehistoric one and then ionic which
+sort of sucked and then I thought like
+that there must be a better way and then
+I found re native I saw flut on my way
+but like I didn't stay long okay that's
+good because of that you're with us yes
+yeah yeah exactly I feel like most
+developers like start with angular and
+they're like nope and then they end
+react native look angular had its time
+you know it was very very big and
+popular right like me for example I
+started web development with angular um
+because I I I I I had a chance to move I
+started as a backend devel developer and
+then I had a chance to move up to the
+full stack but I had to learn angular
+right uh not the first one it was the
+better one already I don't remember the
+specific version but yeah uh but from
+there I I could go to react because I
+could do the the front end right and
+then I had options so that was nice but
+yeah angular was there and angular like
+I feel like angular was necessary to
+make this step from JavaScript just
+being like this jQuery making buttons
+pretty thing to something more yeah that
+that's what angler did for pretty much
+all front and development all right all
+right yeah I I mean I agree with you but
+uh it's interesting to to to to see that
+Ang was somewhere for everywhere
+everyone not especially nowadays um all
+right all right so moving on let's let's
+uh let's skip a bit ahead right let's
+leave the beginnings uh and jump into
+the now all right so
+nowadays what what do you do now
+nowadays you uh maybe with Ola right now
+you all mentioned that we are working on
+the project together building stuff for
+TVs mobiles and stuff like that um can
+you say something more about your
+everyday everyday tasks and and job what
+what what do you prefer working on and
+what do you work on how does it look
+like for you uh well actually I enjoy
+working on TVs it's like a special type
+of challenge because what you have on
+TVs and you don't have on mobile phones
+are Focus uh issues because you have the
+remote and you have the an item that's
+that that lights up and you move with
+your remote so that's always a fun
+Challenge and we have like a gazillion
+emulators uh that we need to work with
+and well I I I like it when my job is a
+little bit tough because you know makes
+me think and it what I like when it's
+challenging okay so that's good that's
+what I like fck is management and you
+love it oh my God give me
+that I didn't say I love it I I said I
+like it well that's Alla people that's
+Alla uh okay thank you very much uh
+Anisha how about you because your role
+that you described it sounds like you do
+a lot of different things so what do you
+focus on nowadays yeah so I guess it's
+my job to make ola's job easier
+basically um so I actually watched like
+you know your one of the last episodes
+of um the PO podcast and you were
+talking about yeah developing on TV and
+that's basically my Focus right now is
+like how to make building react native
+TV apps easier or you know just
+exploring like what developers are doing
+right now um I think this year like I'm
+really interested in seeing like how can
+we test TV apps because it's such a
+unexplored area I mean like in general
+like developing for TV apps is just not
+as talked about or there's not as much
+content around it um I think recently
+bam theodo they just released a Blog on
+on react native TV and it's going to be
+really exciting to see like the content
+that comes out because like all I said
+there's so many challenges when it comes
+to TV that you don't see on like mobiles
+or tablets
+um sorry bam is actually that's okay bam
+is working on like their own Focus
+management Library yeah yeah I think so
+um yeah in terms of testing like other
+than really just and react native
+testing library and a couple of the
+performance tooling like there's not
+much that was built with TV in mind um
+so that's sort of what I want to look
+into this year and Anisha do you have
+like a a favorite part of your job since
+you have so many jobs wrapped up in one
+is there something that you like more
+than other tasks H I think I would say
+the the conferences like I mean that's
+where I met um everyone from coack I
+think you you get to meet the people who
+you know you've admir like you know I
+met Lorenzo and Nicola and I've been
+using react native I've seen their names
+pop up on GitHub and um you know the
+change logs like a thousand times and to
+be able to meet them and talk on the
+same stage as them um was amazing and I
+actually got to talk about something I
+really like which is story work um so I
+think that's my favorite part being able
+to use the tech I like see how it might
+make you know developing for Amazon
+easier and then being able to share it
+all right and by the way uh you can see
+anisha's talking about storybook on the
+conference on our YouTube channel so go
+ahead and check it out it was really
+really cool I loved I I loved your talk
+I loveed the storytelling about it that
+was so cool thank you yeah same same so
+go go ahead and check it out if you
+haven't yet and um oh boy uh so I can PL
+plug my uh few words in here as well uh
+well I I don't really enjoy working with
+Focus management I'm
+sorry that's okay speaking of TVs um
+it's really interesting that you see you
+say that it's very unexplored because it
+is that's true from the technical point
+of view but not only because like ux on
+TV is completely different than on any
+other platform as well right you need to
+make users use the remote and be you
+know fine with it be be nice and and int
+intuitive which is not that easy uh
+which brings I think another issue that
+very uh often these TV apps uh they they
+kind of have similar vibe to them
+because you know they have the ux that
+just works um but they all look like
+Netflix let's just be honest like you
+know
+Netflix like they nailed the UI and they
+everybody's just sort of trying to copy
+it that's true that's true but you know
+now when when we see this um this spark
+of TV development and you know react
+native getting there maybe we'll see
+something complet completely new in in
+you know couple of months couple of
+years you know it everything changes so
+fast um
+true all right uh
+So speaking of uh of
+changes if we if we think about react
+and react native maybe maybe let's focus
+on react native for now five years ago
+react native versus today's react native
+do you have um you know do you have any
+specific thoughts on that like we know
+that
+Everything Has Changed basically right
+uh there were class components we can
+still use them but let not uh we didn't
+have hooks and stuff like that so what
+what are your thoughts Anisha go ahead
+yeah well I think you nailed the two
+main ones um I think to understand like
+the changes in react native first of all
+like they stem from the changes in react
+and I think the major ones were yeah
+like you know the recommendation like by
+react docs themselves like they updated
+their docs last year and you can see
+this real shifted focus of functional
+components from class components and
+with it obviously the recommendation
+like of a hooks first approach um we've
+seen the context API come into play and
+I think in general like there's been a
+lot of changes to how state is handled
+so you know we saw context come around
+in 2018 hooks came around in
+2019 um and I think just the way that
+you think about building your react and
+I guess hence react native app has
+changed a lot um I personally really
+like the functional component first
+approach like I never really enjoyed
+class components but I still think that
+they had their advantages um which we
+can touch on um maybe when we go into a
+little bit more detail about like the
+benefits of functional versus class or
+class versus function for sure for sure
+we can get there uh yeah uh AA would you
+like to add anything to that I mean I I
+totally agree like if if we just if if
+we were to look only at react native I I
+wouldn't say besides all the stuff that
+Chang in react not much else changed in
+react native right like like you said
+like all the main changes come from
+react and they are huge um so if we try
+to imagine what it was like to try and
+learn react 5 years ago like when we
+learned react and uh if we look at
+someone who who would be reading the new
+documentation now and reading it now
+it's like a completely different Journey
+uh because they they are presented with
+pretty much a different product maybe I
+want to say yeah like yeah it's like
+it's it's a different thing it has
+context it has hooks like before it was
+you know just components and you have to
+deal with the rest on your
+own um so the the the mindset is
+different I haven't like I haven't
+looked at articles because I remember
+like from all documentation I remember
+an article that I loved about the react
+mindset and it like made a great
+impression on me do you know Anisha if
+that article is still there yeah yeah
+it's definitely still there but I I
+really like as well like they've brought
+a lot of those Concepts to the Forefront
+like when you go into the new docs like
+you see yeah thinking and react you see
+like how like hooks first approach so
+it's much nicer I would say learning
+today is lucky because it's much nicer
+yeah I mean with with the development of
+all these um how to call it like
+different techniques different and um
+different architecture ideas and stuff
+like that also the develop the
+development experience improved right
+the the developer experience I think at
+least nowadays I'm not sure five years
+ago but nowadays developer experience is
+one of key factors why why people choose
+react and react native to work with and
+this is quite amazing like I I I don't
+recall that five years ago people would
+stumble upon some technology and they be
+like nah this is not a great DX let's
+not use it nowadays because we got so
+much much to choose from people are like
+focusing on this stuff and I really love
+it because you know I am I'm kind of a
+lazy person when it comes to like you
+know working so when when something
+requires me doing extra work just
+because the technology doesn't allow me
+to do it faster and easier I'm just so
+um like not motivated you know it's just
+another obstacle that comes in the way
+of my creativity and passion to to to
+building right and that sucks so it's
+great to see that also that improved you
+know could about more stuff that
+improved of course but there's there
+there's a trap there because you have
+like new devs who only learn well
+hopefully they learn JavaScript so they
+have some like basic knowledge hopefully
+and then they they jump into react and
+they see use effects in context and then
+you uh they they write websites that
+suck because they don't realize about
+re-rendering about the effect that using
+like a wide uh like one single context
+for the whole app that R renders
+everything all the time or like they
+don't care about uh the dependency array
+and their use effects because they don't
+understand why it's so important you
+know so okay you can go fast it's nice
+it's comfortable but then you hit a
+roadblock where your app sucks and you
+have to like sort of learn all the
+nitty-gritty small problems and you have
+to work with them I think that's so true
+yeah and I think like when you came from
+class components like learning about
+those life cycle methods like component
+did Mount component will Mount like you
+had those clear entry points for like
+where you'd initiate state where you'd
+clean up state it was much more kind of
+intuitive like to handle cleaning up
+your resources setting up your resources
+and like I think you know the class
+components off offered like explicit
+ways you know to implement when you had
+error boundaries so I think when you
+come from that way of thinking like
+you're more likely to think about where
+should I set my state up like I think
+when you start yeah but when you start
+functional for first you're not going to
+have for example components that just
+handle state or components that just are
+dumb functional components yeah um so I
+think that logic change it was great to
+learn like when you learned class
+components because now you can think
+about setting up your state like from
+that way of thinking yeah exactly and
+the and the logic was linear like right
+because you're setting up your component
+it should be or not right and now for
+example and you you get a you get a PR
+and you see that somebody added or
+changed a use effect and it's like a
+th000 that that's what happens in our
+project with Coley so we have a file
+that's a thousand lines long somebody
+adds or changes a use effect and even in
+the diff you don't see the whole file so
+you don't know there's like five other
+use effects that sort of you know go
+yeah yeah crazy I think there was a
+really great talk at like a reacted
+Advance London where someone was like
+how to use a use effect effectively and
+I really like that cuz like I was like I
+relate so hard to some of these problems
+like literally if you use the use effect
+without the dependency you're not ever
+going to realize that it's just in an
+endless loop right until you for example
+log it out or you you check out the
+performance and you're like okay this is
+like running a render every single time
+um but it's such a simple thing to
+forget like you just forget to put that
+bracket and that's it um so I get it I
+think before you were like forced to put
+State Management in like the higher
+order components and then you would
+think logically about what that lower
+level component was doing
+but nowadays like it's not as I would
+say for what's the right word I don't
+know it's not as clear cut like you can
+have a component that does like a
+thousand things yeah yeah yeah but also
+because the I think the process of of
+developing react got easier right over I
+mean yeah depends how you look at it but
+let's say it comfortable for sure yeah
+more comfortable and that makes you as a
+fresh developer be like okay I can build
+an app by just knowing this Basics
+that's great but you don't realize as as
+you mentioned like creating a context
+that's going to wrap up your whole app
+and you're going to keep your state
+there for a fresh developer it sounds
+like awesome I can just keep everything
+there right it's it's nice and intuitive
+and then you don't realize that well
+your performance sucks right now and you
+don't know why back in the days when you
+know you had to to to build stuff uh
+step by step with with as you mentioned
+with um life cycle methods and all this
+stuff you had to understand why you're
+doing this and when it's going to be
+executed and stuff like that right so
+yeah if you started with class
+components you probably have deeper
+knowledge nowadays because you had to
+transition transition to the more
+comfortable environment than what you
+were used to right um and not not even
+mentioning the the react forget or react
+compiler uh yeah it's compiler now yeah
+they just announced it not too long ago
+yeah they just announced it and it's it
+seems like it's going to make um you
+know the process even easier you will
+not even have to care about like
+memoization and stuff like that you know
+you don't have to care about the use
+memo or react do memo and stuff like
+this so you know without this knowledge
+question is is it good or is it not good
+that it's gonna be this simple you know
+we're gonna have I feel like we're going
+to have so many mediocre apps or just
+mediocre code everywhere um and only the
+the few ones that are really good and
+Polished with a deeper knowledge uh in
+place right uh but yeah that I'm just
+I'm just wondering here because I'm I'm
+I'm really curious about the oh no pun
+intended like I've seen I've seen tweets
+where people are wondering if Poland is
+like a hot bed for react native
+development because we have call St
+software mention in Poland it's
+ridiculous I want to officially say we
+do not have react native universities in
+Poland I don't I don't know why we love
+look but but Shimon from Kack uh at his
+uh high school he is learning react by
+like by the program so Shimon he's like
+he's like a 16-year-old who works and
+does open source he's just out of this
+world maybe he doesn't even go to school
+he just tells that yeah it's
+possible you mention like op tour sorry
+um to kind of digress but I think one of
+the main changes in react native like I
+personally have seen over like the kind
+of four or five years is I mean like
+Expo has made it incredibly easy to to
+build those react native apps um you
+know you can build for like one plat
+multiple platforms from like one code
+base and like deploy it much more easier
+than say five years ago and I think like
+that open source Community around react
+native like it's it's it's way stronger
+like than I would say around react and I
+think that for react native is probably
+one of the key changes like i' I've
+personally seen is like how strong your
+open source Community is MH yeah that's
+yeah that's a very good point and we
+have we have the like the biggest
+migration is Dan abramov who moved to
+Blue Sky and he's working on react
+native and I guess we're all sort of
+waiting for him to make our lives even
+more comfortable and come up with
+something great come on Dan this is a
+message to you yeah clock is ticking
+it's been a few months no new Redux yet
+yep no new
+Redux oh that's a good one all right uh
+but by the way do you have any thoughts
+like why the hell react native has such
+a big Community like bigger than react
+that's what I mean like everything
+started with react like what what what
+what happened on the
+way where people just hungry for good
+you know crossplatform functionalities
+and stuff like that and they were like
+all right let's do it the correct way or
+what happened maybe I missed
+something I I honestly wouldn't know but
+I'm here for it like I I I love it I
+think it makes like everyone's jobs like
+a thousand times easier um I actually
+made my first open source contribution
+like very recently so it was actually to
+your your guys's um repo so react native
+testing Library uh and I think it's just
+maybe it's like more welcoming like I
+don't I don't know if it's more
+welcoming or it is welcoming like you
+meet the people working on the thing
+you're using so it's easier to like feel
+less intimidated to contribute um yeah
+for me that was definitely for me that
+was definitely a factor like to see that
+the community felt smaller so I I sort
+of like I I felt like I knew the faces
+like that popped up on GitHub and and
+Twitter and so that that does make it
+less intimidate intimidating and I also
+think that um on on web the the
+ecosystem like the whole the the amount
+of options you have to build a website
+is huge compared to mobile apps that
+makes sense and right we don't have that
+many options for for good mobile apps
+and so they're just like when you take
+the
+percentage you know yeah yeah and the
+and the nice side effect of that
+Community Driven technology is well
+conferences you get to meet all these
+people face to face like I remember
+working with DOT net a lot back in the
+days and you know doet is is is a big
+nice technology but it's curated by the
+huge company right it's not it wasn't
+open source back then and
+I remember that you know every
+conference was you know meeting nice
+people of course but these people are
+just random people working with this
+technology not working on the technology
+which is so much uh different experience
+than when you go to the reactnative
+let's say reag native EU last year right
+you were there hope you were there and
+it was so much fun to just see those
+people who you know as those Legends of
+react native and it turns out these are
+actually normal nice people you know you
+can hang out with them this is so cool
+yeah all right all right so you know
+let's let's tackle this how you would
+compare learning react uh SL reactnative
+back in the days right uh when you
+started to like newcomers nowadays um
+and I'm talking here about you know
+some maybe not specifically challenges
+but different approaches right when when
+we started there was there were class
+components for example nowadays you
+start off by learning that there we
+class components but don't use them
+there are functional components now
+right so stuff like this do you do you
+have any thoughts on that if I can but
+in like the worst thing I see on Reddit
+is people saying I don't I don't know
+JavaScript and I'm trying to learn react
+native and I see that post and I just it
+it's just you're setting yourself up for
+disaster anybody please learn everybody
+please learn react native but please
+start with like at least some basics of
+JavaScript you can go to W3 schools some
+people love it some people hate it but
+at least you know something to to have
+like a basic understanding of JavaScript
+and then go ahead and dive into some
+react and then react native and that
+that that's a good path that's the same
+path that we took five years ago it's
+the same path now except with better
+dogs that look better yeah and they're
+great shout out to Rachel and Dan for
+that especially yes yes definitely but
+yeah I really like your your comment a
+lot that you know start start with
+Basics right and um it's interesting
+because you can learn react and react
+native without knowing javascri I mean
+it's possible it's just not
+gonna don't yeah but just just don't do
+that you know like imagine you trying to
+build I don't know build a wooden table
+but you don't know how to use the the
+saw how to saw the wood right so you g
+to start breaking it on your knee and
+you know hope that it's going to be even
+and nice no it it doesn't work like this
+that's a that's a good metaphor
+yeah um yeah like for me personally I
+think yeah the major changes we already
+talked about but um like learning react
+first like you're you're presented with
+so many options it's almost overwhelming
+so I think like road map sh does a
+really good job of like telling you the
+different paths you can take um and it
+makes you start from JavaScript so I
+love that um but with react native as
+well like it takes you through different
+options you have um and I think there's
+a shift in like
+thinking on the react side and react
+native side of things like they react
+native had an RFC recently and it's
+looking at react native as a framework
+um where and then you have tools on top
+of that will help that will help you
+build those production level apps and I
+think you know react native themselves
+recommend Expo as that way of building
+your react native apps and that doesn't
+mean like you have to use xbo but it
+does make it a lot easier so I would say
+like if you're learning for the first
+time like yes you can use those tools to
+sort of make you know creating your
+first app a little bit easier pick one
+po there's so many options um when we
+look at State Management for example you
+know you've got like six different
+options which one do you go for but I
+think picking one and then sort of
+working your way through the rest is a
+lot easier than looking at everything
+and just being like okay what do I
+do yeah yeah that makes sense uh and uh
+good thing that you mentioned State
+Management
+uh because I think we are heading to
+this uh specific topic um which is like
+okay so what what kind of choice we got
+we got the Redux we got mobx uh Zan J
+Tha recoil and uh X State I never I
+never met xstate anywhere uh on a
+project but I know it exists so we got
+so much choice and there's also context
+right I mean it's not specifically State
+Management but you can use it this way
+so what how do we choose one right like
+if if I'm a newcomer I got all this
+stuff you know people will feed me Redux
+but it's just not great to learn as a
+beginner so you know how do I make a
+good choice uh all I know you know few
+things about State Management for a
+reason uh why don't you take over I have
+my reason to she wrote a book guys read
+the
+book WR an amazing book um so sorry than
+you um and I see the all the State
+Management you mentioned the my book was
+published last year and there's already
+a few new ones that are coming up and
+they're looking good like Legend State
+and also Anisha showed me like the T oh
+my gosh I forgot the name t Leaf yeah
+yeah uh yeah uh so so I looked at that
+and it looks very interesting
+so uh it basically comes down to your
+opinions and uh you can write a lot of
+stuff you should really always start
+with just your app and context and only
+at the moment where you see that that is
+not enough should you start looking into
+something more and then um well it's a
+question of preference really there's
+not you there are people who maybe
+create benchmarks that something works
+better than something else but it's
+going to be like milliseconds of
+differences so we go back to what you
+mentioned Kuba before which is DX and
+what you feel com with what you like
+using and uh so so that's that there are
+uh it's categorized and we we talked a
+moment before Anisha you want to touch
+on that on the categories of State
+Management so I think like when I was
+trying to learn State Management like
+the only option was Vu and I and I was
+overwhelmed and I think like what what
+helped me learn about the rest was yeah
+like seeing what categories Things fall
+into so I think like when you look at
+Redux and zustan like it's more reducer
+based like you know you're having act
+dispatching actions to that centralized
+state which is often like what people
+call like the single source of Truth and
+then with recall and ji it's more atom
+based so state is split into like those
+tiny pieces of data um which which which
+people call atoms um and it can be read
+and written to by the hooks and then I
+think Ms and falls into like observable
+state where you can track the
+dependencies between the state and the
+components so that's sort of like I kind
+of jotted this down and I was like this
+is how my brain kind of puts these
+categories and I think there's an
+article I read that categorizes them
+into something similar but like looking
+at them as those three helps you think
+so if I've learned for example Redux
+this then might be a bit easier to learn
+or for example if I've learned recoil Jo
+typ would have a similar pattern of
+looking at things but I think it's
+really nice that like you don't have to
+learn Redux anymore and Redux from back
+in the day you know it's become Redux
+toolkit it's so much easier it's so much
+nicer to use um I really appreciate that
+yeah Redux tokit is definitely like the
+way to go if anybody starts a new
+project with Redux today please don't
+just go like try Redux to it at least
+take a look and uh besides the
+categories you mentioned there's uh
+there's xate that as KU mentioned as
+well sort of like escapes all other
+categories it's my personal favorite
+when I do private projects I always use
+xate because it's of it presents your
+state as a state machine so you you have
+to think about the states of the things
+you're coding so you have a button you
+have to think of the states that it can
+be in and it it can be like active or uh
+disabled or whatever um I like um so
+again this is a personal preference I
+just like it works for my brain it's
+fine I like it I think it's nice all
+right and as you said it it all goes
+down to the opinion and you know it's
+fine to have to have your own
+preferences uh Anisha do you have your
+favorite one yeah mine definitely is a
+stand I think it's just super easy to
+use and like you know the fact that it
+leverages hooks you can have like your
+state set up in like 10 lines of cod
+which I think coming from having to set
+up like Redux with you know your actions
+and dispatches and you'd have like five
+different files and then you'd still be
+like doing like the spaghetti in your
+head as to where things are coming from
+yeah like it's just nice to look at and
+use but I think you know the state of
+react native like shows a really good
+trend of like where everything's going
+so if you're still confused and you
+don't like our personal opinions which
+you should um good to check it out like
+I think react query is one of the ones
+that's on the rise a lot recently yeah
+like react query or like the official
+name t query now that's a that's like a
+very interesting um part of our world
+because I find that for many devs who
+have never worked with it it's difficult
+to their heads around the fact that it's
+not really State Management it's not
+really caching but it's sort of in the
+middle and I've seen many developers Who
+start working with it and they try to
+mix Redux with react quy kind of like
+fill in holes that are not there because
+react query or tquery is already doing
+all that for you so if uh if you're like
+starting to work with uh tack query make
+sure to go through the documentation
+because like there's a 90% chance that
+whatever you're trying to do you're
+gonna find that in the documentation and
+it just it's covered there do you have
+um section in your book on react query
+yes I do then uh look up this source as
+well uh yeah but my favorite one is uh
+moex for for a change so we got all
+different uh different have you have you
+tried
+Val no I I don't even know if I've heard
+of it oh it's supposed to be like the
+better mobx it's the same as zustan is
+for Redux that's valo for mobex all
+right I'm gonna it's created by the same
+like uh po mandress so it's like a
+community of
+developers okay sounds interesting um
+yeah and I think this is a great place
+to encourage our viewers on YouTube I
+suppose uh if you have your opinions
+drop a comment you know it's it's all
+awesome to see why people choose
+specific things we all learn here uh go
+on Anisha I inter I want to ask AA like
+do you think that the rise in like
+interest for react query comes from you
+know the rise in Ser intro well the
+introduction of server
+components yeah definitely that's
+uh I think I think so
+actually well I'm not sure about the
+source no I'm not sure I like my first
+thought was yes but then I'm not sure if
+maybe it was sort of developed
+independently that uh the Ser components
+so the same need as the developers of uh
+react query that that this is what we
+need we need a better cooperation with
+the server we need better control over
+cash and the data that comes in so um
+yeah that's that's what I think maybe it
+just happened like by chance in parallel
+yeah it's possible to yeah I mean it it
+looks like because um Rea quer is with
+us for for some time now I don't
+remember when it got popular but I
+remember it's been at least at least two
+years I would say yeah definitely so and
+I don't know if they already had an idea
+of uh several components back then uh
+but yeah um okay I I think that you know
+if we had the whole day we could stick
+to the State Management discussion
+because it sounds really cool and I feel
+like I can learn a lot from you guys so
+somebody if somebody who's watching
+feels like doing some like history
+digging in Into The Internet of Things
+please leave a comment with information
+if you find it that would be awesome
+that would be
+awesome um all right but let's leave it
+here let's leave um our audience a
+little hungry for knowledge so they
+actually do the research right yeah um
+and I would like to ask you what do you
+think is the future of uh State
+Management in react native what can what
+it can look like um you know moving on
+because I you you pointed really nicely
+react query or rtk query is taking its
+space right now people are starting
+using it more and more and trying to
+understand it deeper that's great so
+what is
+next maybe I will I will give it to you
+yeah I mean it's I'm not good question I
+think like so the way that we I would
+say we have to take learnings from
+probably the way State Management's
+going in react and I would say like the
+reason we're seeing a trend like for
+example just stand and like the
+minimalistic State Management libraries
+is because that's sort of what people
+people want um they want an easier way
+to handle State Management um so I think
+we'll see probably a rise and Trend in
+like those minimalistic State libraries
+maybe that'll be something new um I
+think the fact that react server
+components are becoming such a big thing
+there will be probably changes in the
+way that we think about State Management
+like you know use the hooks don't work
+if you're doing serde rendering and
+that's also probably why like react
+query in the react world is becoming
+more and more popular because people
+need a way to do server side date
+management so I don't know if like that
+Trend will come through to react native
+but it'll be interesting to see um I I
+don't like I've touched on turbo modules
+and like you know the new architecture
+and like my learning but seeing how for
+example that the new Js bridge and like
+how we interact with like native modules
+I don't know enough so if anybody does
+please do you know leave some comments
+to like help me with my learning but
+like is there is there going to be a
+trend around how State Management like
+works with Native modules that's just a
+theoretical question
+interesting yeah all right all I have
+any any other thoughts on that well I
+had one though when you were asking your
+question because you mentioned rtk query
+so I remember that there's also redx
+toid query and town query so so so that
+points to the fact that there is
+interest in in those Solutions and
+people are trying uh people behind react
+toolkit a Redux toolkit they realize
+that they can add this to their library
+and it's great we're actually using it
+in our project and then I I like using
+it it's nice uh and at col we have a
+thing called upskilling day so like once
+a month we have a full day of trying to
+learn new things and actually yesterday
+we had a talk by Shimon who was speaking
+about over thee updates to our to apps
+where we can leverage uh service
+components right am I remembering this
+right because this wases like it's fresh
+in my mind I'm not sure like it's not
+you know it's not settled down um but
+this was the first time when every time
+before his talk when I saw people
+talking about um server components I was
+thinking like uh for react native what's
+the point for react native know I that
+much I'm not reading into the article
+you know I'm going to spend 20 minutes
+on something else but so yesterday he
+planted the seed in my brain that maybe
+this is something really viable for our
+use cases uh for our apps and for
+pushing changes to react native
+apps but this is still um this is still
+an idea right I mean there is uh I think
+there I don't okay I don't remember
+correct right now if Shimon mentioned
+that but there are some Works uh like
+proof of concept Works around this or
+not do you remember
+Ola ah we we will need to ask him
+exactly I remember I remember him
+explaining that when you do over the air
+of course there are some problems
+because you have apple that Apple
+doesn't like you to update your app too
+much over the year right they don't like
+you to change the bundle too much but
+there uh once you do those over thee
+updates you can like Leverage add more
+stuff if you do server components like
+it's supposed to be easier and like more
+straightforward mhm yeah and I think
+that uh Shimon also um has talk on that
+topic from uh from conference in Berlin
+and I think it's online you can you can
+look it up so um if possible we'll drop
+the link in the notes of this episode so
+everybody can check it out and learn new
+things maybe we can actually settle down
+our knowledge cuz from yesterday so much
+information yeah yeah uh yeah but that's
+that's a really really interesting
+perspectives
+um and uh you know the the the
+the let me let me put it in in in the
+right words um the way that react forget
+is bringing like it's taking away the
+responsibility for us to to like care
+about this performance memorization
+memorization and Stu like that I'm
+wondering if some solutions maybe you
+know not this specific because that's a
+compiler right but similar approaches to
+State Management if if anybody will try
+to take on that so they going to build
+like a solution that's going to take
+care of all the State Management in our
+so we don't need to care about it and we
+just use it like a variables anywhere
+right that'll be very simplified
+approach but it sounds very tough to to
+tackle that I'm just wondering if
+somebody will ever have a courage to do
+this I mean if you're if you're talking
+about the react team I think what they
+did with context was their sort of them
+trying right to to dip their toe in the
+s Management and I don't want to be mean
+but for me it's sort of backfired
+because uh you know we really had have
+to know how to use it in order not to
+break the performance of your app so
+it's not it's not the best thing that
+exists in the react World like context
+is not my favorite feature of
+react um it's not the most intuitive one
+right I mean it's interesting take I I
+like that it's just out of the box right
+but yeah as you said you need to
+understand how to use it otherwise
+you're going to break your it is yeah
+it's like I love hooks I I I use hooks
+like every day at work and I I think
+that feature is great and it's thought
+out and it's awesome uh I'm just not a
+big fan of context I think it depends I
+think like people need to understand
+like what to use context for and what
+not to use context for I think what
+happens is as a new developer like
+you're probably like okay this works for
+State Management you throw everything in
+a context like you said like when you're
+using it for something like a theme it
+makes sense when you're using it to like
+handle your the entire state of your
+application you're probably better off
+like going with the state State
+Management
+solution I think those like dos and
+Dawns like when and when not to use
+State Management maybe all we could we
+could write an article or something
+maybe somebody already has if you find
+an article on this like please drop it
+in the comments as well we we can write
+a better one no way
+exactly exactly uh yeah but with the
+with the context it's also as you said
+you can start a theme that's a great
+idea when you wrap up your whole up in
+this but you can also uh have do smaller
+context to manage the state but then you
+give up on the readability of your code
+because it's just going to get messy
+right so there are you know pros and
+cons of everything basically but I'm I'm
+very curious about the what's coming
+this year in react because it seems like
+react is um the the latest changes that
+they announc so not react foret but
+react compiler and they're supposed to
+remove use memo and use call back right
+sort of uh sort of hided under the hood
+so react is Maybe becoming a little more
+of a black box but maybe that's okay
+maybe that that's that's why it's going
+to be even more comfortable to use I'm
+very like I feel that this year is going
+to be I feel and I hope that this year
+is going to bring some some big changes
+like in react 18 well you know thinking
+about it this way uh it makes sense of
+course but it also kind of resonates
+with what we were talking about before
+so before react uh was not that easy to
+work with and but because of that you
+had to understand how to work with it
+then they started taking away stuff
+making things simpler and more
+comfortable but giving up on the deeper
+knowledge that you require you were
+required to have now uh compiler takes
+it takes away the knowledge of the
+memorization you don't need that anymore
+question is will this introduce issues
+like you know will there be stuff that
+we actually need to understand when
+using this compiler or or will it be
+like just so simple like a walk in a
+park just plug it in that's it you know
+so it's becoming a black box is it good
+maybe it but maybe people will just not
+care about details anymore and that's
+not going to be great right so we'll see
+we'll see I I'd like to quote my
+favorite JavaScript newsletter which is
+bites. devv and it's definitely like my
+my favorite newsletter of all
+newsletters and in the last um in the
+last um newsletter they wrote that the
+react compiler will will take away the
+need to talk with that one teammate that
+you have that thinks we should memor all
+the things so we all have that one
+teammate that things we should all the
+things so over that's definitely a big
+Pro like yeah let's do that so you can
+fire that guy already no don't do that
+he's actually useful uh he's useful but
+we don't need to talk about memo anymore
+yeah that's good take it out of the memo
+um all right ladies uh let's uh we are
+slowly heading towards the end of this
+one and uh I H let you know what I have
+to share it with our listeners
+uh before when we were planning this
+episode we wanted to talk about women in
+Tech right that was the idea before that
+but we were like you know what let's
+let's talk about state of the react
+because that's just interesting and and
+fun because women are people
+too you say it yeah you say
+it I'm I'm just supporting you here I
+cannot tell but uh so that was the idea
+and because of that for like at the end
+of the episode I would still like to ask
+you um what would be your tips for you
+know women looking to start um you know
+making their first steps in Tech maybe
+they want to start learning programming
+or maybe they are on their already
+Junior positions and they want to just
+grow um so do you have any maybe
+personal experiences or you've heard of
+something that you know might be really
+useful for
+them uh I will give it a go for Anisha
+yeah so I think the reason we didn't
+want to do just a women in Tech episode
+is to like we're not we're not just
+women in Tech like we're just we are we
+are reac native developers and we wanted
+to say that we wanted to show like I
+guess younger women that you don't you
+you shouldn't be categorized as just a
+woman in Tech like that's not our label
+we all has written a book she's like one
+of the leading experts I I I've learned
+so much already in like probably just
+the two hours we've spoken um and I
+think you know that we have a lot of
+knowledge to share and we want to be
+able to share that as experts in the
+react native field not not women in Tech
+and we just thought okay fine let's just
+not let's not do the usual thing and
+actually show young women that you can
+start from anywhere like all you started
+from languages I started from
+engineering like you can start from
+anywhere and you can go into the tech
+field and you might have a windy path
+but you'll find your kind of spot and so
+my advice to like anybody I wouldn't
+even say like a young woman in Tech is
+don't be like intimida by the depth or
+the you know the MTH world out there of
+like what to learn um kind of just take
+your path and choose choose different
+like when there's options choose one and
+learn it and the best way to kind of
+learn is by sharing um and in fact like
+I do recognize though that there is
+there is obviously
+a I don't I wouldn't say problem I would
+say there is H I don't even know what
+the right word is but there probably
+people like young women in Tech want to
+see more women people that look like
+them in senior position so you want to
+see like how did haa end up where she is
+how did I end up where I am just because
+you want to see someone who looks like
+you doing the thing you want to do and
+so I'm really looking to share kind of
+that story so I'm going to try and
+record some similar to this actually
+like some fireside chats with some of
+the women who've inspired me in my
+journey um and just see how they got to
+their to their the point where they are
+um so it's going to be called her code
+stories and it's just going to be a
+woman telling her story how she ended up
+where she is um so hopefully that helps
+uh learn my young women learn or want to
+get into Tech um because I think the
+only way to like solve a problem is to
+get more people like Alla like you know
+who are in these amazing positions like
+right doing amazing things out there in
+the open sharing the like technical work
+they're doing so yeah that's my that's
+my long-winded answer sorry that was a
+that was an awesome answer I could like
+sign with both hands uh seriously uh
+what I what I would like to add is that
+it is a fact that there's like there's
+less women intact than maybe in other
+positions but there's more and more and
+uh I would recommend looking for maybe
+like Role Models uh on the internet you
+can like I love there's a bunch of girls
+do that do tag on Twitter and that who
+are hilarious and smart
+and it's really fun to to look what they
+look at what they write and like my my
+biggest advice to anybody who wants to
+get into Tech H either you're a boy or a
+girl is that would not get discouraged
+if you don't like the tech that you're
+working with and actually Anisha like
+your past is also like a proof of that
+you start with something you start with
+engineering but you didn't like that so
+you look for something else and there's
+like there's so many things even even if
+you decide that you want to do web
+there's like a gazillion things you can
+choose from there's backend development
+front full uh full stack whatever and
+you can code cars or you know
+refrigerators whatever there's seriously
+and don't feel bad if what you're trying
+to learn doesn't spark Joy it's like
+like you don't have to uh you can just
+switch you can try a different
+technology and find something that you
+do like and once you find it you'll have
+fun working with
+it lovely lovely what what a great set
+of tips for everyone not just for women
+I agree with that because I would say
+the same to anyone uh maybe one more
+thing I could add uh to this one uh is
+if you're starting maybe not even
+starting when you are even a seniors
+have this problem stop I mean start
+putting value on yourself like you are
+your work is worth a lot and you need to
+realize that when you're going for a job
+interview and you know the the the money
+doesn't satisfy I'm negotiate I mean you
+are not there because they they don't
+have any choice they do have a choice
+but you know prove your value right um
+don't don't uh don't end up being the
+person who just took the job because you
+were nice you know and don't do that um
+so uh that that will be my advice at the
+end um so thank you very much Anisha
+thank you very much Ola it was my
+pleasure to have you on this coffee talk
+um I hope our audience will take away a
+lot from this I feel like there were
+some great tips some great discussion
+sparkers and uh idea givers so let's see
+let's see where it goes I hope people
+will leave some comments with their
+ideas with their research uh yeah we
+waiting for the research on server
+components come on come on internet is
+do thing and if you have any you know
+ideas of what you might like like what
+you're going to see in 2024 like I think
+all of us would love to hear I mean if
+there's a way to make testing on TV
+easier also just please tell me because
+that is my B 2024 that is all I want to
+know so I'm gonna test my TV today after
+work you I'm gonna just sit down on a
+couch and start
+testing you can hire do the focus
+management testing I actually
+yes oh my God they're gonna keep me to
+that at work now they're gonna
+give that's going to be your LinkedIn
+title she loves Focus management and
+everyone's going to friend you because
+that is just weird can we right can we
+cut it
+out I don't think so it's going
+wi just kidding we shall see about this
+but for now uh we're g to end this here
+and uh last few words from me please
+sign up people for Kack newsletter
+because it is for Developers for Tech
+leaders but not only also for people who
+want to get in there and start coding
+and get your foot in the in the door uh
+there's some great content there uh
+there is some blog stuff there is some
+podcast stuff and others so go go ahead
+and sign up
+and that's it thank you very much I hope
+you're going to have a great day evening
+afternoon whatever time it is at your
+place have it great and see you in the
+next
+one bye bye
+[Music]
+bye
+no

@@ -1,0 +1,1415 @@
+Hello everybody.
+We're happy to see you all at this
+webinar. Uh and what we're going to talk
+about uh while we just you know getting
+started and warming up. Um let's wait
+for everybody to join and briefly start
+with the round of introductions. Um I'm
+Mike CEO and founder at Costag. And
+today with me is Back. Yeah. And I'm
+Barack. I maintain React Native Builder
+Bob and interested in brownfield in
+general.
+Nice. So today
+um we're we're going to talk about
+um brow right which is basically a way
+to start using react native inside
+existing mobile applications. Um and
+I've been doing brownfield for a while.
+Uh I think ever since we started uh the
+company brownfield was obviously one of
+the most important topics that people
+were interested in. uh because you know
+sometimes we start new applications but
+many times we actually have to deal with
+something that is already existing and
+um yeah I spent quite some time on the
+library side and react native side uh
+you are on the application front end
+side and I I know like the reason you're
+here is because you actually tried all
+all the things that I'm talking about
+yourself so we can
+exactly
+yeah so
+um that project you're working on right
+now uh the project with the browfield
+integration um
+like okay we'll get to it probably uh
+during the during the during the
+presentation um I'm just trying to
+figure out the screen sharing situation
+here um I guess probably the best way
+would be to do it this
+way
+Okay, hold on a
+second. So, we'll start briefly and uh
+to do so I will be sharing um the
+slides. Back, do you have setup for
+sharing the slides in the meantime? Uh
+because I'm having some technical
+difficulties. I wonder if
+okay just a second and I can share
+that'll be very helpful um so we can get
+started u meanwhile I can briefly walk
+you through the agenda for today uh the
+agenda is that we'll do a short
+presentation uh like overall we we will
+spend up to an hour talking about
+brownfield uh what we will start with
+first is going through a bit of slides
+where we can talk about uh react native
+um how it array and and all the things
+and then um we will talk about uh
+implementation itself and how how all
+these pieces sort of uh play uh
+together. So um yeah we already went
+through the introductions so uh we can
+start with the react native architecture
+um which is um the diagram we have on
+the next slide and ah it's beautiful
+with the animations. So um basically
+before we go deeper into react native
+brownfield let's talk about how react
+native works under the hood so you can
+have a perfect understanding of it and
+then a lot of things that we will be
+talking about will become much easier uh
+for you to sort of understand. So React
+Native has two layers. The first one,
+JavaScript layer is where you write your
+code, right? It's the UI components,
+business logic. Uh it's all using
+React's intuitive uh component model. So
+this is you know clean a a very clean
+way to write platform independent code
+and describe what you want to do. And
+then below that you have the native
+layer and this is the magic that then
+turns your React code into real platform
+specific components and behaviors.
+Now for example like on this slide when
+you write your component to show a movie
+card the native layer in the middle and
+I see bur you don't have the fancy font
+library that I have with that there's
+supposed to be an arrow in the middle
+but question mark is also okay because
+like what is really going on here is the
+is the is the fun part but um you know
+that native layer is what makes the
+component on the left side be an actual
+native component on the right side and
+the Key here is that you only write your
+code once on the top on the top side. So
+the native layer takes care of all the
+complexity for you. And you know that
+separation of concerns is what actually
+makes React Native pretty powerful for
+crossplatform
+development. And then uh let's talk
+about separation of concerns. React
+Native provides the entire native
+implementation for you. So green stuff
+um it's not just you know native code
+with few modules it's actually an entire
+uh rendering engine uh tooling for
+debugging profiling and access to native
+APIs. So everything that you need to
+write performant native code is there
+for you. You can just focus on building
+cool features with JavaScript.
+So don't not having to worry about
+native is is one great thing. Another is
+faster time to market. And the reason
+for that is first of all you're working
+with JavaScript and TypeScript. So
+languages that are very fast to develop
+in right and then
+uh they also have excellent LLM and AI
+tool support. Um that accelerates your
+development process from day one. And uh
+if you could bur just press space twice,
+we'll see the beautiful cards. Yes. And
+then the third one is the uh when you
+build a feature for React Native, you
+can deploy it across multiple platforms
+simultaneously, right? So you don't have
+to build the same feature once um three
+four times. You can just build it once.
+So that is second benefit. Another
+benefit is uh fewer bags across
+platforms. So first of all when you find
+and fix an issue that fix will apply
+across all platforms immediately and
+there is no need to fix the same issue
+you know multiple times in different
+code bases and then second of all even
+better once you test things and and and
+sort of fix it you can verify it once
+and kind of make sure that it it is
+working everywhere and that dramatically
+reduces your overall Q&A time and
+finally perhaps the most practical
+advantage of all is the knowledge
+transfer. So you know first of all you
+have or you are a web developer so you
+already know JavaScript. Second of all
+we all as long as we are uh developers
+understand the the development patterns
+of the web and lastly we all know React.
+So that means you know everybody who's
+either writing JavaScript is more or
+less familiar with web development or is
+building with React can get productive
+with React Native immediately. And that
+is pretty awesome because once you start
+integrating React Native into your
+mobile apps, you're opening your native
+code bases to a huge number of people
+that wouldn't be able to to sort of work
+with your codebase uh otherwise. That
+makes scaling much easier. Now that we
+understand all the benefits, let's talk
+about the actual brownfield journey to
+achieve the shared codebase. Before we
+do that, let's try to visualize it. So
+this is more or less the state you have
+today.
+web using React and typically Android
+and iOS using Cotlin and Swift and each
+platform has its own implementation, own
+development cycle, own maintenance
+needs. And then on the right side, this
+is where we want to be. We want to have
+unified React Native codebase powering
+all
+platforms. One implementation, one
+deployment cycle, short maintenance.
+So what we really want to do is we want
+to get from this which is same component
+written twice in both swift
+android to this a very clean and elegant
+React component that works across all
+the
+platforms. I know this looks pretty
+sweet but in reality React Native never
+replaces your entire codebase. it be,
+you know, we often talk about React
+Native migrations and people go crazy
+with, you know, chasing this 100% React
+Native rewrite. In practice, what really
+ends up being is React Native being part
+of your stack like in this case
+coexisting with Swift, iOS, Cotlin um on
+Android and Swift on iOS. So, what is
+the advantage if if that's the case?
+Well, one of them, my favorite one to be
+honest, is that you can keep your apps
+fully functional and continue
+development while you work towards
+sharing code with React
+Native. You can gradually integrate
+React Native features into your
+application and the migration strategy
+you choose and we'll talk about
+migration strategies later. And then you
+get to keep native cover makes sense. So
+say you have some native functionalities
+where you care about performance or you
+typically deal with some sort of secure
+sensitive data, you can keep that as is.
+There is no need to rewrite everything
+to React Native if it doesn't make
+sense. And lastly, you can choose how
+fast you want to do it. You can take
+necessary measurements and decide what's
+best for your users. That's pretty cool,
+right?
+So let's see how we can make that
+migration happen. Uh so today we're
+going to show you how to take one react
+component and integrate it with existing
+native applications. And we will have um
+two strategies. The simple one and this
+is sort of the simple one you can get
+started with the one you can see online.
+Um and we'll do it just for the sake of
+setting up the context and then we will
+talk about the more advanced way of
+doing brownfield applications. the one
+that you know Burak has been working on
+in production that I've been uh working
+on as well and and so you will be able
+to see some actual production cases with
+that and at the end if you have any
+questions or you will want to follow up
+later we will be able to accommodate
+that as well and for the sake of doing
+that demonstration we will be using iOS
+for two reasons first of all we don't
+have time to to do both and second of
+all typically iOS is always easier uh to
+present unless unless Unless we are
+talking to somebody who's been talking
+Java for the past 20 years, then it
+might be the other way around. So, a lot
+of what we'll be talking about, like I
+said, is publicly available knowledge,
+at least for the first part. Um, you can
+check the official documentation of
+React Native. Very good resource, highly
+recommended. Uh, and the React team did
+pretty good job making that
+documentation a very good resource. So,
+I would say it is worth giving them a
+shout out on this occasion.
+So the first thing we'll start with is
+the project structure. The key is
+organization. Uh you know you want your
+React Native code to live alongside your
+native application. This means creating
+a directory for React Native somewhere
+inside your actual native application
+typically sidebyside iOS and Android
+folders. That way you can keep things
+organized. And again um this is just one
+way to do it. You can do it any way you
+want but typically if you were to follow
+the React Native getting started guide
+you would do this because that's just
+the way uh it is recommended and is
+actually very simple. Next we we need to
+get React Native and depend and its
+dependencies working and this is a very
+important step. Now if you have
+JavaScript background you're like okay
+whatever that is basic knowledge the the
+challenge is and this is the reason why
+we have created the advanced uh way of
+doing brownfield is this is not the case
+for the rest of your team so the
+challenge is and we'll talk about
+challenges later once you integrate
+react native now everybody on your team
+has to run npm install and obviously if
+you have a team of 50 native engineers
+that is not optimal from many for many
+reasons So we will have to install it
+with npm. That means you must install
+Node.js as well. Once that's once that's
+done, uh you will get node modules
+folder in your workspace typically uh
+very close to typically very close to
+where you install your React Native. Um
+and this is where React Native will be
+as well as other dependencies. And this
+is the this is the React Native is
+inside node modules. And the reason for
+that is React Native does not use cocoa
+pods or Maven for distributing its
+binaries because a lot of there is a lot
+of dependencies between JavaScript and
+native. Uh their decision has been made
+to sort of go back to shipping binaries
+with npm package. Um so if you have
+native background you might be slightly
+confused but this is just to make sure
+that we don't have some dependency
+misaligned versioning issues later in
+production when using JavaScript.
+Now once we have that we can jump to
+configuring pot file and again this is
+iOS so on Android that would be gradal
+um and um if you already have pot file
+like many iOS projects do uh you will go
+there and you will add react native line
+you can see there in the middle and
+that's where uh that's where that's
+where things get get started. Um so
+there is a lot of code here and on the
+next slide I have highlighted the actual
+code that is specific to React Native.
+If you're starting fresh, React Native
+provides a P file you can use out of the
+box. Either way, the end result is the
+same. You have this P file and that P
+file will uh generate an entire XC
+workspace when you run P install, which
+is the next
+step. After that, once you run it, you
+will receive an XC
+workspace on your uh inside your
+project. um as you can see on the next
+slide is going to be a um inside iOS
+folder X Xcode project an XC workspace.
+So the idea is that once this is created
+you have everything set up and you can
+start using the XC workspace. So if
+you've been using if you've been
+building a fresh native iOS application
+you probably didn't have XC workspace.
+So this will be a new project for you.
+But in reality all the projects or most
+of them are already using kaka pods and
+are probably quite lo and old. And in in
+such cases you will have xc workspace
+already and adding react native will
+feel a bit like adding another library
+dependency to your project. It's just
+that this one will be compiled kind of
+from source. That's why you will feel
+like you're struggling with JavaScript
+even though it's a dependency of your
+project.
+So now before we render React Native
+inside, let's take a look at the
+index.js of React Native application.
+This will help us understand what's
+going on. And as you can see, there is
+so much stuff inside that I had to do
+the scroll animation. Um, and we're not
+going to talk about everything here. Uh,
+in fact, we're just going to focus on
+what's most important, which is app
+registry component that I highlighted uh
+for you on the next slide. Um, the app
+registry is a module that allows you to
+explicitly register React components
+that can be referenced from the native
+side. And if you are new to React Native
+Brownfield or adapting React Native,
+this is probably the key highlight that
+that you have to keep in mind and
+understand. Um when you register react
+component with
+um reg ru app registry you can reference
+it from the native side and the strategy
+you choose is up to you. You can
+register one typically that's what's by
+the default which is just one big root
+component but doesn't have to be right.
+If you decide that you want to replace
+five components gradually, so starting
+starting small and going up the tree, in
+that case you may decide to register
+few. And as you can see on the next
+slide, uh we have uh RCT root view
+factory which is an abstraction provided
+by React Native on iOS. And we can use
+that helper to instantiate a UI view
+that will be pointing to that React
+component. And that is the module name
+and initial properties in case you
+wanted to pass some additional options
+and we'll talk about it later as well uh
+in Burak part how we can leverage that
+to provide some additional abstraction
+for type safety specifically. So when we
+put that view on the screen uh that that
+root view UI view what will happen is on
+the next slide you will see we have a
+hello world the purple component this is
+the full screen react component. So as
+you can see it is really just taking um
+um sorry in this case let's let's I
+actually made a mistake so let me um go
+back one sentence this is the default
+react application actually so what I was
+supposed to say is that the purple one
+is actually react component so when you
+start a fresh react application uh the
+app registry will instantiate this uh
+hello world and the purple stuff will be
+hello world now on the next slide and
+this is uh what I was meaning to say is
+when you register multiple components in
+this case active order bottom tabs and
+hello world you'll see that you have an
+opportunity to render three of them on
+the native side and in this case we're
+rendering them one next to another which
+obviously uh makes sense but you know
+imagine you were building an Uber and
+one of the components was the header
+another one was I don't know the Uber
+rides component and the last one was
+payments module so It's sort of a lot of
+flexibility in here depending on how you
+want to do it and this is the strength
+of React Native the fact that it
+seamlessly integrates with your existing
+code bases and at the same time it
+provides the primitives it uses native
+primitives as well. So it is at the end
+of the day UI view. No way you can
+differentiate it if you've done your
+styling right. And that's it. If you end
+up following this route, you should
+follow the documentation step by step.
+The next slide will show you the link.
+This is the link to um Xcode additional
+Xcode steps. And you know for the
+bravity of this uh webinar, I decided to
+skip some steps. So, I hope that we made
+this easy part even easier and it seems
+like super super fun stuff to do. I have
+to give you a little warning that there
+are a few more steps in there that you
+should actually pay attention to and I
+guess um that brings us to the
+challenges. So, let me just do a quick
+introduction to Burak's part by saying
+what's wrong with this approach and that
+will set the scene for the second part.
+Um, one significant consideration is
+that your native development team will
+need to work with the JavaScript
+pipeline. Right? Like I said, this isn't
+necessarily a blocker, but it can create
+friction when even small React Native
+features require all engineers to handle
+additional uh workflow steps. And from
+my personal experience and I've been you
+know uh working with React Native for
+it's crazy to say but I believe it's
+been it's going to be around 9 years h
+this is all this has always been an
+issue um you know what is my native
+native steam reaction going to be and so
+on and so on and second of all um good
+understanding of JavaScript ecosystem.
+So without good understanding of the
+JavaScript ecosystem, troubleshooting
+these issues will be a challenge because
+okay like I'm working with JavaScript
+daytoday and now with AI and cursor it
+is even easier but every time you know
+just just just think about like if
+you're a JavaScript engineer just think
+about how many times you had an issue
+with native build problems and you spent
+hours troubleshooting that learning how
+cmake works and stuff like that. It is
+the same for native developers just the
+other way around. So depending on your
+background, you may uh you may realize
+quickly and early on that putting that
+into your codebase, the stakeholders in
+your team will quickly say this is a
+no-go because we're not adding
+additional technical debt. We are
+supposed to move faster not slow
+everybody down. So these are the
+challenges and from those challenges uh
+we came up with the idea for advanced
+the reactive integration and this is
+what Burak has been working with. So
+that said I'll I'll pass it over to you
+Back now and um I'm also happy to help
+with the slides but if you have your
+setup up and running feel free to
+continue. Sure I can go on. Okay. So
+again, um, we have lots of these
+challenges and I think like these
+challenges personally hurt me because
+like I can imagine a native team lead
+stepping in and telling me what to add
+or what to not add to my React Native
+application and like that wouldn't be
+the most ideal case. So to solve all
+these problems um, we have developed a
+more advanced React Native integration.
+Um, we use a component that we call the
+bridge component. So let's take a look
+at what the bridge component looks like
+and what it exactly
+does. Okay, at a high level, this is
+what our advanced React Native
+integrations architecture is. Um, we
+have three main layers, three main
+boxes. We got the React Native layer at
+the top. So the React Native layer
+contains our JavaScript code, the React
+code and then we have a bridge component
+just below React Native layer uh which
+sits just in the middle and this
+component is tested handling all the
+communication between my JavaScript code
+iOS and Android. So when I have to call
+the native API, I have to make a call to
+um my native application. I want to show
+something like show a model that's
+implemented in my native Android
+application. What I do from JavaScript
+is make a call to the bridge component
+and then the bridge component is tasked
+with um going to the Android app or the
+iOS app and calling the right APIs and
+then showing me the model that I wanted
+to show. So the bridge component is
+tasked with communication. Um it just
+glues everything together. It glues my
+JavaScript code with everything else.
+And let's talk about the benefits and um
+some of the key challenges. So first of
+all um this approach provides some clean
+packaging. Um when I have my React
+Native application um package this means
+I ship everything as a pre-ompiled
+artifact. What this means is I build my
+React Native code in advance before I'm
+passing it to the native teams. Um, and
+this will mean for them that they won't
+have to pay the price of building React
+Native if they want to use it in the
+app. You build it. You pay the price of
+building React Native. You as a React
+Native team pay it and then once native
+team receives that package, they don't
+have to pay it anymore because um the
+code has already been built. They just
+have to consume a library. Um and then
+we have a single package and then in
+that package we have all our React
+Native components with their business
+logic register. So this means we I have
+a single package with everything about
+React Native. I don't have to worry
+about anything else. Um, and then I
+assume you have some native engineers
+that already know how to consume a
+library like how to consume a library
+from Maven, how to consume an XC
+framework or even as an SPM package. Um,
+we have this approach so the native
+developers can just take the React
+Native code and add it as a any library
+to the native
+applications. Um, and then let's look at
+how it looks like in practice. So what
+we do is we create an Xcode project an
+Xcode library and that library produces
+an XC framework file on iOS and we have
+a pod file in the example but that
+doesn't mean that you have to add coca
+pods to your native application. It just
+gives you an XC framework which means
+you can either directly consume it um
+use coca pods to consume it or you can
+also use SPM's ability to ship XC
+frameworks. So if you have a like pure
+swift codebase that you don't want to
+add any coal pods, you don't want to add
+um any XC frameworks manually because
+you might be um interested in not having
+to deal with the versions, you can just
+use SPM and the SPM can handle grabbing
+the right XC framework for you. And then
+on Android, we have um an AAR file. So
+you can push this to Maven, your private
+one, and then you can just consume it as
+any other library. Here we have the
+implementation um and this just consumes
+our react native
+application. Um so let's take a look at
+um what like what am I sending now? So I
+I said that we have a package but that
+package what like what's inside that
+package inside that package is we have a
+library and all the libraries need to
+have a public interface because when the
+native developers import that library
+into their apps they have to somehow be
+able to call some code like load a viv
+um lo a viv controller to like sh react
+native application. So what we do is we
+design a carefully crafted public API
+interface. Um so we typically we
+typically expose a VF controller like in
+this but uh we can also pick to just
+ship a VF. You don't have to always like
+ship a V controller. Um in this case
+what we do is we call the React root
+view factory API to create a root view
+and then this all happens internally. So
+your application devs don't have to know
+what the react would be factory does.
+It's just our um internal
+interface. So once that's all done
+um yeah so once all that that's all done
+we go to the native application and just
+import the library that we published
+earlier. In this case you can take a
+look at the importer library line and
+once library is imported we load our viv
+controller as any other. um it says let
+react vc um equals to our hello world
+view controller and this is the view
+control that we have um exposed from our
+library and then once that's done we can
+obviously present it do anything we want
+and that's just react native at this
+point you don't have to worry about
+anything else
+um the second benefit is we can enable
+type safety this way because normally
+when you have the um classic approach or
+like the simpler approach you you really
+don't have a public interface. You just
+have the react internals. You can use
+them and you basically call any view
+with a string name and that doesn't seem
+safe because uh what I can do is instead
+of hello world I can do hello world uh
+just forgot the d and my view is not
+going to be loading. But in this case um
+we can have type safety in our public
+interface and that will ensure that the
+native developers don't import the um
+like import with a wrong
+name. Um so we have strong type
+checking. We can also pass the arguments
+with correct types to the library. And
+then lastly, thanks to the compile time
+safety, I don't even have to run my app
+to see if React Native is working
+properly because I have uh static type
+checking and everything is if like
+everything has the correct types,
+everything should work
+properly. Um and then here we have an
+example of what the type safety looks
+like. Um so in this case I am creating a
+new strct called hello world config and
+this internally accepts um a show user
+greeting boolean and then once we have
+that what we can do is we can go back to
+our view controller class and accept
+this config structure as the init
+parameter. So when you want to create a
+new hello world view controller, you
+also have to pass this config and what
+we do internally after that is um there
+is this argument that the create root
+view function accepts called initial
+properties. So whatever you pass to the
+initial properties are going to be
+passed to the react native uh the react
+components props. And what this means is
+when I render my component, my show user
+grading prop will be whatever the native
+engineer sets it
+to. Um, and then here we have the React
+code. For instance, I have my
+application. This const app is my React
+functional component that it receives my
+props as arguments. And inside that
+props, I have my show user greeting
+constant. And then based on that, I can
+either show the hello world or not. And
+I receive this prop from the native
+site. I don't have this defined anywhere
+in my react
+application. Um and then in the native
+side what I do is um when I am consuming
+uh the hello world view of controller
+from my application I first create my
+config and creating that I have my hello
+world config and then I just pass it um
+the props that I want. In this case I
+have true as show user greeting and then
+I just pass it to my hello world view
+controller. And notice that this is all
+type safe. So if I ever try to pass
+something to my React component that
+doesn't even exist, um it's not going to
+be a problem because I have everything
+strictly type. I have compile time type
+type safety.
+Um and then also it's um it would be
+nice to mention that oh I have my react
+native views and I have my native
+application and what I can do is I can
+take
+my native views and then uh take my
+react native views and then put it into
+the native application but it's also
+important to say that I can do the exact
+opposite. I can get my native views like
+let's say I have built a custom payroll
+screen that I want to show but inside my
+react native portion what I can do is I
+can wrap it and then just push to the
+react native um and once that's done my
+native application will render my n
+react native component and then the
+react native component will render the
+native component and actually this is
+what happens with react native when you
+render text when you render any views
+it's going to be showing the um the
+native component itself when you use a
+web view for instance, it's going to use
+a native web view. So why shouldn't it
+be possible to do it with any other
+views?
+Um yeah, so I think Mike you can take it
+over now. Okay, thank you Burak. So that
+was the um advanced way of doing things.
+So now you more or less know how to
+approach those two things. Um so let's
+talk about the universal best practices.
+So the things that make sense regardless
+of which one approach you go with and
+actually even regardless of whether you
+even choose React Native in the first
+place. So this might be interesting for
+you regardless. So let's talk about
+migration strategy. The first one most
+companies can't really pose development
+or migrate everything at once. So first
+of all we typically recommend an
+iteration screen by screen approach. So
+this is the first step. Then the idea is
+to start small, validate React Native in
+a control environment and finally
+gradually expand based on the success.
+So let's have a look at uh the
+application structure. Um this is a
+typical structure may depend on you know
+your application but you know typically
+you would have login dashboard maybe
+some screens FAQ and help. So we we have
+to look uh for the best candidate for
+the migration and um on the highlighted
+slide uh on the section like on this
+slide now you can see I highlighted uh
+FAQ and help which are usually the best
+starting points. They're often
+non-critical even though you want your
+users to get some help. Um you typically
+already use a web view there. Uh so you
+know that makes them perfect fit for
+native because you likely have some
+JavaScript under the hood anyway. uh and
+we can take application approach but
+also um the next um alternative approach
+is a component level migration and in
+this case we can be even more granular.
+We can instead of replacing the whole
+FAQ screen we can take advantage of um
+uh what Burex um has been showing us at
+the very end with the sort of
+birectional approach. We can go even
+lower and register instead of a big FAQ
+screen. Imagine you created five
+different small React components or even
+if you have React on the web, you would
+have a component for everything because
+everything is a component. So you could
+have a button or you could have a
+navbar. All these can be ported over to
+React Native component by component. So
+you don't have to go for the whole
+screen if you're concerned that you want
+to start even smaller. So in this case
+FAQ item would be the smallest one and
+then we will be going up building up
+this as we continue. So that is the sort
+of migration approach. Now when we
+migration another best practice is the
+sort of brownfield uh setup in general.
+Um we shouldn't aim for
+100% React Native because brownfield is
+a valid end goal. it's not a temporary
+state. Um so if we go over to the next
+section uh we will see I created a
+breakdown um of you know how you can
+think about using native code where it
+makes sense. Uh so first of all you know
+keep in mind that React Native Excel is
+coexisting with your native codebase and
+this is uh this should be viewed as a
+first class solution not a compromise
+and and some features like CPU intensive
+work or crossplatform C++ libraries make
+more sense to keep native like there is
+no need to rewrite these in JavaScript.
+In fact if you've been following trends
+the trend is the opposite actually. On
+the other hand, your UI or business
+logic uh makes perfect sense to be
+written in React Native because you can
+share it with your web implementation.
+And finally, another universal best
+practice that you will need is very
+crucial is the monitoring. Um so you
+have to implement proper telemetry to
+understand your results in production.
+First of all, uh one good practice that
+we use of code stack is um DMAG
+methodology which is define, measure,
+analyze, improve, control. It is a very
+nice and lightweight framework to how on
+how to think about finding performance
+problems, analyzing them and fixing them
+in your codebase, making sure they never
+happen again. Second of all, there is
+real user monitoring for production
+insights, which means getting actual
+data from user devices and seeing how
+how the results of your work translate
+to actual end users. And finally, you
+can consider using open telemetry for
+for comprehensive data collection. And a
+little sneak peek, we've been using this
+internally for our customers. There is a
+library coming up. So if you're rolling
+out your custom solution right now or
+you feel like ah I would have to sort of
+build it myself there will be something
+from us for you to use. So getting all
+that all together
+um here is an example of hypothetical
+migration from a web view uh and how we
+can measure it to provide us feedback.
+Thanks to real user monitoring, we can
+have a very good information before and
+after uh how the change or introduction
+of React Native is impacting the
+performance of a particular screen. In
+this case, everything you see on the
+screen is made up, but it's just here to
+show you the sort of reason behind doing
+all that. And if if we started using
+React Native say for um help section or
+FAQ section, what we typically see with
+our customers is much better performance
+of sections that were web views
+otherwise. Uh much better satisfaction
+because the native layouts and UI
+provides much better user experience and
+after all overall the impact is
+positive. You can see faster loading
+time. Everybody is happy. We are we have
+validated the approach and we are ready
+to go. So as you can see this is all
+very good and you you might be asking
+yourself question like who's really
+doing that and let me tell you that
+everybody's doing this pretty much
+everybody unless you're a startup but
+typically these two players are worth a
+shot. Uh Shopify recently completed the
+migration from fully native to React
+Native. So they transitioned and
+repurposed their entire their entire
+organization from being native
+organization to react and react native
+organization. They still do maintain
+native pieces where it makes sense but
+but in principle they are react native
+first right now and they're they're
+pretty interesting company to sort of
+call out because typically and this is
+what we presented to you today as well
+the migration strategies to start from
+bottom up take least important screens
+validate how reit behaves if you're
+satisfied keep going further Shopify
+they have a lot of great resources
+online. They did total opposite and we
+did podcast with them together. Uh you
+should uh check it out React Universe uh
+on air podcast with Shopify Mustafa Ali
+who's the sort of technical person
+behind that effort. And so we talk a lot
+about challenges of migrating to React
+Native including you know what happens
+with your native engineers but typically
+uh what I wanted to sort of call out
+here is the the fact that they started
+from the top. Their approach was let's
+order screens by impact and start
+rewriting the biggest screens and most
+important screens first. Reason for that
+very simple if the technology is not
+going to satisfy our requirements we'd
+rather get to know that very early
+rather than at the end. And so it worked
+out for them as well. Something to keep
+in mind as an anecdote I guess uh
+because their engineering resources are
+pretty pretty heavy. And then we have
+meta obviously who created react native
+and they were using react native in
+brownfield from the very beginning. In
+fact this is the way they do it all the
+way commitment you can keep uh you can
+you can be safe that that use case will
+always be uh important. They use it in
+marketplace which is serving billions of
+people every day huge number performing
+very well and marketplace is from what
+I've been reading online the reason why
+people got excited about Facebook again
+especially the younger audience uh
+because people are making deals on
+marketplace which you know um is is what
+what is attracting meta users to
+Facebook application again which in
+result only shows how important that
+technology for meta is the trend is
+clear companies are increasingly
+adopting React Native and you know
+latest uh news and research from uh the
+US shows that most startups are
+recruiting React Native developers first
+for the speed of use time to market and
+you also have to keep in mind that with
+the sort of increase of AI in our
+everyday's lives and increase of you
+know agents for development react and
+react native
+point because LMS are pretty good at
+writing that code. So if that sounds
+like a plan, uh before we jump into Q&A,
+I wanted to um highlight two things. Uh
+the first one is um this is very easy to
+do. I mean at least to get started if
+you have a native application and you
+feel like you're not moving as fast as
+you could or you're exploring React
+Native or you maybe started but you
+didn't completed it. Whatever is your
+status, you can get a production ready
+solution under a month based on our
+experience. We're happy to help you with
+this, but if you have your own
+engineers, we're also happy to provide
+you some feedback, tips, and tricks.
+Point is you can start you can join the
+React Native community within a month
+from today if you decide. And um and and
+so I guess at this point we can uh park
+it up. Just one more slide where uh ah
+it didn't update. I updated in the
+meantime, but it's okay. Scan this QR
+code to join our newsletter, but also um
+I'm going to type it in the chat as
+well. Um but I'm also going to say it.
+Feel free to email me uh at
+mikecolstack.com and we're more than
+happy um to answer any of the follow-up
+questions you have if you either don't
+want to talk about your application on a
+webinar um because maybe it's under NDA
+or something that you're not feeling
+like you want to share. This one uh we
+can take offline and we can talk about
+it. So, we have roughly 10 to 15 minutes
+left for some Q&A. And I guess um if you
+want to participate in the Q&A, feel
+free to drop a question in the chat. In
+the meantime, I can uh kick it off with
+my first question. My first question
+would be uh to you, Borak, given the
+advanced setup.
+Um how like how did you like how was the
+performance and reception after you
+started that migration? We talked about
+theory. What about the actual uh
+feedback from uh from the client?
+Okay. So what we have done is we
+implemented the first stage which was
+the PC stage and the client already had
+a react native application and they
+wanted to bring the react native only
+features that they filled with web views
+to their native app. So again, as you
+said, they wanted to replace their web
+views and I can say this that um I can
+say this happily that they were pretty
+happy with replacing uh some of their
+web views like their payment. All of
+those were changed and they had better
+UX thanks to React Native having a
+better UX than web views. That is
+interesting. So typically we've been
+talking about you know you have native
+app and you want to move faster and
+maybe start migrating but uh you can
+see you can see from uh from their case
+like you may have some other application
+already and you may be like yeah why
+don't we just uh use that instead. So um
+we have two questions in the chat and
+there are two related to each other. So
+we'll start with the first one from
+Alfredo. Thank you for the question. Is
+there a GitHub repo with demo advanced
+setup scaffolding? And another one which
+is also related. Thank you for the
+question. Is there any chance that this
+framework for brownfield integration
+will become open
+source? Um I will let you bak answer
+this one as well because you are sort of
+more involved in that project than me.
+So I'll let you take the um you know the
+the glory um and answer that.
+So people just ask us. So in general
+people ask us when it's going to be open
+sourced. Um so it's going to be an
+easier question to answer. Is there any
+chance 100% we're going to be open
+sourcing the React Native framework that
+we've been working on? Um soon let's
+say. And if we have a GitHub repo with
+the demo first of all we have a pending
+PR in this framework that we have that
+has this advanced workflow demo. And
+then I think we also have another GitHub
+repo that I'm not sure if we have open
+it yet. Yeah. Uh so I can I can help
+with that. So there there is a few
+projects uh that we are working on right
+now in this space. Um and I think the
+best will be for me to try sharing my
+screen and then I can walk you through
+uh what we have here. So um let's see.
+All right. So this is uh the first repo
+uh the react native brownfield and um
+react native brownfield is how it all
+started many years ago. At first react
+native brownfield was just a collection
+of utilities uh for for doing different
+migration for doing different
+communication between react re native
+and native. So all the RST review
+factories that you've seen today on our
+slides the sort of how do we migrate how
+do we call UI view from native side and
+that renders react native component that
+is easy but then you have communication
+issues how do I pass my data how do I
+communicate react native navigation with
+the native navigation when I dismiss
+model and like it's two separate worlds
+you have to connect with with with
+themselves and this library is the
+library that we created for Dart
+purpose. It has six years already. So,
+as you can see, it's been around for a
+while. We are working on a complete
+overhaul and bring in more features so
+that all the benefits that you've seen
+today with the automatic packaging will
+be available in this library in the next
+month. If you're interested in uh being
+notified when it's ready, um our
+newsletter is is good way to stay up to
+date, but also just like I said, you can
+email me at mike mike@colstack.com and
+I'll be happy to follow up with you on
+this one as well. And then uh we have
+another one which as as far as I'm aware
+we hadn't open sourced yet but I will
+show you the landing page because we
+have launched a waiting list um just
+about uh just about last week. So um
+this is it. It's called a React Native
+framework. um you know metal last year
+created I'm I'm not sure if like what's
+the demographics here and how much
+you're familiar with the react native
+and framework situation there but let me
+just fast track it fast forwarded and
+say that we have
+created and it's sort of being rolled
+out as we speak to our customers we are
+testing this in production because we
+want to release it and make sure it's
+awesome. This is our sort of collection
+of utilities for building React Native
+apps at a scale. Typically, if you were
+researching React Native today, you've
+came across Expo, and Expo is amazing,
+but it is even better if you're building
+from scratch. We see a lot of our
+customers struggle with existing apps.
+They struggle with their own CI/CD
+pipelines and so many different ifs and
+elsees about their infrastructure that
+is just hard to satisfy at all. And so
+we created this uh framework. On the
+video here you see just a demonstration
+of our build pipeline which means once
+one of your engineers builds the app,
+all of you get it for free
+automatically. So there is no need to
+rebuild it five times. just build it
+once and everybody can run it which is
+pretty cool. It's kind of like expo but
+on your infrastructure and now for this
+one we are working on a bunch of cool
+new features and one of the features as
+you can see we already have it because
+we are already testing it is the
+brownfield integration and brownfield
+integration or the pull request that
+Burak's been talking about is that
+feature. So starting from the next month
+when we do a public beta if you are
+interested to join and participate in
+that private beta email me
+michaelsteam.com or go to the
+enterprise-framework.colasttime.com to
+read more about this and you will have
+access to that. Basically what it is at
+the end of the day is a common line
+tool. So the idea is that you will be
+able to just write an enterprise
+framework build uh build um you know uh
+build uh the the artifacts and then it
+will depending on your choice either put
+it on your internal repo or maybe send
+it automatically to your native devs.
+The idea will be that all these steps
+are tricky. We're just making that super
+easy so you can get started without
+having to sort of figure that all out
+yourself. Um so that would be uh that
+would be the sort of ultimate ultimate
+thing. You can sign up to the waiting
+list. Uh we just released it last week.
+We we got a bunch of people waiting uh
+and it's pretty cool. So that is that is
+a bunch of bunch of utilities that will
+be helpful and you know you might be
+thinking that this is not super u I
+don't know like people often overlook
+that piece and many times I see
+companies dropping react native and they
+often complain about react native itself
+but in fact it's their the way they
+integrated it that's the problem not the
+framework itself. So it's a skill issue.
+Yeah exactly.
+Um exactly. So um that is the that is
+regard itself. Now
+um I wanted to follow up with the
+question about the brownfield
+integration you when you were building
+the sort of PC and integrating that
+since the client already had React
+Native like how was the how was the sort
+of native engineers versus React Native
+situation there when you introduced
+React Native to the main native app
+everybody was sort of expecting that
+because they were used to the pipeline
+or like how did that So,
+so how the app ended up being you know
+from the CI/CD perspective and build
+types as well. Yeah. So, um first of all
+they had lots of native engineers and um
+I think like their point initially was
+not to replace the native apps with
+React Native but just to bring new
+features even faster. But they also told
+us that the trend now in the company is
+to fully migrate React Native
+eventually. Um, and what we've done is
+we had a React Native repository with
+this brownfield code that we talked
+about. They also had a shell application
+that they could test React Native code
+against and we had a CI pipeline that
+packaged everything and published it via
+the SPM and their private Maven
+repository. And once that's done, you
+can obviously go to your native
+application and then on CI or where you
+update your react native application or
+even native application or even manually
+you can just grab the latest swift
+package manager package or the u the
+gradal package.
+Nice. So they had a pretty smooth
+integration. That's pretty cool. And
+then uh did you integrate just one
+screen or like how granular was the
+migration? What did you start?
+Yeah. So we had two cases. Case A, we
+had full screens and they were working
+just fine. We could get any React Native
+screen working in the native application
+in the stack obviously. And then we had
+the sec uh case B which was components.
+So we take any component that's not full
+screen and put it into native screen and
+that case was also working brilliantly.
+Nice. Nice. That's pretty cool. I
+remember one of the first brownfield
+scenarios that was often overlooked uh
+but I was a huge fan of that was the
+sort of um the um you know the the
+birectional stuff. It's not that easy
+but you know many times um typically
+people are concerned about UI how we
+make it feel unified and I just feel
+like from my perspective like React
+Native compared to flatter for example
+like huge win is the sort of easy ease
+of integration I I mean it's not like
+flatter wouldn't be as easy I guess
+probably right yeah I think so that is
+would be easier to start from scratch
+with flutter than to go with the
+brownfield scenario which is which means
+it's not flexible enough in this case.
+Yeah, totally. Totally. And yeah, I
+think you know um when we when we see a
+lot of a lot of interesting
+opportunities uh when it comes to using
+React Native itself is is is typically
+when like good opportunity is when you
+have legacy code on the native side and
+you just want to move faster maybe bring
+your web features to it and sort of keep
+the release train unified. But at the
+same time um another good use case the
+use case that we see every once in a
+while is when there is a new platform
+maybe or new device and you know if you
+have three native code bases and now you
+have to create a fourth one it's a
+totally different discussion rather than
+you're going to get it for free right
+yeah I think we had the vision support
+in few weeks or so
+so it was crazy yeah yeah there you go I
+mean I don't think it would
+otherwise. Um, and you know, the great
+thing about React Native in that case as
+well, thanks to Oscar great work, is
+that it hides away a lot of VR
+primitives in a way that it's a
+component. you're used to components and
+and typically my challenge when it comes
+to building VR apps or or AR apps to
+that to that point is is the whole
+different mental model and I'm just
+struggling to learn that on top of the
+native language and in this case it's
+just kind of makes you feel like you're
+at
+home. Yeah, exactly. So I think like not
+even VR but even with Android and iOS
+you don't have to learn a bunch of
+things to be able to build a native app.
+like I don't I did I didn't know what a
+fragment is until like last year and I
+filled lots of mobile apps with React
+Native. Yeah, you you're totally right.
+I um my story with React Native started
+when I built an iOS application for my
+client and then they wanted me to build
+Android because I was a fullstack guy.
+They were like yeah just just do it
+whatever and started learning Android
+but then then I quickly realized there
+is no way I'm ever mastering that. like
+I just I just couldn't get around Java
+and XML and all those activities. Just
+the mental model of Android was totally
+different from what I would you know
+kind of expect. So you know even today
+when I go through Android code I'm
+somewhat surprised it is working. But
+you know the point is thanks to reactive
+I was able to just sort of roll with it
+and that is also pretty cool because if
+you start using it all the different
+teams can be just one which is also
+pretty cool I guess. Yeah. Yeah. Um
+cool. So we have uh one last question on
+the chat I think before we draw up which
+is um like what are the best resources
+for mastering um you know React Native.
+Guess this is good question from for
+many for many for many reasons. One of
+them the fact that you know it's always
+good to be great engineer but also you
+know having the proper transition of
+knowledge is also very important in your
+organization as well. So I guess we can
+you know while we wrap it up each one of
+us can say what what do we think is the
+best resource. I can say from my
+perspective I find a lot of uh
+satisfaction in just building stuff. So
+um I was not really up to speed with
+Swift and C++ as of last year but I
+started building with natural modules
+some native modules and then I was
+somewhat forced to do it to learn it and
+then I got up to speed very quickly. So
+you know on top of obvious reasons and
+obvious resources I would say nothing
+beats actual coding is very satisfactory
+especially if you're a designer. That
+would be my my my my five cents. Yeah,
+100% agree. And like when it comes to
+resources, I guess a uh the official
+documentation obviously and then b if
+you have advanced scenarios, you have to
+go and read the source code to some
+degree. Yes, exactly. And um yeah, you
+know, this reminds me of the live live
+stream we did the other day when we were
+going through the Vim uh tutorial. And
+it's it's just like with anything, you
+know, like just have to keep doing it
+and then you will perfect it. Uh but if
+you stop then then you won't. Um great.
+So we you know, we did over an almost an
+hour of of talking. I think it was fun.
+You know, for me that was my first
+webinar I think ever because for some
+very strange reason I've never done it
+before and it's super awesome because we
+can practice the slides before
+conference or after the conference and
+you know share knowledge with you and a
+smaller audience than live stream. So I
+would say it was very fun and um I don't
+know Burak for you I think it was also
+one of the first times at CO. So yeah,
+how was it? I enjoyed it. I enjoy
+talking to you and so I actually like
+love talking about this stuff in
+general.
+Yeah, I I do agree. I mean, every time
+we're on the live stream or doing this,
+I'm like not, you know, some people are
+afraid or maybe freak out or have some,
+you know, like stressed out and like
+some people just genuinely just kind of
+go with the flow and I see that's the
+case, which is pretty awesome. Um,
+awesome. So that wraps it up from my
+side. I really wanted to thank everybody
+for joining um and for staying over. We
+did have a rather casual but steady
+audience throughout the whole time which
+is great. Means that nobody decided to
+drop uh after seeing our beautiful
+slides. Um so you can reach out to me
+and Burak on Twitter. You can find us on
+our website and email us as well. We
+we're happy to talk with you and see you
+next time I guess. Yep. See you next
+time.

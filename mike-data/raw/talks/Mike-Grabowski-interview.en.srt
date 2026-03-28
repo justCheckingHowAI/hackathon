@@ -1,0 +1,1215 @@
+1
+00:00:00,320 --> 00:00:02,550
+
+Hi folks, welcome back live stream
+
+2
+00:00:02,550 --> 00:00:02,560
+Hi folks, welcome back live stream
+ 
+
+3
+00:00:02,560 --> 00:00:06,070
+Hi folks, welcome back live stream
+Reacton 2025 day two. I'm here with Mike
+
+4
+00:00:06,070 --> 00:00:06,080
+Reacton 2025 day two. I'm here with Mike
+ 
+
+5
+00:00:06,080 --> 00:00:09,190
+Reacton 2025 day two. I'm here with Mike
+Robavski, CTO and founder of Call Stack.
+
+6
+00:00:09,190 --> 00:00:09,200
+Robavski, CTO and founder of Call Stack.
+ 
+
+7
+00:00:09,200 --> 00:00:09,750
+Robavski, CTO and founder of Call Stack.
+Hello.
+
+8
+00:00:09,750 --> 00:00:09,760
+Hello.
+ 
+
+9
+00:00:09,760 --> 00:00:11,190
+Hello.
+>> Hey Mike, how you doing?
+
+10
+00:00:11,190 --> 00:00:11,200
+>> Hey Mike, how you doing?
+ 
+
+11
+00:00:11,200 --> 00:00:12,870
+>> Hey Mike, how you doing?
+>> Great. Thanks for having me here.
+
+12
+00:00:12,870 --> 00:00:12,880
+>> Great. Thanks for having me here.
+ 
+
+13
+00:00:12,880 --> 00:00:14,470
+>> Great. Thanks for having me here.
+>> Yeah, thank you for being here and
+
+14
+00:00:14,470 --> 00:00:14,480
+>> Yeah, thank you for being here and
+ 
+
+15
+00:00:14,480 --> 00:00:16,470
+>> Yeah, thank you for being here and
+answering the questions from our live
+
+16
+00:00:16,470 --> 00:00:16,480
+answering the questions from our live
+ 
+
+17
+00:00:16,480 --> 00:00:18,550
+answering the questions from our live
+studio uh live studio from our live
+
+18
+00:00:18,550 --> 00:00:18,560
+studio uh live studio from our live
+ 
+
+19
+00:00:18,560 --> 00:00:21,349
+studio uh live studio from our live
+audience. Um and let's get started.
+
+20
+00:00:21,349 --> 00:00:21,359
+audience. Um and let's get started.
+ 
+
+21
+00:00:21,359 --> 00:00:21,750
+audience. Um and let's get started.
+Okay,
+
+22
+00:00:21,750 --> 00:00:21,760
+Okay,
+ 
+
+23
+00:00:21,760 --> 00:00:22,310
+Okay,
+>> let's go.
+
+24
+00:00:22,310 --> 00:00:22,320
+>> let's go.
+ 
+
+25
+00:00:22,320 --> 00:00:24,630
+>> let's go.
+>> Cool. How lightweight is React Native
+
+26
+00:00:24,630 --> 00:00:24,640
+>> Cool. How lightweight is React Native
+ 
+
+27
+00:00:24,640 --> 00:00:26,870
+>> Cool. How lightweight is React Native
+brownfield? Does it significantly
+
+28
+00:00:26,870 --> 00:00:26,880
+brownfield? Does it significantly
+ 
+
+29
+00:00:26,880 --> 00:00:29,750
+brownfield? Does it significantly
+increase bundle size? That's a very good
+
+30
+00:00:29,750 --> 00:00:29,760
+increase bundle size? That's a very good
+ 
+
+31
+00:00:29,760 --> 00:00:32,549
+increase bundle size? That's a very good
+question uh because you won't believe me
+
+32
+00:00:32,549 --> 00:00:32,559
+question uh because you won't believe me
+ 
+
+33
+00:00:32,559 --> 00:00:34,470
+question uh because you won't believe me
+but I have never actually profiled the
+
+34
+00:00:34,470 --> 00:00:34,480
+but I have never actually profiled the
+ 
+
+35
+00:00:34,480 --> 00:00:37,430
+but I have never actually profiled the
+actual u bundle size impact of the
+
+36
+00:00:37,430 --> 00:00:37,440
+actual u bundle size impact of the
+ 
+
+37
+00:00:37,440 --> 00:00:39,750
+actual u bundle size impact of the
+brownfield library itself but I wouldn't
+
+38
+00:00:39,750 --> 00:00:39,760
+brownfield library itself but I wouldn't
+ 
+
+39
+00:00:39,760 --> 00:00:41,750
+brownfield library itself but I wouldn't
+call it significant just because it is
+
+40
+00:00:41,750 --> 00:00:41,760
+call it significant just because it is
+ 
+
+41
+00:00:41,760 --> 00:00:43,990
+call it significant just because it is
+mostly a couple of native files that I
+
+42
+00:00:43,990 --> 00:00:44,000
+mostly a couple of native files that I
+ 
+
+43
+00:00:44,000 --> 00:00:46,389
+mostly a couple of native files that I
+would treat as helpers and utilities. So
+
+44
+00:00:46,389 --> 00:00:46,399
+would treat as helpers and utilities. So
+ 
+
+45
+00:00:46,399 --> 00:00:48,709
+would treat as helpers and utilities. So
+generally speaking considering the whole
+
+46
+00:00:48,709 --> 00:00:48,719
+generally speaking considering the whole
+ 
+
+47
+00:00:48,719 --> 00:00:50,869
+generally speaking considering the whole
+react native and all the native modules
+
+48
+00:00:50,869 --> 00:00:50,879
+react native and all the native modules
+ 
+
+49
+00:00:50,879 --> 00:00:52,709
+react native and all the native modules
+you're adding to your application that
+
+50
+00:00:52,709 --> 00:00:52,719
+you're adding to your application that
+ 
+
+51
+00:00:52,719 --> 00:00:53,990
+you're adding to your application that
+shouldn't feel like anything
+
+52
+00:00:53,990 --> 00:00:54,000
+shouldn't feel like anything
+ 
+
+53
+00:00:54,000 --> 00:00:55,029
+shouldn't feel like anything
+significant.
+
+54
+00:00:55,029 --> 00:00:55,039
+significant.
+ 
+
+55
+00:00:55,039 --> 00:00:58,229
+significant.
+>> Okay. Okay. Um, what kind of migration
+
+56
+00:00:58,229 --> 00:00:58,239
+>> Okay. Okay. Um, what kind of migration
+ 
+
+57
+00:00:58,239 --> 00:01:00,389
+>> Okay. Okay. Um, what kind of migration
+path do you hope teams take? Start
+
+58
+00:01:00,389 --> 00:01:00,399
+path do you hope teams take? Start
+ 
+
+59
+00:01:00,399 --> 00:01:03,270
+path do you hope teams take? Start
+small, one screen or feature islands? Do
+
+60
+00:01:03,270 --> 00:01:03,280
+small, one screen or feature islands? Do
+ 
+
+61
+00:01:03,280 --> 00:01:04,950
+small, one screen or feature islands? Do
+you have any recommendations?
+
+62
+00:01:04,950 --> 00:01:04,960
+you have any recommendations?
+ 
+
+63
+00:01:04,960 --> 00:01:07,750
+you have any recommendations?
+>> Typically, where we see most people uh
+
+64
+00:01:07,750 --> 00:01:07,760
+>> Typically, where we see most people uh
+ 
+
+65
+00:01:07,760 --> 00:01:10,950
+>> Typically, where we see most people uh
+success stories is around starting with
+
+66
+00:01:10,950 --> 00:01:10,960
+success stories is around starting with
+ 
+
+67
+00:01:10,960 --> 00:01:13,750
+success stories is around starting with
+uh a single screen and then uh gradually
+
+68
+00:01:13,750 --> 00:01:13,760
+uh a single screen and then uh gradually
+ 
+
+69
+00:01:13,760 --> 00:01:15,429
+uh a single screen and then uh gradually
+moving outside. I mean that really
+
+70
+00:01:15,429 --> 00:01:15,439
+moving outside. I mean that really
+ 
+
+71
+00:01:15,439 --> 00:01:17,429
+moving outside. I mean that really
+depends on your organization how you set
+
+72
+00:01:17,429 --> 00:01:17,439
+depends on your organization how you set
+ 
+
+73
+00:01:17,439 --> 00:01:20,789
+depends on your organization how you set
+yourself KPIs, but it's either a screen
+
+74
+00:01:20,789 --> 00:01:20,799
+yourself KPIs, but it's either a screen
+ 
+
+75
+00:01:20,799 --> 00:01:23,109
+yourself KPIs, but it's either a screen
+or feature island depending on that
+
+76
+00:01:23,109 --> 00:01:23,119
+or feature island depending on that
+ 
+
+77
+00:01:23,119 --> 00:01:23,990
+or feature island depending on that
+migration.
+
+78
+00:01:23,990 --> 00:01:24,000
+migration.
+ 
+
+79
+00:01:24,000 --> 00:01:26,070
+migration.
+>> Okay, cool. And speaking of migration
+
+80
+00:01:26,070 --> 00:01:26,080
+>> Okay, cool. And speaking of migration
+ 
+
+81
+00:01:26,080 --> 00:01:28,310
+>> Okay, cool. And speaking of migration
+and success stories, are there any
+
+82
+00:01:28,310 --> 00:01:28,320
+and success stories, are there any
+ 
+
+83
+00:01:28,320 --> 00:01:30,310
+and success stories, are there any
+brownfield success stories you can share
+
+84
+00:01:30,310 --> 00:01:30,320
+brownfield success stories you can share
+ 
+
+85
+00:01:30,320 --> 00:01:30,950
+brownfield success stories you can share
+with us?
+
+86
+00:01:30,950 --> 00:01:30,960
+with us?
+ 
+
+87
+00:01:30,960 --> 00:01:32,789
+with us?
+>> Yeah, there is a lot of I mean
+
+88
+00:01:32,789 --> 00:01:32,799
+>> Yeah, there is a lot of I mean
+ 
+
+89
+00:01:32,799 --> 00:01:34,710
+>> Yeah, there is a lot of I mean
+unfortunately there's quite a few NDAs
+
+90
+00:01:34,710 --> 00:01:34,720
+unfortunately there's quite a few NDAs
+ 
+
+91
+00:01:34,720 --> 00:01:37,749
+unfortunately there's quite a few NDAs
+I've signed over time. However, um you
+
+92
+00:01:37,749 --> 00:01:37,759
+I've signed over time. However, um you
+ 
+
+93
+00:01:37,759 --> 00:01:40,310
+I've signed over time. However, um you
+know, we've seen um we've seen during
+
+94
+00:01:40,310 --> 00:01:40,320
+know, we've seen um we've seen during
+ 
+
+95
+00:01:40,320 --> 00:01:41,749
+know, we've seen um we've seen during
+the keynote in the morning, we've seen
+
+96
+00:01:41,749 --> 00:01:41,759
+the keynote in the morning, we've seen
+ 
+
+97
+00:01:41,759 --> 00:01:44,469
+the keynote in the morning, we've seen
+Zando and HelloFresh being showcased for
+
+98
+00:01:44,469 --> 00:01:44,479
+Zando and HelloFresh being showcased for
+ 
+
+99
+00:01:44,479 --> 00:01:47,429
+Zando and HelloFresh being showcased for
+their brownfield stories and um React
+
+100
+00:01:47,429 --> 00:01:47,439
+their brownfield stories and um React
+ 
+
+101
+00:01:47,439 --> 00:01:50,550
+their brownfield stories and um React
+Native Brownfield is pretty much um well
+
+102
+00:01:50,550 --> 00:01:50,560
+Native Brownfield is pretty much um well
+ 
+
+103
+00:01:50,560 --> 00:01:52,230
+Native Brownfield is pretty much um well
+there is a picture of brownfield library
+
+104
+00:01:52,230 --> 00:01:52,240
+there is a picture of brownfield library
+ 
+
+105
+00:01:52,240 --> 00:01:54,389
+there is a picture of brownfield library
+in uh one of the articles. So that's
+
+106
+00:01:54,389 --> 00:01:54,399
+in uh one of the articles. So that's
+ 
+
+107
+00:01:54,399 --> 00:01:56,469
+in uh one of the articles. So that's
+what that one is easy to figure out. But
+
+108
+00:01:56,469 --> 00:01:56,479
+what that one is easy to figure out. But
+ 
+
+109
+00:01:56,479 --> 00:01:57,910
+what that one is easy to figure out. But
+one thing to keep in mind is that
+
+110
+00:01:57,910 --> 00:01:57,920
+one thing to keep in mind is that
+ 
+
+111
+00:01:57,920 --> 00:02:00,709
+one thing to keep in mind is that
+reactive brownfield itself is not a uh
+
+112
+00:02:00,709 --> 00:02:00,719
+reactive brownfield itself is not a uh
+ 
+
+113
+00:02:00,719 --> 00:02:02,550
+reactive brownfield itself is not a uh
+it's not just a library. It's more of an
+
+114
+00:02:02,550 --> 00:02:02,560
+it's not just a library. It's more of an
+ 
+
+115
+00:02:02,560 --> 00:02:04,630
+it's not just a library. It's more of an
+approach. You can really do it without
+
+116
+00:02:04,630 --> 00:02:04,640
+approach. You can really do it without
+ 
+
+117
+00:02:04,640 --> 00:02:06,630
+approach. You can really do it without
+using our library. It's more about how
+
+118
+00:02:06,630 --> 00:02:06,640
+using our library. It's more about how
+ 
+
+119
+00:02:06,640 --> 00:02:09,589
+using our library. It's more about how
+you package it. So I would say uh if you
+
+120
+00:02:09,589 --> 00:02:09,599
+you package it. So I would say uh if you
+ 
+
+121
+00:02:09,599 --> 00:02:11,510
+you package it. So I would say uh if you
+look at those two articles uh they
+
+122
+00:02:11,510 --> 00:02:11,520
+look at those two articles uh they
+ 
+
+123
+00:02:11,520 --> 00:02:13,510
+look at those two articles uh they
+pretty much uh capture reactive
+
+124
+00:02:13,510 --> 00:02:13,520
+pretty much uh capture reactive
+ 
+
+125
+00:02:13,520 --> 00:02:14,949
+pretty much uh capture reactive
+brownfield and I would think of these
+
+126
+00:02:14,949 --> 00:02:14,959
+brownfield and I would think of these
+ 
+
+127
+00:02:14,959 --> 00:02:16,309
+brownfield and I would think of these
+two as success story.
+
+128
+00:02:16,309 --> 00:02:16,319
+two as success story.
+ 
+
+129
+00:02:16,319 --> 00:02:18,710
+two as success story.
+>> Okay. Wonderful. And how does the final
+
+130
+00:02:18,710 --> 00:02:18,720
+>> Okay. Wonderful. And how does the final
+ 
+
+131
+00:02:18,720 --> 00:02:20,790
+>> Okay. Wonderful. And how does the final
+state of apps using brownfield look
+
+132
+00:02:20,790 --> 00:02:20,800
+state of apps using brownfield look
+ 
+
+133
+00:02:20,800 --> 00:02:22,949
+state of apps using brownfield look
+like? Is it more of a hybrid approach or
+
+134
+00:02:22,949 --> 00:02:22,959
+like? Is it more of a hybrid approach or
+ 
+
+135
+00:02:22,959 --> 00:02:25,110
+like? Is it more of a hybrid approach or
+do they fully transfer to React Native
+
+136
+00:02:25,110 --> 00:02:25,120
+do they fully transfer to React Native
+ 
+
+137
+00:02:25,120 --> 00:02:25,670
+do they fully transfer to React Native
+over time?
+
+138
+00:02:25,670 --> 00:02:25,680
+over time?
+ 
+
+139
+00:02:25,680 --> 00:02:27,830
+over time?
+>> Also very good question. I think often a
+
+140
+00:02:27,830 --> 00:02:27,840
+>> Also very good question. I think often a
+ 
+
+141
+00:02:27,840 --> 00:02:30,470
+>> Also very good question. I think often a
+um misconception is that you have to
+
+142
+00:02:30,470 --> 00:02:30,480
+um misconception is that you have to
+ 
+
+143
+00:02:30,480 --> 00:02:32,790
+um misconception is that you have to
+finish at a green field stage. So you
+
+144
+00:02:32,790 --> 00:02:32,800
+finish at a green field stage. So you
+ 
+
+145
+00:02:32,800 --> 00:02:34,949
+finish at a green field stage. So you
+have to finish the rewrite uh where we
+
+146
+00:02:34,949 --> 00:02:34,959
+have to finish the rewrite uh where we
+ 
+
+147
+00:02:34,959 --> 00:02:36,790
+have to finish the rewrite uh where we
+see a lot of companies being successful
+
+148
+00:02:36,790 --> 00:02:36,800
+see a lot of companies being successful
+ 
+
+149
+00:02:36,800 --> 00:02:39,509
+see a lot of companies being successful
+is starting the migration uh doing only
+
+150
+00:02:39,509 --> 00:02:39,519
+is starting the migration uh doing only
+ 
+
+151
+00:02:39,519 --> 00:02:41,509
+is starting the migration uh doing only
+the things that are necessary. Sometimes
+
+152
+00:02:41,509 --> 00:02:41,519
+the things that are necessary. Sometimes
+ 
+
+153
+00:02:41,519 --> 00:02:43,190
+the things that are necessary. Sometimes
+they end up being grafield for the
+
+154
+00:02:43,190 --> 00:02:43,200
+they end up being grafield for the
+ 
+
+155
+00:02:43,200 --> 00:02:45,509
+they end up being grafield for the
+foreseeable future. So I would say when
+
+156
+00:02:45,509 --> 00:02:45,519
+foreseeable future. So I would say when
+ 
+
+157
+00:02:45,519 --> 00:02:47,830
+foreseeable future. So I would say when
+you start using uh React Native inside
+
+158
+00:02:47,830 --> 00:02:47,840
+you start using uh React Native inside
+ 
+
+159
+00:02:47,840 --> 00:02:50,309
+you start using uh React Native inside
+your mobile app, do not aim necessarily
+
+160
+00:02:50,309 --> 00:02:50,319
+your mobile app, do not aim necessarily
+ 
+
+161
+00:02:50,319 --> 00:02:52,470
+your mobile app, do not aim necessarily
+for phasing out all of your native
+
+162
+00:02:52,470 --> 00:02:52,480
+for phasing out all of your native
+ 
+
+163
+00:02:52,480 --> 00:02:54,390
+for phasing out all of your native
+screens, if you end up staying somewhere
+
+164
+00:02:54,390 --> 00:02:54,400
+screens, if you end up staying somewhere
+ 
+
+165
+00:02:54,400 --> 00:02:56,390
+screens, if you end up staying somewhere
+in between, that's perfectly fine.
+
+166
+00:02:56,390 --> 00:02:56,400
+in between, that's perfectly fine.
+ 
+
+167
+00:02:56,400 --> 00:02:58,790
+in between, that's perfectly fine.
+>> Yeah. Cool. Well, thank you for sharing
+
+168
+00:02:58,790 --> 00:02:58,800
+>> Yeah. Cool. Well, thank you for sharing
+ 
+
+169
+00:02:58,800 --> 00:03:02,070
+>> Yeah. Cool. Well, thank you for sharing
+those insights on migration and uh two
+
+170
+00:03:02,070 --> 00:03:02,080
+those insights on migration and uh two
+ 
+
+171
+00:03:02,080 --> 00:03:03,750
+those insights on migration and uh two
+final questions for you. What's your
+
+172
+00:03:03,750 --> 00:03:03,760
+final questions for you. What's your
+ 
+
+173
+00:03:03,760 --> 00:03:06,390
+final questions for you. What's your
+favorite React feature of all times?
+
+174
+00:03:06,390 --> 00:03:06,400
+favorite React feature of all times?
+ 
+
+175
+00:03:06,400 --> 00:03:09,030
+favorite React feature of all times?
+>> Honestly, I love uh Hooks.
+
+176
+00:03:09,030 --> 00:03:09,040
+>> Honestly, I love uh Hooks.
+ 
+
+177
+00:03:09,040 --> 00:03:09,830
+>> Honestly, I love uh Hooks.
+>> Okay. Wow.
+
+178
+00:03:09,830 --> 00:03:09,840
+>> Okay. Wow.
+ 
+
+179
+00:03:09,840 --> 00:03:12,630
+>> Okay. Wow.
+>> I like Hooks. I I like how they u
+
+180
+00:03:12,630 --> 00:03:12,640
+>> I like Hooks. I I like how they u
+ 
+
+181
+00:03:12,640 --> 00:03:14,149
+>> I like Hooks. I I like how they u
+initially when I was switching from
+
+182
+00:03:14,149 --> 00:03:14,159
+initially when I was switching from
+ 
+
+183
+00:03:14,159 --> 00:03:16,550
+initially when I was switching from
+classes they made me change my mental
+
+184
+00:03:16,550 --> 00:03:16,560
+classes they made me change my mental
+ 
+
+185
+00:03:16,560 --> 00:03:18,309
+classes they made me change my mental
+model and I learned a lot while I was
+
+186
+00:03:18,309 --> 00:03:18,319
+model and I learned a lot while I was
+ 
+
+187
+00:03:18,319 --> 00:03:19,750
+model and I learned a lot while I was
+shifting from classes to function
+
+188
+00:03:19,750 --> 00:03:19,760
+shifting from classes to function
+ 
+
+189
+00:03:19,760 --> 00:03:20,550
+shifting from classes to function
+components.
+
+190
+00:03:20,550 --> 00:03:20,560
+components.
+ 
+
+191
+00:03:20,560 --> 00:03:23,509
+components.
+>> Okay. And what's uh what's a thing about
+
+192
+00:03:23,509 --> 00:03:23,519
+>> Okay. And what's uh what's a thing about
+ 
+
+193
+00:03:23,519 --> 00:03:25,190
+>> Okay. And what's uh what's a thing about
+you that doesn't come up in normal
+
+194
+00:03:25,190 --> 00:03:25,200
+you that doesn't come up in normal
+ 
+
+195
+00:03:25,200 --> 00:03:26,070
+you that doesn't come up in normal
+conversation.
+
+196
+00:03:26,070 --> 00:03:26,080
+conversation.
+ 
+
+197
+00:03:26,080 --> 00:03:28,070
+conversation.
+>> So see here's the thing every time I go
+
+198
+00:03:28,070 --> 00:03:28,080
+>> So see here's the thing every time I go
+ 
+
+199
+00:03:28,080 --> 00:03:30,309
+>> So see here's the thing every time I go
+to a conference I try to be uh very
+
+200
+00:03:30,309 --> 00:03:30,319
+to a conference I try to be uh very
+ 
+
+201
+00:03:30,319 --> 00:03:32,550
+to a conference I try to be uh very
+lowkey about everything I do outside. I
+
+202
+00:03:32,550 --> 00:03:32,560
+lowkey about everything I do outside. I
+ 
+
+203
+00:03:32,560 --> 00:03:34,149
+lowkey about everything I do outside. I
+mostly focus on code and I'm always
+
+204
+00:03:34,149 --> 00:03:34,159
+mostly focus on code and I'm always
+ 
+
+205
+00:03:34,159 --> 00:03:35,830
+mostly focus on code and I'm always
+fully locked in. Okay.
+
+206
+00:03:35,830 --> 00:03:35,840
+fully locked in. Okay.
+ 
+
+207
+00:03:35,840 --> 00:03:37,750
+fully locked in. Okay.
+>> But my passion is cars. I love driving.
+
+208
+00:03:37,750 --> 00:03:37,760
+>> But my passion is cars. I love driving.
+ 
+
+209
+00:03:37,760 --> 00:03:40,229
+>> But my passion is cars. I love driving.
+style of racing and um
+
+210
+00:03:40,229 --> 00:03:40,239
+style of racing and um
+ 
+
+211
+00:03:40,239 --> 00:03:42,070
+style of racing and um
+>> thing to know about me is that I have
+
+212
+00:03:42,070 --> 00:03:42,080
+>> thing to know about me is that I have
+ 
+
+213
+00:03:42,080 --> 00:03:44,550
+>> thing to know about me is that I have
+full sleeve tattoo here and it's my
+
+214
+00:03:44,550 --> 00:03:44,560
+full sleeve tattoo here and it's my
+ 
+
+215
+00:03:44,560 --> 00:03:46,630
+full sleeve tattoo here and it's my
+first car BMW. I have it tattooed all
+
+216
+00:03:46,630 --> 00:03:46,640
+first car BMW. I have it tattooed all
+ 
+
+217
+00:03:46,640 --> 00:03:48,789
+first car BMW. I have it tattooed all
+the pieces on my arm. I cannot show it
+
+218
+00:03:48,789 --> 00:03:48,799
+the pieces on my arm. I cannot show it
+ 
+
+219
+00:03:48,799 --> 00:03:50,390
+the pieces on my arm. I cannot show it
+right here but maybe when we meet the
+
+220
+00:03:50,390 --> 00:03:50,400
+right here but maybe when we meet the
+ 
+
+221
+00:03:50,400 --> 00:03:52,550
+right here but maybe when we meet the
+other day you'll see it right here.
+
+222
+00:03:52,550 --> 00:03:52,560
+other day you'll see it right here.
+ 
+
+223
+00:03:52,560 --> 00:03:54,710
+other day you'll see it right here.
+>> Part of the suspension is right here. So
+
+224
+00:03:54,710 --> 00:03:54,720
+>> Part of the suspension is right here. So
+ 
+
+225
+00:03:54,720 --> 00:03:57,670
+>> Part of the suspension is right here. So
+it's like this little passion of mine.
+
+226
+00:03:57,670 --> 00:03:57,680
+it's like this little passion of mine.
+ 
+
+227
+00:03:57,680 --> 00:03:58,789
+it's like this little passion of mine.
+>> Really passionate.
+
+228
+00:03:58,789 --> 00:03:58,799
+>> Really passionate.
+ 
+
+229
+00:03:58,799 --> 00:03:59,190
+>> Really passionate.
+>> Yeah.
+
+230
+00:03:59,190 --> 00:03:59,200
+>> Yeah.
+ 
+
+231
+00:03:59,200 --> 00:04:00,949
+>> Yeah.
+>> Cool. I never realized you had a full
+
+232
+00:04:00,949 --> 00:04:00,959
+>> Cool. I never realized you had a full
+ 
+
+233
+00:04:00,959 --> 00:04:02,470
+>> Cool. I never realized you had a full
+sleeve. That's really cool.
+
+234
+00:04:02,470 --> 00:04:02,480
+sleeve. That's really cool.
+ 
+
+235
+00:04:02,480 --> 00:04:04,869
+sleeve. That's really cool.
+>> Uh it was supposed to be a mystery so I
+
+236
+00:04:04,869 --> 00:04:04,879
+>> Uh it was supposed to be a mystery so I
+ 
+
+237
+00:04:04,879 --> 00:04:06,949
+>> Uh it was supposed to be a mystery so I
+didn't really answer the question. Yeah.
+
+238
+00:04:06,949 --> 00:04:06,959
+didn't really answer the question. Yeah.
+ 
+
+239
+00:04:06,959 --> 00:04:07,589
+didn't really answer the question. Yeah.
+There you go.
+
+240
+00:04:07,589 --> 00:04:07,599
+There you go.
+ 
+
+241
+00:04:07,599 --> 00:04:09,270
+There you go.
+>> Thank you so much, Mike, for joining us
+
+242
+00:04:09,270 --> 00:04:09,280
+>> Thank you so much, Mike, for joining us
+ 
+
+243
+00:04:09,280 --> 00:04:13,280
+>> Thank you so much, Mike, for joining us
+today. And uh folks, stay tuned.
+
