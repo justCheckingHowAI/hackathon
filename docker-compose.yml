@@ -3,3 +3,9 @@ services:
     build:
       context: ./app
     restart: unless-stopped
+  api:
+    build:
+      context: ./api
+    ports:
+      - "8000:80"
+    restart: unless-stopped
