@@ -3,14 +3,16 @@ from __future__ import annotations
 import json
 import os
 import shutil
+import time
+import subprocess
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
 
-DEFAULT_LOCATION = 'us-east4'
+DEFAULT_LOCATION = 'europe-west2'
 DEFAULT_EMBEDDING_MODEL = 'publishers/google/models/text-embedding-005'
-DEFAULT_CORPUS_DISPLAY_NAME = 'gemelius corpus'
+DEFAULT_CORPUS_DISPLAY_NAME = 'gemelius'
 SKIP_DIR_NAMES = {'scripts', '__pycache__'}
 
 
@@ -24,10 +26,12 @@ class Settings:
     chunk_size: int
     chunk_overlap: int
     max_embedding_requests_per_min: int
+    retry_count: int
+    retry_sleep_seconds: int
 
     @classmethod
     def from_env(cls) -> 'Settings':
-        project_id = os.getenv('GCP_PROJECT_ID') or os.getenv('GOOGLE_CLOUD_PROJECT')
+        project_id = 'custom-helix-491611-k3'
         if not project_id:
             raise ValueError('Missing GCP project id. Set GCP_PROJECT_ID or GOOGLE_CLOUD_PROJECT.')
 
@@ -47,6 +51,8 @@ class Settings:
             chunk_size=int(os.getenv('VERTEX_RAG_CHUNK_SIZE', '512')),
             chunk_overlap=int(os.getenv('VERTEX_RAG_CHUNK_OVERLAP', '100')),
             max_embedding_requests_per_min=int(os.getenv('VERTEX_RAG_EMBEDDING_RPM', '1000')),
+            retry_count=int(os.getenv('VERTEX_RAG_RETRY_COUNT', '4')),
+            retry_sleep_seconds=int(os.getenv('VERTEX_RAG_RETRY_SLEEP_SECONDS', '75')),
         )
 
 
@@ -79,15 +85,64 @@ def iter_source_files(source_dir: Path) -> list[Path]:
 
 def init_rag(settings: Settings):
     try:
+        import google.auth
         import vertexai
         from vertexai import rag
+        from google.auth.exceptions import DefaultCredentialsError
+        from google.oauth2.credentials import Credentials
     except ImportError as exc:
         raise RuntimeError(
             'vertexai is not installed. Install api/requirements.txt first.'
         ) from exc
 
-    vertexai.init(project=settings.project_id, location=settings.location)
+    try:
+        vertexai.init(project=settings.project_id, location=settings.location)
+        rag.list_corpora()
+        return rag
+    except DefaultCredentialsError:
+        access_token = gcloud_access_token()
+        credentials = Credentials(token=access_token, quota_project_id=settings.project_id)
+
+        original_default = google.auth.default
+
+        def patched_default(*args, **kwargs):
+            try:
+                return original_default(*args, **kwargs)
+            except DefaultCredentialsError:
+                return credentials, settings.project_id
+
+        google.auth.default = patched_default
+        vertexai.init(
+            project=settings.project_id,
+            location=settings.location,
+            credentials=credentials,
+        )
     return rag
+
+
+def gcloud_access_token() -> str:
+    try:
+        result = subprocess.run(
+            ['gcloud', 'auth', 'print-access-token'],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except FileNotFoundError as exc:
+        raise RuntimeError(
+            'gcloud is not installed and no Application Default Credentials were found.'
+        ) from exc
+    except subprocess.CalledProcessError as exc:
+        stderr = exc.stderr.strip() or exc.stdout.strip() or 'unknown gcloud auth failure'
+        raise RuntimeError(
+            'Unable to obtain Google Cloud access token via gcloud auth print-access-token: '
+            f'{stderr}'
+        ) from exc
+
+    token = result.stdout.strip()
+    if not token:
+        raise RuntimeError('gcloud auth print-access-token returned an empty token.')
+    return token
 
 
 def ensure_corpus(rag, settings: Settings) -> str:
@@ -136,7 +191,6 @@ def upload_file(rag, settings: Settings, corpus_name: str, stage_path: Path, dis
                     chunk_overlap=settings.chunk_overlap,
                 )
             ),
-            max_embedding_requests_per_min=settings.max_embedding_requests_per_min,
         )
     except TypeError:
         return rag.upload_file(
@@ -144,7 +198,42 @@ def upload_file(rag, settings: Settings, corpus_name: str, stage_path: Path, dis
             path=str(stage_path),
             display_name=display_name,
             description=f'source_dir={settings.source_dir}',
+            transformation_config=rag.TransformationConfig(
+                chunking_config=rag.ChunkingConfig(
+                    chunk_size=settings.chunk_size,
+                    chunk_overlap=settings.chunk_overlap,
+                )
+            ),
         )
+
+
+def upload_with_retry(
+    rag,
+    settings: Settings,
+    corpus_name: str,
+    stage_path: Path,
+    display_name: str,
+):
+    last_exc: Exception | None = None
+    for attempt in range(1, settings.retry_count + 1):
+        try:
+            return upload_file(rag, settings, corpus_name, stage_path, display_name)
+        except RuntimeError as exc:
+            last_exc = exc
+            message = str(exc).lower()
+            if 'quota exceeded' not in message and '429' not in message:
+                raise
+            if attempt == settings.retry_count:
+                raise
+            print(
+                f'Quota hit for {display_name}; retry {attempt}/{settings.retry_count} '
+                f'after {settings.retry_sleep_seconds}s'
+            )
+            time.sleep(settings.retry_sleep_seconds)
+
+    if last_exc is not None:
+        raise last_exc
+    raise RuntimeError(f'Unable to upload {display_name}')
 
 
 def main() -> int:
@@ -164,6 +253,7 @@ def main() -> int:
     stage_dir = Path(tempfile.mkdtemp(prefix='vertex_rag_stage_'))
     uploaded_count = 0
     skipped_count = 0
+    failed_count = 0
 
     try:
         for source_path in source_files:
@@ -174,7 +264,19 @@ def main() -> int:
                 continue
 
             stage_path = build_stage_file(source_path, settings.source_dir, stage_dir)
-            operation = upload_file(rag, settings, corpus_name, stage_path, relative_name)
+            try:
+                operation = upload_with_retry(
+                    rag,
+                    settings,
+                    corpus_name,
+                    stage_path,
+                    relative_name,
+                )
+            except Exception as exc:
+                failed_count += 1
+                print(f'Failed: {relative_name} error={exc}')
+                continue
+
             uploaded_count += 1
             print(
                 'Uploaded:',
@@ -191,6 +293,7 @@ def main() -> int:
     print(f'Source directory: {settings.source_dir}')
     print(f'Uploaded files: {uploaded_count}')
     print(f'Skipped existing files: {skipped_count}')
+    print(f'Failed files: {failed_count}')
     print(f'Total discovered files: {len(source_files)}')
     return 0
 

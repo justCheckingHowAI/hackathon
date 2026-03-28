@@ -1,9 +1,7 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, status
 from fastapi.responses import RedirectResponse
-
-from db import DatabaseConfigError, get_database
 
 
 router = APIRouter(tags=['health'])
@@ -16,17 +14,4 @@ def read_root() -> RedirectResponse:
 
 @router.get('/health')
 def healthcheck() -> dict[str, str]:
-    return {'status': 'ok'}
-
-
-@router.get('/health/db')
-def db_healthcheck() -> dict[str, str]:
-    try:
-        db = get_database()
-        db.ping()
-    except DatabaseConfigError as exc:
-        raise HTTPException(status_code=500, detail=str(exc)) from exc
-    except Exception as exc:
-        raise HTTPException(status_code=503, detail=f'Database unavailable: {exc}') from exc
-
     return {'status': 'ok'}
