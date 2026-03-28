@@ -95,7 +95,7 @@ Dashboard Gemellus widoczny w picture-in-picture (Agent Activity + Sources).
 
 **AGENT-MIKE:** "Hey, what's up?"
 
-**KOLEGA:** "Hey Mike - we've got a client hitting a Module Federation issue on Hermes. Android containers won't load, there's some webpack require error. This was your area - what should we do?"
+**KOLEGA:** "Hey Mike - A client is asking whether they should use Metro or Re.Pack for their monorepo with 12 packages. What would Mike recommend?"
 
 **Agent Activity (widoczne obok):**
 ```
