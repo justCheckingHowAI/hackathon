@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import json
 from typing import Any
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 
 from schemas_vapi import (
     OutboundCallRequest,
@@ -67,25 +68,57 @@ async def create_vapi_call(
 
 @router.post('/vapi/tools/whoami', response_model_exclude_none=True)
 async def vapi_whoami_tool(
-    request: VapiToolWebhookRequest,
+    request: Request,
 ) -> VapiToolWebhookResponse:
-    results: list[VapiToolResult] = []
+    try:
+        payload = json.loads((await request.body()).decode('utf-8') or '{}')
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return VapiToolWebhookResponse(results=[])
 
-    for tool_call in request.message.tool_call_list:
-        if tool_call.name != 'whoami':
-            results.append(
-                VapiToolResult(
-                    toolCallId=tool_call.id,
-                    error=f'Unsupported tool call for this endpoint: {tool_call.name}',
-                )
-            )
-            continue
+    def extract_tool_call_ids(value: Any) -> list[str]:
+        if isinstance(value, dict):
+            tool_calls = value.get('toolCallList')
+            if isinstance(tool_calls, list):
+                ids = [
+                    tool_call.get('id')
+                    for tool_call in tool_calls
+                    if isinstance(tool_call, dict) and isinstance(tool_call.get('id'), str)
+                ]
+                if ids:
+                    return ids
 
-        results.append(
-            VapiToolResult(
-                toolCallId=tool_call.id,
-                result=WHOAMI_RESULT,
-            )
+            tool_with_calls = value.get('toolWithToolCallList')
+            if isinstance(tool_with_calls, list):
+                ids = [
+                    tool_call.get('toolCall', {}).get('id')
+                    for tool_call in tool_with_calls
+                    if isinstance(tool_call, dict)
+                    and isinstance(tool_call.get('toolCall'), dict)
+                    and isinstance(tool_call.get('toolCall', {}).get('id'), str)
+                ]
+                if ids:
+                    return ids
+
+            for nested_value in value.values():
+                ids = extract_tool_call_ids(nested_value)
+                if ids:
+                    return ids
+
+        if isinstance(value, list):
+            for nested_value in value:
+                ids = extract_tool_call_ids(nested_value)
+                if ids:
+                    return ids
+
+        return []
+
+    tool_call_ids = extract_tool_call_ids(payload)
+    results = [
+        VapiToolResult(
+            toolCallId=tool_call_id,
+            result=WHOAMI_RESULT,
         )
+        for tool_call_id in tool_call_ids
+    ]
 
     return VapiToolWebhookResponse(results=results)

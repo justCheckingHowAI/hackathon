@@ -147,8 +147,8 @@ Po pierwszym `pull` traktuj [config/vapi/assistant.json](/Users/maksymilian/.sup
 Backend wystawia testowy custom tool webhook:
 - `POST /vapi/tools/whoami`
 
-Domyślnie `config/vapi/assistant.json` wskazuje produkcyjny URL:
-- `https://api.gemellus.app/vapi/tools/whoami`
+Aktualna konfiguracja demo w `config/vapi/assistant.json` wskazuje localtunnel URL:
+- `https://fast-tables-pay.loca.lt/vapi/tools/whoami`
 
 Lokalny flow z `localtunnel`:
 
@@ -167,11 +167,32 @@ lt --port 8001
 PYTHONPATH=api .venv/bin/python api/scripts/sync_vapi_assistant.py push
 ```
 
+Szybki test publicznego webhooka:
+
+```bash
+curl -X POST https://fast-tables-pay.loca.lt/vapi/tools/whoami \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "message": {
+      "type": "tool-calls",
+      "toolCallList": [
+        {
+          "id": "tool-call-1",
+          "name": "Whoami",
+          "arguments": {}
+        }
+      ]
+    }
+  }'
+```
+
 Potem zadaj assistantowi pytanie typu:
 - "Who are you?"
 - "Whose clone are you?"
 
 Jeśli prompt i tool config są poprawne, Vapi wywoła `whoami` webhook i assistant odpowie jako Mike Grabowski.
+
+Endpoint `POST /vapi/tools/whoami` przyjmuje rzeczywisty payload z Vapi i wyciąga `toolCallId` z różnych shape'ów requestu, więc nie powinien już odpadać na `422` przy normalnym wywołaniu z platformy.
 
 ## Testy
 

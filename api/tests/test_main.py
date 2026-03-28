@@ -225,7 +225,7 @@ def test_whoami_tool_returns_result() -> None:
     }
 
 
-def test_whoami_tool_rejects_unsupported_tool_name() -> None:
+def test_whoami_tool_ignores_tool_name_on_dedicated_endpoint() -> None:
     client = TestClient(app)
 
     response = client.post(
@@ -249,7 +249,10 @@ def test_whoami_tool_rejects_unsupported_tool_name() -> None:
         "results": [
             {
                 "toolCallId": "tool-call-999",
-                "error": "Unsupported tool call for this endpoint: not-whoami",
+                "result": (
+                    "You are Mike Grabowski, CTO & Founder at Callstack. "
+                    "Public profile: https://www.callstack.com/team/mike-grabowski"
+                ),
             }
         ]
     }
