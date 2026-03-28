@@ -31,7 +31,7 @@
           }
         },
         "server": {
-          "url": "https://fast-tables-pay.loca.lt/vapi/tools/whoami"
+          "url": "https://api.gemellus.app/vapi/tools/whoami"
         }
       },
       {
@@ -46,7 +46,7 @@
           }
         },
         "server": {
-          "url": "https://fast-tables-pay.loca.lt/vapi/tools/generate-hiring-pack"
+          "url": "https://api.gemellus.app/vapi/tools/generate-hiring-pack"
         }
       },
       {
@@ -73,7 +73,7 @@
           }
         },
         "server": {
-          "url": "https://fast-tables-pay.loca.lt/vapi/tools/run-cypher-query"
+          "url": "https://api.gemellus.app/vapi/tools/run-cypher-query"
         }
       },
       {
@@ -95,7 +95,7 @@
           }
         },
         "server": {
-          "url": "https://fast-tables-pay.loca.lt/vapi/tools/retrieve-rag-contexts"
+          "url": "https://api.gemellus.app/vapi/tools/retrieve-rag-contexts"
         }
       }
     ]
