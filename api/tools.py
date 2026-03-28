@@ -191,22 +191,7 @@ async def run_cypher_query_tool(raw_body: bytes) -> VapiToolWebhookResponse:
 
 
 def get_google_access_token() -> str:
-    access_token = os.getenv('GOOGLE_ACCESS_TOKEN') or os.getenv('GCP_ACCESS_TOKEN')
-    if access_token:
-        return access_token
-
-    try:
-        return subprocess.check_output(
-            ['gcloud', 'auth', 'print-access-token'],
-            stderr=subprocess.STDOUT,
-            text=True,
-        ).strip()
-    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
-        detail = getattr(exc, 'output', None) or str(exc)
-        raise RuntimeError(
-            'Failed to get Google access token. Set GOOGLE_ACCESS_TOKEN or run '
-            f"'gcloud auth print-access-token'. {detail.strip()}"
-        ) from exc
+    return "ya29.a0Aa7MYioJwg-MLCfvaE5Yko0lRbQMhPaPJCafu1FdBqgb5z1XwLga4ZbSBlEnJE9oabFYhARwj_VrymkZ79lcV71RMcnMd4YM2Lw62aMq-pFj5I6ljHriywbiJupiOjyEBFY0E94_IPbh2_j_c6l76odhqVz_rkNsR17csDt2k_MVzlFeW_TAR-U01TUI9hy70APGvy_F3lXwyQaCgYKAUcSARESFQHGX2MirIPWi18dphIoRbNXrT0Q2Q0213"
 
 
 def _vertex_request(url: str, method: str = 'GET', payload: dict[str, Any] | None = None) -> dict[str, Any]:
