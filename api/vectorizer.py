@@ -86,12 +86,15 @@ class VectorizerService:
         try:
             import vertexai
             from vertexai import rag
+            from google.oauth2.credentials import Credentials
+            from tools import get_google_access_token
         except ImportError as exc:
             raise VectorizerConfigError(
                 "vertexai is not installed. Add google-cloud-aiplatform to api/requirements.txt."
             ) from exc
 
-        vertexai.init(project=self.settings.project_id, location=self.settings.location)
+        creds = Credentials(token=get_google_access_token())
+        vertexai.init(project=self.settings.project_id, location=self.settings.location, credentials=creds)
         return rag
 
     def corpus_display_name(self) -> str:
