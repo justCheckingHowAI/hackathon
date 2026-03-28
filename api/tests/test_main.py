@@ -31,6 +31,10 @@ class StubVapiClient:
         }
 
 
+def setup_function() -> None:
+    app.dependency_overrides = {}
+
+
 def test_get_vapi_assistant() -> None:
     app.dependency_overrides = {get_vapi_client: lambda: StubVapiClient()}
     client = TestClient(app)
@@ -65,6 +69,7 @@ def test_create_call_uses_env_default_phone_number() -> None:
     app.dependency_overrides = {
         get_settings: lambda: Settings(
             private_key="test-key",
+            assistant_id="assistant-from-env",
             default_phone_number_id=None,
             default_phone_number="+12604002243",
             base_url="https://api.vapi.ai",
@@ -76,7 +81,6 @@ def test_create_call_uses_env_default_phone_number() -> None:
     response = client.post(
         "/vapi/calls",
         json={
-            "assistantId": "assistant-123",
             "customerNumber": "+48123123123",
         },
     )
@@ -85,13 +89,13 @@ def test_create_call_uses_env_default_phone_number() -> None:
     assert response.json() == {
         "id": "call-123",
         "status": "queued",
-        "assistantId": "assistant-123",
+        "assistantId": "assistant-from-env",
         "phoneNumberId": "phone-1",
         "customer": {"number": "+48123123123"},
     }
     assert stub.calls == [
         {
-            "assistantId": "assistant-123",
+            "assistantId": "assistant-from-env",
             "phoneNumberId": "phone-1",
             "customer": {"number": "+48123123123"},
         }
@@ -103,6 +107,7 @@ def test_create_call_accepts_explicit_phone_number_id() -> None:
     app.dependency_overrides = {
         get_settings: lambda: Settings(
             private_key="test-key",
+            assistant_id="assistant-from-env",
             default_phone_number_id=None,
             default_phone_number=None,
             base_url="https://api.vapi.ai",
@@ -131,10 +136,37 @@ def test_create_call_accepts_explicit_phone_number_id() -> None:
     }
 
 
+def test_create_call_accepts_explicit_assistant_id() -> None:
+    stub = StubVapiClient()
+    app.dependency_overrides = {
+        get_settings: lambda: Settings(
+            private_key="test-key",
+            assistant_id="assistant-from-env",
+            default_phone_number_id="phone-2",
+            default_phone_number=None,
+            base_url="https://api.vapi.ai",
+        ),
+        get_vapi_client: lambda: stub,
+    }
+    client = TestClient(app)
+
+    response = client.post(
+        "/vapi/calls",
+        json={
+            "assistantId": "assistant-explicit",
+            "customerNumber": "+48123123123",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json()["assistantId"] == "assistant-explicit"
+
+
 def test_create_call_requires_phone_number_config() -> None:
     app.dependency_overrides = {
         get_settings: lambda: Settings(
             private_key="test-key",
+            assistant_id="assistant-from-env",
             default_phone_number_id=None,
             default_phone_number=None,
             base_url="https://api.vapi.ai",
