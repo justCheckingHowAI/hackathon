@@ -138,36 +138,72 @@ class VectorizerService:
         corpus_name = self.ensure_corpus()
         resolved_display_name = display_name or path.name
 
-        try:
-            operation = rag.upload_file(
-                corpus_name=corpus_name,
-                path=str(path),
-                display_name=resolved_display_name,
-                description="global_corpus",
-                transformation_config=rag.TransformationConfig(
-                    chunking_config=rag.ChunkingConfig(
-                        chunk_size=self.settings.chunk_size,
-                        chunk_overlap=self.settings.chunk_overlap,
-                    )
-                ),
-                max_embedding_requests_per_min=self.settings.max_embedding_requests_per_min,
-            )
-        except TypeError:
+        def _do_upload():
             try:
-                operation = rag.upload_file(
+                return rag.upload_file(
                     corpus_name=corpus_name,
                     path=str(path),
                     display_name=resolved_display_name,
                     description="global_corpus",
+                    transformation_config=rag.TransformationConfig(
+                        chunking_config=rag.ChunkingConfig(
+                            chunk_size=self.settings.chunk_size,
+                            chunk_overlap=self.settings.chunk_overlap,
+                        )
+                    ),
+                    max_embedding_requests_per_min=self.settings.max_embedding_requests_per_min,
                 )
+            except TypeError:
+                return rag.upload_file(
+                    corpus_name=corpus_name,
+                    path=str(path),
+                    display_name=resolved_display_name,
+                    description="global_corpus",
+                    transformation_config=rag.TransformationConfig(
+                        chunking_config=rag.ChunkingConfig(
+                            chunk_size=self.settings.chunk_size,
+                            chunk_overlap=self.settings.chunk_overlap,
+                        )
+                    )
+                )
+
+        import time
+        import logging
+        LOGGER = logging.getLogger("vectorizer")
+
+        operation = None
+        last_exc: Exception | None = None
+        retry_count = 4
+        retry_sleep_seconds = 75
+
+        for attempt in range(1, retry_count + 1):
+            try:
+                operation = _do_upload()
+                break
             except Exception as exc:
-                raise DocumentImportError(
-                    f"Unable to upload {path.name} to corpus {corpus_name}."
-                ) from exc
-        except Exception as exc:
-            raise DocumentImportError(
-                f"Unable to upload {path.name} to corpus {corpus_name}."
-            ) from exc
+                last_exc = exc
+                message = str(exc).lower()
+                if not any(k in message for k in ('quota', '429', '13', '8', 'internal', 'resource_exhausted')):
+                    raise DocumentImportError(
+                        f"Unable to upload {path.name} to corpus {corpus_name}."
+                    ) from exc
+                if attempt == retry_count:
+                    raise DocumentImportError(
+                        f"Unable to upload {path.name} to corpus {corpus_name} after {retry_count} retries."
+                    ) from exc
+                LOGGER.warning(
+                    'Quota hit for %s; retry %s/%s after %ss',
+                    resolved_display_name,
+                    attempt,
+                    retry_count,
+                    retry_sleep_seconds,
+                )
+                time.sleep(retry_sleep_seconds)
+
+        if operation is None:
+            if last_exc is not None:
+                raise DocumentImportError(f"Unable to upload {path.name} to corpus {corpus_name}.") from last_exc
+            raise DocumentImportError(f"Unable to upload {path.name} to corpus {corpus_name}.")
 
         return UploadResult(
             corpus_name=corpus_name,
