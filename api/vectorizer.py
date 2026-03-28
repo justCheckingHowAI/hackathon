@@ -62,7 +62,6 @@ class VectorizerSettings:
 
 @dataclass(slots=True)
 class UploadResult:
-    person_id: str
     corpus_name: str
     display_name: str
     source_path: str
@@ -95,11 +94,11 @@ class VectorizerService:
         vertexai.init(project=self.settings.project_id, location=self.settings.location)
         return rag
 
-    def corpus_display_name(self, person_id: str) -> str:
-        return f"{self.settings.corpus_prefix}-{self._sanitize_person_id(person_id)}"
+    def corpus_display_name(self) -> str:
+        return f"{self.settings.corpus_prefix}-default"
 
-    def ensure_person_corpus(self, person_id: str) -> str:
-        display_name = self.corpus_display_name(person_id)
+    def ensure_corpus(self) -> str:
+        display_name = self.corpus_display_name()
         existing_corpus = self._find_corpus_by_display_name(display_name)
         if existing_corpus is not None:
             return self._corpus_name(existing_corpus)
@@ -118,14 +117,13 @@ class VectorizerService:
             )
         except Exception as exc:
             raise CorpusProvisionError(
-                f"Unable to create RAG corpus for person_id={person_id}."
+                "Unable to create RAG corpus."
             ) from exc
 
         return self._corpus_name(corpus)
 
-    def upload_file_for_person(
+    def upload_file(
         self,
-        person_id: str,
         file_path: str | Path,
         display_name: str | None = None,
     ) -> UploadResult:
@@ -134,7 +132,7 @@ class VectorizerService:
             raise DocumentImportError(f"File does not exist: {path}")
 
         rag = self._rag_module
-        corpus_name = self.ensure_person_corpus(person_id)
+        corpus_name = self.ensure_corpus()
         resolved_display_name = display_name or path.name
 
         try:
@@ -142,7 +140,7 @@ class VectorizerService:
                 corpus_name=corpus_name,
                 path=str(path),
                 display_name=resolved_display_name,
-                description=f"person_id={person_id}",
+                description="global_corpus",
                 transformation_config=rag.TransformationConfig(
                     chunking_config=rag.ChunkingConfig(
                         chunk_size=self.settings.chunk_size,
@@ -157,7 +155,7 @@ class VectorizerService:
                     corpus_name=corpus_name,
                     path=str(path),
                     display_name=resolved_display_name,
-                    description=f"person_id={person_id}",
+                    description="global_corpus",
                 )
             except Exception as exc:
                 raise DocumentImportError(
@@ -169,7 +167,6 @@ class VectorizerService:
             ) from exc
 
         return UploadResult(
-            person_id=person_id,
             corpus_name=corpus_name,
             display_name=resolved_display_name,
             source_path=str(path),
@@ -177,16 +174,15 @@ class VectorizerService:
             rag_file_id=self._extract_rag_file_id(operation),
         )
 
-    def import_gcs_uris_for_person(
+    def import_gcs_uris(
         self,
-        person_id: str,
         gcs_uris: list[str],
     ) -> str | None:
         if not gcs_uris:
             raise DocumentImportError("gcs_uris cannot be empty.")
 
         rag = self._rag_module
-        corpus_name = self.ensure_person_corpus(person_id)
+        corpus_name = self.ensure_corpus()
 
         try:
             operation = rag.import_files(
@@ -202,14 +198,13 @@ class VectorizerService:
             )
         except Exception as exc:
             raise DocumentImportError(
-                f"Unable to import GCS files for person_id={person_id}."
+                "Unable to import GCS files."
             ) from exc
 
         return self._extract_operation_name(operation)
 
-    def search_person_corpus(
+    def search_corpus(
         self,
-        person_id: str,
         query: str,
         top_k: int = 5,
         vector_distance_threshold: float | None = None,
@@ -218,7 +213,7 @@ class VectorizerService:
             return []
 
         rag = self._rag_module
-        corpus_name = self.ensure_person_corpus(person_id)
+        corpus_name = self.ensure_corpus()
         retrieval_filter = None
         if vector_distance_threshold is not None:
             retrieval_filter = rag.Filter(
@@ -236,7 +231,7 @@ class VectorizerService:
             )
         except Exception as exc:
             raise VectorizerError(
-                f"Unable to retrieve RAG context for person_id={person_id}."
+                "Unable to retrieve RAG context."
             ) from exc
 
         return self._normalize_search_results(response)
@@ -252,13 +247,6 @@ class VectorizerService:
             if getattr(corpus, "display_name", None) == display_name:
                 return corpus
         return None
-
-    @staticmethod
-    def _sanitize_person_id(person_id: str) -> str:
-        sanitized = re.sub(r"[^a-zA-Z0-9-]+", "-", person_id.strip()).strip("-")
-        if not sanitized:
-            raise VectorizerConfigError("person_id cannot be empty.")
-        return sanitized.lower()
 
     @staticmethod
     def _corpus_name(corpus: Any) -> str:

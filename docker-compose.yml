@@ -13,6 +13,8 @@ services:
     build:
       context: ./api
     restart: unless-stopped
+    volumes:
+      - ~/.config/gcloud:/root/.config/gcloud:ro
     environment:
       GCP_PROJECT_ID: ${GCP_PROJECT_ID}
       GCP_LOCATION: ${GCP_LOCATION:-us-east4}
@@ -27,6 +29,8 @@ services:
       context: ./api
     restart: unless-stopped
     command: ["/api/start-worker.sh"]
+    volumes:
+      - ~/.config/gcloud:/root/.config/gcloud:ro
     environment:
       GCP_PROJECT_ID: ${GCP_PROJECT_ID}
       GCP_LOCATION: ${GCP_LOCATION:-us-east4}

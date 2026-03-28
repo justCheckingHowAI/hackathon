@@ -25,21 +25,21 @@ def _get_service() -> VectorizerService:
     return VectorizerService()
 
 
-@router.post('/{person_id}/upload')
-async def upload_and_vectorize(person_id: str, file: UploadFile) -> dict[str, str | None]:
-    """Upload a file and vectorize it into the person's RAG corpus."""
-    logger.info("Starting upload_and_vectorize for person_id=%s with filename=%s", person_id, file.filename)
+@router.post('/upload')
+async def upload_and_vectorize(file: UploadFile) -> dict[str, str | None]:
+    """Upload a file and vectorize it into the global RAG corpus."""
+    logger.info("Starting upload_and_vectorize with filename=%s", file.filename)
     if not file.filename:
-        logger.warning("Upload failed: No filename provided for person_id=%s", person_id)
+        logger.warning("Upload failed: No filename provided")
         raise HTTPException(status_code=422, detail='No filename provided.')
 
     # Read the file content and enforce size limit
     content = await file.read()
-    logger.info("Read %d bytes for person_id=%s file=%s", len(content), person_id, file.filename)
+    logger.info("Read %d bytes for file=%s", len(content), file.filename)
     if len(content) > MAX_UPLOAD_SIZE:
         logger.warning(
-            "Upload failed: File size %d exceeds limit %d for person_id=%s",
-            len(content), MAX_UPLOAD_SIZE, person_id
+            "Upload failed: File size %d exceeds limit %d",
+            len(content), MAX_UPLOAD_SIZE
         )
         raise HTTPException(
             status_code=413,
@@ -54,18 +54,16 @@ async def upload_and_vectorize(person_id: str, file: UploadFile) -> dict[str, st
         logger.info("Saved temp file to %s, starting vectorization via service", tmp_path)
 
         service = _get_service()
-        result = service.upload_file_for_person(
-            person_id=person_id,
+        result = service.upload_file(
             file_path=tmp_path,
             display_name=file.filename,
         )
 
         logger.info(
-            "Successfully vectorized file for person_id=%s. Operation ID: %s, RAG File ID: %s",
-            person_id, result.operation_id, result.rag_file_id
+            "Successfully vectorized file. Operation ID: %s, RAG File ID: %s",
+            result.operation_id, result.rag_file_id
         )
         return {
-            'person_id': result.person_id,
             'corpus_name': result.corpus_name,
             'display_name': result.display_name,
             'source_path': result.source_path,
@@ -73,25 +71,25 @@ async def upload_and_vectorize(person_id: str, file: UploadFile) -> dict[str, st
             'rag_file_id': result.rag_file_id,
         }
     except VectorizerConfigError as exc:
-        logger.error("VectorizerConfigError during upload for person_id=%s: %s", person_id, exc, exc_info=True)
+        logger.error("VectorizerConfigError during upload: %s", exc, exc_info=True)
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     except DocumentImportError as exc:
-        logger.error("DocumentImportError during upload for person_id=%s: %s", person_id, exc, exc_info=True)
+        logger.error("DocumentImportError during upload: %s", exc, exc_info=True)
         raise HTTPException(status_code=502, detail=str(exc)) from exc
     except VectorizerError as exc:
-        logger.error("VectorizerError during upload for person_id=%s: %s", person_id, exc, exc_info=True)
+        logger.error("VectorizerError during upload: %s", exc, exc_info=True)
         raise HTTPException(status_code=500, detail=str(exc)) from exc
     finally:
         logger.info("Cleaning up temp directory %s", tmp_dir)
         shutil.rmtree(tmp_dir, ignore_errors=True)
 
 
-@router.get('/{person_id}/files')
-def list_vectorized_files(person_id: str) -> list[dict[str, str | None]]:
-    """List all RAG files in the person's corpus."""
+@router.get('/files')
+def list_vectorized_files() -> list[dict[str, str | None]]:
+    """List all RAG files in the global corpus."""
     try:
         service = _get_service()
-        corpus_name = service.ensure_person_corpus(person_id)
+        corpus_name = service.ensure_corpus()
         rag = service._rag_module
 
         rag_files = rag.list_files(corpus_name=corpus_name)
